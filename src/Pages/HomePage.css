@@ -1,0 +1,18 @@
+.HomeDashBoard{
+    width: 100vw;
+    height: 40vh;
+    background-color: blue;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    transition-duration: 2s; 
+    font-size: 1.5vw;
+}
+
+.container{
+
+}
+
+.HomeDashBoard:hover{
+    transform:scaleY(-2)
+}
