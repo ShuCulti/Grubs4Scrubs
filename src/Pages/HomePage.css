@@ -1,18 +1,69 @@
-.HomeDashBoard{
-    width: 100vw;
-    height: 40vh;
-    background-color: blue;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    transition-duration: 2s; 
-    font-size: 1.5vw;
+.html,body{
+    overflow-x: hidden;
+}
+
+.Home{
+    position:absolute;
+    top: 0px; left: 0px;
+    width: 100%;
+    height: 400vh;
 }
 
 .container{
 
 }
 
-.HomeDashBoard:hover{
-    transform:scaleY(-2)
+.HomeDashBoard{
+    
 }
+
+.HomeBoard{
+    display: flex;
+    width: 100%;
+    height: 42vh;
+    background-color: dodgerblue;
+}
+
+
+.HomeBoard-title{
+    display: flex;
+    position:relative;
+    font-size: 2.4vw;
+    font-family:'Arial';
+    font-weight: bolder;
+    top: 7vh; left: 10%;
+    width: fit-content;
+}
+.HomeBoard-title-desc{
+    position: absolute;
+    top: 21vh; left: 10.2%;
+    font-size:larger;
+}
+
+.HomeBoard-search{
+    position: absolute;
+    top: 28vh; left: 10.2%;
+    width: 28%;
+    font-size:larger;
+    border-radius: 14px;
+    background-color: aliceblue;
+    color: black;
+}
+
+.HomeBoard-food{
+    position: absolute;
+    width: 30%;
+    height: 30vh;
+    display: flex;
+    left: 72%;
+}
+
+.HomeBoard-food-holder{
+    position: absolute;
+    top: 33vh;
+    left: 70.5%;
+    width: 30%;
+    height: 30vh;
+    z-index: auto;
+}
+

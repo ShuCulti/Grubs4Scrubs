@@ -1,0 +1,92 @@
+.Navbar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0px; left: 0px;
+    gap: 80px;
+    width: 100%; height: 9vh;
+    background-color:black;
+    
+}
+
+.GrubsLogo{
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    font-size: 3.5vw;
+    cursor:pointer;
+}
+
+
+.GrubsLogo-text{
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    font-size: 1.8vw;
+}
+
+.GrubsLogo-text-4-colour{
+    color: rgb(216, 92, 9);
+}
+
+.GrubsLogo-text-Scrubs-colour{
+    color: rgb(4, 110, 197);
+}
+
+.RecipesIcon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8vw;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.RecipesIcon:hover{
+    background-color: rgb(12, 12, 12);
+}
+
+
+.DashBoardIcon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8vw;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.DashBoardIcon:hover{
+    background-color: rgb(12, 12, 12);
+}
+
+.MealPlannerIcon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8vw;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.MealPlannerIcon:hover{
+    background-color: rgb(12, 12, 12);
+}
+
+.ShoppingListIcon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8vw;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.ShoppingListIcon:hover{
+    background-color: rgb(12, 12, 12);
+}
+
+.NavbarIcons-Text{
+    font-size: medium;
+}
+

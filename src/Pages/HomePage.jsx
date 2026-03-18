@@ -1,22 +1,54 @@
 import "react"
 import "./HomePage.css"
+import "./Components.css"
+import { useNavigate } from "react-router"
+import {LayoutDashboardIcon, PizzaIcon, LucideShoppingCart, Calendar1Icon}from "lucide-react"
+import {Navbar} from "../Components/Navbar.jsx"
+
 
 export default function Home(){
     return(
         <>
-        <div className="HomeDashBoard">
-            Welcome Son
-            <img src="https://i.imgflip.com/8b9jjf.jpg"alt="penis" ></img>
- 
+        <div className="Home">
+            <div>
+                <Navbar/>
+                <HomeBoard/>
+            </div>
         </div>
         </>
     )
 }
 
-function Navbar(){
+function HomeBoard(){
     return(
-        <nav>
+        <>
+        <div className="HomeBoard">
+            <span className="HomeBoard-title">
+                Eat Good and Save Good
+            </span>
+            <p className="HomeBoard-title-desc">
+                Enjoy quality dishes and desserts at your budget and cooking level
+                </p>
+                <div>
+                    <input className="HomeBoard-search">
+                    
+                    </input>
+                </div>
+                <HomeBoardDecor/>
+        </div>
+        </>
+    )
+}
 
-        </nav>
+function HomeBoardDecor(){
+    return(
+        <>
+            <div className="HomeBoard-food">
+                <img src="Adobe Express - file.png" alt="delicious burger" />
+            </div>
+            <div className="HomeBoard-food-holder">
+                <img src="burger-holder-hand.png" alt="hand" />
+            </div>
+        </>
     )
 }
