@@ -19,6 +19,8 @@
 
 .HomeBoard{
     display: flex;
+    position: absolute;
+    top: 8vh;
     width: 100%;
     height: 42vh;
     background-color: dodgerblue;
@@ -44,7 +46,8 @@
     position: absolute;
     top: 28vh; left: 10.2%;
     width: 28%;
-    font-size:larger;
+    height: 2vh;
+    font-size: small;
     border-radius: 14px;
     background-color: aliceblue;
     color: black;
@@ -64,6 +67,62 @@
     left: 70.5%;
     width: 30%;
     height: 30vh;
-    z-index: auto;
+    z-index: 0;
 }
 
+.Home3Sections-text{
+    position:absolute;
+    top: 57vh;
+    left: 10%;
+    font-size: 1.8vw;
+    font-weight: 500;
+}
+
+.Home3Sections-line{
+    position: absolute;
+    top: 61.6vh; left: 10%;
+    width: 5%;
+    background-color: #F59E0B;
+    border-color: #F59E0B;
+    height: 0.5vh;
+    border-radius: 16px;
+}
+
+.Home3Sections-container{
+    display: flex;
+    gap: 2rem;
+    position: absolute;
+    top: 68vh;
+    left: 10%;
+
+}
+
+.Home3Sections{
+    position: relative;
+    height: 28vh;
+    width: 25vw;
+    background-color: #1A1A2E;
+    border-radius: 12px;
+    border-style:groove;
+    border-width: 1;
+    border-color:#CEBDFF;
+
+}
+
+.HomeFeatured-background{
+    display: flex;
+    position: absolute;
+    top: 105vh;
+    height: 75vh;
+    width: 100%;
+    background-color: #0f0f1b;
+}
+
+.HomeCreate-Account{
+    display: flex;
+    position: absolute;
+    top: 180vh;
+    height: 55vh;
+    width: 100%;
+    background-color: #13132b75;
+}
