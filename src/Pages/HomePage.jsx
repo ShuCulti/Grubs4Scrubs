@@ -74,7 +74,7 @@ function Home3SectionsDiv(){
     <>
         <div className="Home3Sections-container">
             <div className="Home3Sections">
-                Penis
+                67
             </div>
             <div className="Home3Sections">
             
