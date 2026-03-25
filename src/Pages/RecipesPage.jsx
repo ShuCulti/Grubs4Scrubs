@@ -45,6 +45,7 @@ const recipes = [
         cost: "€4.10",
         servings: "3 servings",
     },
+    
 ]
 
 const filters = ["All", "Breakfast", "Lunch", "Dinner"]
