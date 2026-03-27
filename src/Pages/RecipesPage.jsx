@@ -125,7 +125,7 @@ export default function Recipes() {
                     </div>
                 </div>
 
-                <div className="recipes-footer-height"><G4Sfooter/></div>
+                <G4Sfooter/>
             </div>
         </>
     )

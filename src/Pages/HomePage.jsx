@@ -15,7 +15,9 @@ export default function Home(){
             <div>
                 <Navbar/>
                 <HomeBoard/>
-                
+            </div>
+            <div className="Home-footer-wrapper">
+                <G4Sfooter/>
             </div>
         </div>
         </>
@@ -39,7 +41,6 @@ function HomeBoard(){
                 <Home3Sections/>
                 <HomeFeatured/>
                 <HomeCreateAccountTab/>
-                < G4Sfooter/>
         </div>
         </>
     )

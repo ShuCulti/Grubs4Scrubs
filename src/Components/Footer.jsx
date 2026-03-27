@@ -1,5 +1,4 @@
 import "react"
-import "../Pages/HomePage.css"
 import "../Pages/Components.css"
 import { useNavigate } from "react-router"
 
@@ -8,12 +7,12 @@ export function G4Sfooter(){
 
     const footerLinks = [
         {id: 1, name: "Features", link: "/Grubs4Scrubs/features"},
-        {id: 2, name: "Pricing", link: "/Grubs4Scrubs/features"},
-        {id: 3, name: "About", link: "/Grubs4Scrubs/features"},
-        {id: 4, name: "Privacy Policy", link: "/Grubs4Scrubs/features"},
-        {id: 5, name: "Terms of Service", link: "/Grubs4Scrubs/features"},
-        {id: 6, name: "Cookie Settings", link: "/Grubs4Scrubs/features"},
-        {id: 7, name: "Contact Us", link: "/Grubs4Scrubs/features"}
+        {id: 2, name: "Pricing", link: "/Grubs4Scrubs/pricing"},
+        {id: 3, name: "About", link: "/Grubs4Scrubs/about"},
+        {id: 4, name: "Privacy Policy", link: "/Grubs4Scrubs/privacy-policy"},
+        {id: 5, name: "Terms of Service", link: "/Grubs4Scrubs/terms-of-service"},
+        {id: 6, name: "Cookie Settings", link: "/Grubs4Scrubs/cookies-settings"},
+        {id: 7, name: "Contact Us", link: "/Grubs4Scrubs/contact-us"}
     ]
 
     return(
