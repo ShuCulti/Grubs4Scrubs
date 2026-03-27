@@ -1,3 +1,10 @@
+.recipesPage{
+    position:absolute;
+    top: 0px; left: 0px;
+    width: 100%;
+    height: 110vh;
+}
+
 .recipes-page {
     position: relative;
     top: 10vh;
@@ -239,4 +246,10 @@
     font-size: 0.8rem;
     padding-top: 20px;
     border-top: 1px solid #1a1a2e;
+}
+
+.recipes-footer-height{
+    display: flex;
+    position: absolute;
+    top: 50vh;
 }

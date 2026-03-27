@@ -3,6 +3,7 @@ import { Navbar } from "../Components/Navbar.jsx"
 import "./HomePage.css"
 import "./Components.css"
 import "./RecipesPage.css"
+import { G4Sfooter } from "../Components/Footer.jsx"
 
 const recipes = [
     {
@@ -62,7 +63,7 @@ export default function Recipes() {
 
     return (
         <>
-            <div className="Home">
+            <div className="recipesPage">
                 <Navbar />
 
                 <div className="recipes-page">
@@ -124,23 +125,7 @@ export default function Recipes() {
                     </div>
                 </div>
 
-                <footer className="recipes-footer">
-                    <div className="footer-top">
-                        <div className="footer-brand">Grubs4Scrubs</div>
-                        <div className="footer-links">
-                            <a href="#">Features</a>
-                            <a href="#">Pricing</a>
-                            <a href="#">About</a>
-                        </div>
-                        <div className="footer-links">
-                            <a href="#">Privacy</a>
-                            <a href="#">Terms</a>
-                        </div>
-                    </div>
-                    <div className="footer-bottom">
-                        © 2024 Grubs4Scrubs. All rights reserved.
-                    </div>
-                </footer>
+                <div className="recipes-footer-height"><G4Sfooter/></div>
             </div>
         </>
     )

@@ -6,7 +6,7 @@
     position:absolute;
     top: 0px; left: 0px;
     width: 100%;
-    height: 400vh;
+    height: 290vh;
 }
 
 .container{
@@ -106,6 +106,7 @@
     border-style:groove;
     border-width: 1;
     border-color:#CEBDFF;
+    cursor: pointer;
 }
 
 .Home3Sections:hover{
@@ -157,15 +158,6 @@
     background-color: #0f0f1b;
 }
 
-.HomeCreate-Account-background{
-    display: flex;
-    position: absolute;
-    top: 200vh;
-    height: 55vh;
-    width: 100%;
-    background-color: #13132b75;
-}
-
 /*  Home Featured  */ 
 
 .HomeFeatured-title{
@@ -211,6 +203,7 @@
     border-width: 0.5px;
     border-color:#636266;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .HomeFeatured-recipes:hover{
@@ -256,4 +249,137 @@
 .HomeFeatured-recipes-meta{
     color: #888;
     font-size: 12px;
+}
+
+/* Create Account Div Section */
+
+.HomeCreate-Account-background{
+    position: absolute;
+    top: 190vh;
+    background-color: #1a1a2e;
+    background-image: 
+            radial-gradient(ellipse 50% 110% at 20% 40%, rgba(34, 229, 255, 0.1) 15%, transparent 50%),
+            radial-gradient(ellipse 50% 110% at 80% 60%, rgba(233, 175, 15, 0.1) 20%, transparent 50%);
+    padding: 80px 20px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    width: 100%; height: 55vh;
+}
+
+
+
+.HomeCreate-Account-title{
+    position: relative;
+    font-weight:400;
+}
+
+.HomeCreate-Account-description{
+    position: relative;
+    font-size: 2.7vh;
+   
+
+    color: #b1b1b1;
+}
+
+.HomeCreate-Account-Btn{
+    position: relative;
+    background-color: rgb(32, 176, 233);
+    width: 13%;
+    height: 7.4vh;
+    top: 2vh;
+    font-size: 2.1vh;
+    color:#1A1A2E;
+
+}
+
+.HomeCreate-Account-Btn:active{
+    transform: scale(0.98)
+
+}
+
+.HomeCreate-Account-Btn:hover{
+    
+}
+
+/* Footer */
+
+.footer{
+    position: absolute;
+    background-color:#1a1a2e;
+    top: 262vh; 
+    width: 100%; height:100%;
+
+}
+
+.footer-HomePage{
+    position: absolute;
+    background-color:#1a1a2e;
+    top: 200vh; 
+    width: 100%; height:100%;
+}
+
+.footer-line{
+    position: absolute;
+    z-index: 100;
+    top: 261vh;
+    border-color: #cccccc2a;
+    background-color: #cccccc2a;
+    width: 100%; height: 0.1px;
+}
+
+.footer-title-container{
+    display: flex;
+    position: absolute;
+    font-weight: 400;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    top: 20%;  
+    font-size: 2.3vh;
+    width: 100%;
+
+}
+
+
+.footer-title-4{
+    color: #F59E0B;
+   
+
+}
+
+.footer-links{
+
+    display: flex;
+    position: absolute;
+    top: 38%;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.footer-links-a{
+    position: relative;
+    top: 2.1vh;
+    font-weight: 400;
+    font-size: 1.8vh;
+    cursor: pointer ;
+}
+
+.footer-links-a:active{
+    position: relative;
+    top: 2.1vh;
+    font-weight: 400;
+    font-size: 1.8vh;
+    cursor: pointer ;
+    color: #b1b1b1;
+}
+
+
+.footer-copy-right{
+    position: absolute;
+    top: 14vh
 }

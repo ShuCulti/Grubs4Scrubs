@@ -6,6 +6,7 @@ import {LayoutDashboardIcon, PizzaIcon, LucideShoppingCart, Calendar1Icon}from "
 import {CalendarIcon,ShoppingBasketIcon,ForkKnifeIcon,} from "lucide-react"
 import {Navbar} from "../Components/Navbar.jsx"
 import Searchbar  from "../Components/Searchbar.jsx"
+import {G4Sfooter} from "../Components/Footer.jsx"
 
 export default function Home(){
     return(
@@ -38,6 +39,7 @@ function HomeBoard(){
                 <Home3Sections/>
                 <HomeFeatured/>
                 <HomeCreateAccountTab/>
+                < G4Sfooter/>
         </div>
         </>
     )
@@ -138,13 +140,18 @@ function HomeFeatured(){
 }
 
 function HomeCreateAccountTab(){
+    const navigate = useNavigate()
     return(
         <>
             <div className="HomeCreate-Account-background">
-                <div>
+                <h1 className="HomeCreate-Account-title">Stop eating dry cereal</h1>
+                <p className="HomeCreate-Account-description">Join 10,000+ students and busy professionals who are upgrading their kitchen game without breaking the bank.</p>
 
+                <div>
+                    <button className="HomeCreate-Account-Btn" onClick={()=> navigate("/")}> Create Free Account</button>
                 </div>
             </div>
         </>
     )
 }
+
