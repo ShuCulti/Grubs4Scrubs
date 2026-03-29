@@ -3159,9 +3159,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yaoch\\Documents\\GitHub\\Grubs4Scrubs\\Grubs4Scrubs.API\\Grub4Scrubs.API.csproj",
-      "projectName": "Grub4Scrubs.API",
-      "projectPath": "C:\\Users\\yaoch\\Documents\\GitHub\\Grubs4Scrubs\\Grubs4Scrubs.API\\Grub4Scrubs.API.csproj",
+      "projectUniqueName": "C:\\Users\\yaoch\\Documents\\GitHub\\Grubs4Scrubs\\Grubs4Scrubs.API\\Grubs4Scrubs.API.csproj",
+      "projectName": "Grubs4Scrubs.API",
+      "projectPath": "C:\\Users\\yaoch\\Documents\\GitHub\\Grubs4Scrubs\\Grubs4Scrubs.API\\Grubs4Scrubs.API.csproj",
       "packagesPath": "C:\\Users\\yaoch\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\yaoch\\Documents\\GitHub\\Grubs4Scrubs\\Grubs4Scrubs.API\\obj\\",
       "projectStyle": "PackageReference",

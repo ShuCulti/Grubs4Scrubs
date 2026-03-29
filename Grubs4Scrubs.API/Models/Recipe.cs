@@ -1,4 +1,4 @@
-namespace Grubs4Scrubs.API.Models;
+namespace Grubs4Scrubs.Models;
 
 public class Recipe
 {

@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Grubs4Scrubs.API.Models;
-using Grubs4Scrubs.API.Data;
+using Grubs4Scrubs.Models;
 
-namespace Grubs4Scrubs.API.Data;
+namespace Grubs4Scrubs.Data;
 
 public class AppDbContext : DbContext
 {

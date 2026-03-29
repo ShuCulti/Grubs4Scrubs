@@ -1,0 +1,6 @@
+@Grubs4ScrubsAPI_HostAddress = http://localhost:5075
+
+GET {{Grubs4ScrubsAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
