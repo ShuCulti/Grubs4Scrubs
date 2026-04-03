@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class RecipeController : ControllerBase
 {
 

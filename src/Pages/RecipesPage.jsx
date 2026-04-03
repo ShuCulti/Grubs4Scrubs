@@ -1,57 +1,24 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Navbar } from "../Components/Navbar.jsx"
 import "./HomePage.css"
 import "./Components.css"
 import "./RecipesPage.css"
 import { G4Sfooter } from "../Components/Footer.jsx"
+import api from "../services/recipeservice.js"
 
-const recipes = [
-    {
-        id: 1,
-        emoji: "🥗",
-        name: "University Power Bowl",
-        category: "Lunch",
-        tags: ["LUNCH", "MEDITERRANEAN"],
-        time: "15 min",
-        cost: "€3.50",
-        servings: "1 serving",
-    },
-    {
-        id: 2,
-        emoji: "🍜",
-        name: "Midnight Exam Ramen",
-        category: "Dinner",
-        tags: ["DINNER", "ASIAN FUSION"],
-        time: "10 min",
-        cost: "€2.20",
-        servings: "1 serving",
-    },
-    {
-        id: 3,
-        emoji: "🥞",
-        name: "Sunday Prep Pancakes",
-        category: "Breakfast",
-        tags: ["BREAKFAST", "CLASSIC"],
-        time: "25 min",
-        cost: "€1.80",
-        servings: "4 servings",
-    },
-    {
-        id: 4,
-        emoji: "🍝",
-        name: "Budget Batch Pasta",
-        category: "Lunch",
-        tags: ["LUNCH", "ITALIAN"],
-        time: "20 min",
-        cost: "€4.10",
-        servings: "3 servings",
-    },
-    
-]
 
 const filters = ["All", "Breakfast", "Lunch", "Dinner"]
 
 export default function Recipes() {
+
+    const [recipes, setRecipes] = useState([]);
+
+    useEffect(()=> {
+        api.get("/Recipe")
+        .then(res=> setRecipes(res.data))
+        .catch(err => console.error("Failed to fetch recipes", err))
+    }, [])
+
     const [activeFilter, setActiveFilter] = useState("All")
     const [searchQuery, setSearchQuery] = useState("")
 

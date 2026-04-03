@@ -117,7 +117,7 @@ function HomeFeatured(){
             <div className="HomeFeatured-ViewAllRecipes" onClick={()=> navigate("/recipes")}>View all recipes ➜</div>
             <div className="HomeFeatured-recipes-container">
                 {featuredRecipes.map((featuredRecipe)=>(
-                    <div className="HomeFeatured-recipes">
+                    <div key = {featuredRecipe.id} className="HomeFeatured-recipes">
                         <img className= "HomeFeatured-recipes-img" src={featuredRecipe.img} alt="Feautured Recipe" />
                         <div className="HomeFeatured-recipes-body">
                             <h3 className="HomeFeatured-recipes-title">{featuredRecipe.title}</h3>
