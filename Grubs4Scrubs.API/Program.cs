@@ -1,8 +1,22 @@
+using Grubs4Scrubs.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddCors(policy =>
+{
+    policy.AddPolicy("AllowReact",policy =>
+    {
+        policy.WithOrigins("http://localhost:5173") // my frontend url port
+            .AllowAnyHeader()  // allow JSON content-type, etc.
+            .AllowAnyMethod();  // allow GET, POST, PUT, DELETE
+    });
+});
+
+builder.Services.AddControllers();
+builder.Services.AddDbContext<AppDbContext>();
 
 var app = builder.Build();
 
