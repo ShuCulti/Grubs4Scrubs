@@ -20,6 +20,12 @@ builder.Services.AddDbContext<AppDbContext>();
 
 var app = builder.Build();
 
+// Seed the database with starter recipes if empty
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+DbSeeder.Seed(connectionString);
+
+app.UseCors("AllowReact");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -46,6 +52,9 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast");
+
+app.UseAuthorization();
+app.MapControllers();
 
 app.Run();
 

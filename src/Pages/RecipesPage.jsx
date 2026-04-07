@@ -24,7 +24,7 @@ export default function Recipes() {
 
     const filteredRecipes = recipes.filter((recipe) => {
         const matchesFilter = activeFilter === "All" || recipe.category === activeFilter
-        const matchesSearch = recipe.name.toLowerCase().includes(searchQuery.toLowerCase())
+        const matchesSearch = recipe.title.toLowerCase().includes(searchQuery.toLowerCase())
         return matchesFilter && matchesSearch
     })
 
@@ -69,14 +69,14 @@ export default function Recipes() {
                                 </div>
                                 <div className="recipe-card-body">
                                     <div className="recipe-tags">
-                                        {recipe.tags.map((tag) => (
-                                            <span key={tag} className="recipe-tag">{tag}</span>
+                                        {recipe.tag.split(",").map((tag) => (
+                                            <span key={tag} className="recipe-tag">{tag.trim()}</span>
                                         ))}
                                     </div>
-                                    <h3 className="recipe-name">{recipe.name}</h3>
+                                    <h3 className="recipe-name">{recipe.title}</h3>
                                     <div className="recipe-meta">
-                                        <span>🕐 {recipe.time}</span>
-                                        <span>💰 {recipe.cost}</span>
+                                        <span>🕐 {recipe.cookTime}</span>
+                                        <span>💰 {recipe.estimatedBudget}</span>
                                         <span>🍽️ {recipe.servings}</span>
                                     </div>
                                 </div>

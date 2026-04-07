@@ -36,7 +36,7 @@ public class RecipeController : ControllerBase
                 PrepTime = reader.GetInt32(reader.GetOrdinal("PrepTime")),
                 CookTime = reader.GetInt32(reader.GetOrdinal("CookTime")),
                 Servings = reader.GetInt32(reader.GetOrdinal("Servings")),
-                EstimatedBudget = reader.GetDecimal(reader.GetOrdinal("Estimated Budget")),
+                EstimatedBudget = reader.GetDecimal(reader.GetOrdinal("EstimatedBudget")),
                 Category = reader.GetString(reader.GetOrdinal("Category")),
                 CreatedAt = reader.GetDateTime(reader.GetOrdinal("CreatedAt"))
             });
@@ -51,7 +51,7 @@ public class RecipeController : ControllerBase
         using SqlConnection conn = new(_connectionString);
         conn.Open();
 
-        string sql = @"INSERT INTO Recipes (Title, Description, PrepTime, CookTine, Servings, EstimatedBudget, Category, CreatedAt)
+        string sql = @"INSERT INTO Recipes (Title, Description, PrepTime, CookTime, Servings, EstimatedBudget, Category, CreatedAt)
                         VALUES (@Title, @Desc, @Prep, @Cook, @Serv, @Budget, @Cat, @Created)";
 
         using SqlCommand cmd = new(sql, conn);
