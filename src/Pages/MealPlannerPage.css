@@ -1,0 +1,238 @@
+.MealPlanner{
+    position: relative;
+    margin-top: 10vh;
+    padding: 0 8%;
+    padding-bottom: 80px;
+}
+
+/* Header */
+
+.MealPlanner-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+}
+
+.MealPlanner-header-title{
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.MealPlanner-header-desc{
+    color: #8a8f98;
+    font-size: 1rem;
+}
+
+.MealPlanner-header-stats{
+    display: flex;
+    gap: 24px;
+}
+
+.MealPlanner-header-stat{
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 16px 24px;
+    text-align: center;
+}
+
+.MealPlanner-header-stat-label{
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: #8a8f98;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+}
+
+.MealPlanner-header-stat-value{
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #38bdf8;
+}
+
+/* Day Tabs */
+
+.MealPlanner-daytabs{
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+}
+
+.MealPlanner-daytab{
+    padding: 10px 24px;
+    border-radius: 20px;
+    border: 1px solid #333;
+    background-color: transparent;
+    color: #aaa;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.MealPlanner-daytab:hover{
+    border-color: #666;
+    color: #fff;
+}
+
+.MealPlanner-daytab-active{
+    background-color: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+.MealPlanner-daytab-active:hover{
+    background-color: #eee;
+    color: #000;
+    border-color: #eee;
+}
+
+/* Meal Slots Grid */
+
+.MealPlanner-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+}
+
+.MealPlanner-slot{
+    background-color: #1a1a2e;
+    border: 1px solid #2a2a3e;
+    border-radius: 16px;
+    padding: 24px;
+    min-height: 220px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+}
+
+.MealPlanner-slot:hover{
+    transform: translateY(-4px);
+    border-color: #4f46e5;
+}
+
+.MealPlanner-slot-type{
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: #a78bfa;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 20px;
+}
+
+.MealPlanner-slot-content{
+    text-align: center;
+    padding-top: 16px;
+}
+
+.MealPlanner-slot-emoji{
+    display: block;
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+.MealPlanner-slot-name{
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.MealPlanner-slot-cost{
+    color: #8a8f98;
+    font-size: 0.85rem;
+}
+
+/* Empty Slot */
+
+.MealPlanner-slot-empty{
+    border-style: dashed;
+    border-color: #333;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+}
+
+.MealPlanner-slot-empty:hover{
+    border-color: #4f46e5;
+    background-color: rgba(79, 70, 229, 0.05);
+}
+
+.MealPlanner-slot-add{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: #666;
+}
+
+.MealPlanner-slot-add-icon{
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.MealPlanner-slot-add p{
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Week Overview */
+
+.MealPlanner-overview{
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 32px;
+}
+
+.MealPlanner-overview-title{
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 24px;
+}
+
+.MealPlanner-overview-grid{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 16px;
+}
+
+.MealPlanner-overview-day{
+    text-align: center;
+}
+
+.MealPlanner-overview-day-label{
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #8a8f98;
+    margin-bottom: 12px;
+}
+
+.MealPlanner-overview-day-meals{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.MealPlanner-overview-dot{
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #2a2a3e;
+    transition: background-color 0.2s ease;
+}
+
+.MealPlanner-overview-dot-filled{
+    background-color: #38bdf8;
+}
