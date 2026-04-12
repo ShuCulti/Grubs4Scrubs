@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router"
 import { Navbar } from "../Components/Navbar.jsx"
 import "./HomePage.css"
 import "./Components.css"
@@ -10,6 +11,7 @@ import api from "../services/recipeservice.js"
 const filters = ["All", "Breakfast", "Lunch", "Dinner"]
 
 export default function Recipes() {
+    const navigate = useNavigate()
 
     const [recipes, setRecipes] = useState([]);
 
@@ -63,7 +65,7 @@ export default function Recipes() {
 
                     <div className="recipes-grid">
                         {filteredRecipes.map((recipe) => (
-                            <div key={recipe.id} className="recipe-card">
+                            <div key={recipe.id} className="recipe-card" onClick={() => navigate(`/recipes/${recipe.id}`)}>
                                 <div className="recipe-card-image">
                                     <span className="recipe-emoji">{recipe.emoji}</span>
                                 </div>

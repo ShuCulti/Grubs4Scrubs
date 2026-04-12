@@ -157,3 +157,6 @@ C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\obj\Debug\net10.0\
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\obj\Debug\net10.0\Grubs4Scrubs.API.pdb
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\obj\Debug\net10.0\Grubs4Scrubs.API.genruntimeconfig.cache
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\obj\Debug\net10.0\ref\Grubs4Scrubs.API.dll
+C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\BCrypt.Net-Next.dll
+C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.Google.dll
+C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

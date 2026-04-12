@@ -23,15 +23,17 @@ const sampleMeals = {
 export default function MealPlanner() {
     const [activeDay, setActiveDay] = useState("Mon")
 
-    const totalCost = Object.values(sampleMeals).reduce((sum, dayMeals) => {
-        return sum + Object.values(dayMeals).reduce((daySum, meal) => {
-            return daySum + (meal ? meal.cost : 0)
-        }, 0)
-    }, 0)
+    let totalCost = 0
+    let totalMeals = 0
 
-    const totalMeals = Object.values(sampleMeals).reduce((count, dayMeals) => {
-        return count + Object.values(dayMeals).filter(meal => meal !== null).length
-    }, 0)
+    for (const dayMeals of Object.values(sampleMeals)) {
+        for (const meal of Object.values(dayMeals)) {
+            if (meal) {
+                totalCost = totalCost + meal.cost
+                totalMeals = totalMeals + 1
+            }
+        }
+    }
 
     return (
         <>
@@ -134,7 +136,7 @@ function MealPlannerSlot({ mealType, meal }) {
             </>
         )
     }
-
+    else{
     return (
         <>
             <div className="MealPlanner-slot">
@@ -146,7 +148,8 @@ function MealPlannerSlot({ mealType, meal }) {
                 </div>
             </div>
         </>
-    )
+        )
+    }
 }
 
 function MealPlannerWeekOverview() {
