@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Grubs4Scrubs.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1cf968c5e5fc8760b93797f011f89ea0a55bac2c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e2fcc584a55a9be500d540416650d9152deca42f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Grubs4Scrubs.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Grubs4Scrubs.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

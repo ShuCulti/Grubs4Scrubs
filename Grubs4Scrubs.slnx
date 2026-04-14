@@ -1,0 +1,11 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Grubs4Scrubs.API/Grubs4Scrubs.API.csproj" />
+  <Project Path="Grubs4Scrubs.Business/Grubs4Scrubs.Business.csproj" />
+  <Project Path="Grubs4Scrubs.DataAccess/Grubs4Scrubs.DataAccess.csproj" />
+  <Project Path="Grubs4Scrubs.Domain/Grubs4Scrubs.Domain.csproj" />
+</Solution>

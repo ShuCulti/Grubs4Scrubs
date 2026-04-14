@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "Grubs4Scrubs.Domain/1.0.0": {
+        "runtime": {
+          "Grubs4Scrubs.Domain.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Grubs4Scrubs.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

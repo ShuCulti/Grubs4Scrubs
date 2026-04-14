@@ -15,11 +15,8 @@ C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Grubs4Scrubs.API.runtimeconfig.json
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Grubs4Scrubs.API.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Grubs4Scrubs.API.pdb
-C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Azure.Core.dll
-C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Azure.Identity.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Humanizer.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.AspNetCore.OpenApi.dll
-C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.Bcl.Cryptography.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.Build.Framework.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.CodeAnalysis.dll
@@ -35,8 +32,6 @@ C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.Extensions.DependencyModel.dll
-C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.Identity.Client.dll
-C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.Identity.Client.Extensions.Msal.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.IdentityModel.Abstractions.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.IdentityModel.Logging.dll
@@ -48,7 +43,6 @@ C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.VisualStudio.SolutionPersistence.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Mono.TextTemplating.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Newtonsoft.Json.dll
-C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\System.ClientModel.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\System.CodeDom.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\System.Composition.AttributedModel.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\System.Composition.Convention.dll
@@ -57,7 +51,6 @@ C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\System.Composition.TypedParts.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\System.Configuration.ConfigurationManager.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\System.Memory.Data.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\cs\Microsoft.CodeAnalysis.resources.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\de\Microsoft.CodeAnalysis.resources.dll
@@ -160,3 +153,11 @@ C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\obj\Debug\net10.0\
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\BCrypt.Net-Next.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.Google.dll
 C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.Data.SqlClient.Extensions.Abstractions.dll
+C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Microsoft.Data.SqlClient.Internal.Logging.dll
+C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Grubs4Scrubs.Business.dll
+C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Grubs4Scrubs.DataAccess.dll
+C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Grubs4Scrubs.Domain.dll
+C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Grubs4Scrubs.Domain.pdb
+C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Grubs4Scrubs.Business.pdb
+C:\Users\yaoch\Documents\GitHub\Grubs4Scrubs\Grubs4Scrubs.API\bin\Debug\net10.0\Grubs4Scrubs.DataAccess.pdb

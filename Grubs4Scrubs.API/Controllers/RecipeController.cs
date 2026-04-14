@@ -1,76 +1,71 @@
-using Grubs4Scrubs.Models;
-using Grubs4Scrubs.Data;
+using Grubs4Scrubs.Domain;
+using Grubs4Scrubs.Business;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+
+namespace Grubs4Scrubs.Controllers;
+
+// The controller is now THIN — it only handles HTTP stuff.
+// No SQL, no business logic. It just:
+//   1. Receives the request
+//   2. Calls the service
+//   3. Returns the response
 
 [ApiController]
 [Route("api/[controller]")]
 public class RecipeController : ControllerBase
 {
+    private readonly IRecipeService _recipeService;
 
-    private readonly string _connectionString;
-
-    public RecipeController(IConfiguration configuration)
+    // The SERVICE is injected — not the connection string anymore
+    public RecipeController(IRecipeService recipeService)
     {
-        _connectionString = configuration.GetConnectionString("DefaultConnection");
+        _recipeService = recipeService;
     }
-    // GET all action
+
+    // GET api/recipe
     [HttpGet]
     public IActionResult GetAll()
     {
-        var recipes = new List<Recipe>();
-        
-        using SqlConnection conn = new(_connectionString);
-        conn.Open();
-
-        using SqlCommand cmd = new("SELECT * FROM Recipes", conn);
-        using SqlDataReader reader = cmd.ExecuteReader();
-
-        while (reader.Read())
-        {
-            recipes.Add(new Recipe
-            {
-                Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                Title = reader.GetString(reader.GetOrdinal("Title")),
-                Description = reader.GetString(reader.GetOrdinal("Description")),
-                PrepTime = reader.GetInt32(reader.GetOrdinal("PrepTime")),
-                CookTime = reader.GetInt32(reader.GetOrdinal("CookTime")),
-                Servings = reader.GetInt32(reader.GetOrdinal("Servings")),
-                EstimatedBudget = reader.GetDecimal(reader.GetOrdinal("EstimatedBudget")),
-                Category = reader.GetString(reader.GetOrdinal("Category")),
-                CreatedAt = reader.GetDateTime(reader.GetOrdinal("CreatedAt"))
-            });
-        }
+        var recipes = _recipeService.GetAllRecipes();
         return Ok(recipes);
     }
 
-    // POST action
+    // GET api/recipe/5
+    [HttpGet("{id}")]
+    public IActionResult GetById(int id)
+    {
+        var recipe = _recipeService.GetRecipeById(id);
+
+        if (recipe == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(recipe);
+    }
+
+    // POST api/recipe
     [HttpPost]
     public IActionResult Create(Recipe recipe)
     {
-        using SqlConnection conn = new(_connectionString);
-        conn.Open();
-
-        string sql = @"INSERT INTO Recipes (Title, Description, PrepTime, CookTime, Servings, EstimatedBudget, Category, CreatedAt)
-                        VALUES (@Title, @Desc, @Prep, @Cook, @Serv, @Budget, @Cat, @Created)";
-
-        using SqlCommand cmd = new(sql, conn);
-        cmd.Parameters.AddWithValue("@Title", recipe.Title);
-        cmd.Parameters.AddWithValue("@Desc", recipe.Description);
-        cmd.Parameters.AddWithValue("@Prep", recipe.PrepTime);
-        cmd.Parameters.AddWithValue("@Cook", recipe.CookTime);
-        cmd.Parameters.AddWithValue("@Serv", recipe.Servings);
-        cmd.Parameters.AddWithValue("@Budget", recipe.EstimatedBudget);
-        cmd.Parameters.AddWithValue("@Cat", recipe.Category);
-        cmd.Parameters.AddWithValue("@Created", DateTime.UtcNow);
-
-        cmd.ExecuteNonQuery();
-
+        _recipeService.CreateRecipe(recipe);
         return Created();
     }
-    // PUT action
 
-    // DELETE action
+    // PUT api/recipe/5
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, Recipe recipe)
+    {
+        recipe.Id = id;
+        _recipeService.UpdateRecipe(recipe);
+        return NoContent();
+    }
+
+    // DELETE api/recipe/5
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        _recipeService.DeleteRecipe(id);
+        return NoContent();
+    }
 }
-
-

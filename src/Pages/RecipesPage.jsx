@@ -68,6 +68,7 @@ export default function Recipes() {
                             <div key={recipe.id} className="recipe-card" onClick={() => navigate(`/recipes/${recipe.id}`)}>
                                 <div className="recipe-card-image">
                                     <span className="recipe-emoji">{recipe.emoji}</span>
+                                    <img src={recipe.imageUrl} alt="an Image" />
                                 </div>
                                 <div className="recipe-card-body">
                                     <div className="recipe-tags">
