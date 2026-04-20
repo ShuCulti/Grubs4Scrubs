@@ -8,4 +8,5 @@
   <Project Path="Grubs4Scrubs.Business/Grubs4Scrubs.Business.csproj" />
   <Project Path="Grubs4Scrubs.DataAccess/Grubs4Scrubs.DataAccess.csproj" />
   <Project Path="Grubs4Scrubs.Domain/Grubs4Scrubs.Domain.csproj" />
+  <Project Path="Grubs4Scrubs.Tests/Grubs4Scrubs.Tests.csproj" />
 </Solution>

@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grubs4Scrubs.API", "Grubs4Scrubs.API\Grubs4Scrubs.API.csproj", "{1C1064CB-3B83-9990-AF1B-6C54DA1AB54E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C1064CB-3B83-9990-AF1B-6C54DA1AB54E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C1064CB-3B83-9990-AF1B-6C54DA1AB54E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C1064CB-3B83-9990-AF1B-6C54DA1AB54E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C1064CB-3B83-9990-AF1B-6C54DA1AB54E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {29621533-BBD7-43F2-AB35-AE72F3ABE597}
+	EndGlobalSection
+EndGlobal
