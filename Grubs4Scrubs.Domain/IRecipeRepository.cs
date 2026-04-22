@@ -1,6 +1,4 @@
-using Grubs4Scrubs.Domain;
-
-namespace Grubs4Scrubs.DataAccess;
+namespace Grubs4Scrubs.Domain;
 
 // This is the INTERFACE — it defines WHAT the repository can do,
 // but not HOW it does it. The controller and service don't need

@@ -1,5 +1,6 @@
 using Grubs4Scrubs.DataAccess;
 using Grubs4Scrubs.Business;
+using Grubs4Scrubs.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
