@@ -12,6 +12,16 @@ public class Recipe
     public string ImageUrl { get; set; } = string.Empty;
     public decimal EstimatedBudget {get; set;}
     public string Category { get; set; } = string.Empty;
+    /* Ingredients and Instructions are stored a JSON, don't forget to add that bro */
+    public string Ingredients {get; set;} = string.Empty;
+    public string Instructions {get; set;} = string.Empty;
+    public int? UserId { get; set; }
+    public string Tips { get; set; } = string.Empty;
+    public string Nutrition {get; set;} = string.Empty;
+    public string Calories {get; set;} = string.Empty;
+    public string Protein {get; set;} = string.Empty;
+    public string Carbs {get; set;} = string.Empty;
+    public string Fats {get; set;} = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
 }

@@ -1,138 +1,49 @@
-import { useState } from "react"
-import { useParams, useNavigate } from "react-router"
+import { useState, useEffect } from "react"
+import { useParams, useNavigate} from "react-router"
 import { Navbar } from "../Components/Navbar.jsx"
 import { G4Sfooter } from "../Components/Footer.jsx"
 import { Clock, Wallet, Users, ShoppingBasket, CookingPot, Lightbulb, CalendarPlus, Check, Heart, Share2 } from "lucide-react"
 import "./HomePage.css"
 import "./Components.css"
 import "./RecipeViewPage.css"
-
-
-const recipesData = [
-    {
-        id: 1,
-        title: "Midnight Exam Ramen",
-        description: "A steaming bowl of gourmet instant ramen with soft boiled egg and green onions. The ultimate late-night study fuel.",
-        prepTime: 5,
-        cookTime: 10,
-        servings: 1,
-        tag: "Dinner,Asian Fusion",
-        imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuC3gKe9-SDMs0zJ2LlVpaCWGZyus1YjLShreSaKVreDr8SjDGfEwdtGfTdyPQ2WgQCi8WBCRdzcG9z9uywQOyYW5nfcmzwgKc8tCnKO4Vl7GvA7MyOXdhtjq7svcMps6X1ioRW_74Gf3OiRPkJRitQF9sd8cLsMDrxxIaVkjw86SbIjpPmTpkRqf0BoV9bpNhQfBXc5aZjPISOcfoQvw9eDNZqrzaJbi2aVmKN1VjDOqp90k7bjwrjF7FMyJYxzEOPwYUmb4uPMTjON",
-        emoji: "🍜",
-        estimatedBudget: 2.20,
-        category: "Dinner",
-        ingredients: [
-            "1 pack instant ramen",
-            "1 fresh egg",
-            "Chopped green onions",
-            "Sriracha (to taste)",
-            "1 tsp unsalted butter"
-        ],
-        instructions: [
-            { title: "Boil the Base", desc: "Boil 500ml of water in a small pot. For extra flavor, you can use 400ml water and 100ml chicken stock if available." },
-            { title: "Noodle Fusion", desc: "Add the instant noodles and the seasoning packet. Stir gently to break up the noodles. Let them cook for about 1 minute until they start to soften." },
-            { title: "The Perfect Poach", desc: "Lower the heat. Carefully crack an egg into the center of the pot. Do not stir! Let it poach in the hot broth for exactly 2 minutes for a runny yolk." },
-            { title: "Final Flourish", desc: "Pour the ramen into a bowl. Top with a generous amount of chopped green onions, a pat of butter, and a beautiful spiral of Sriracha." }
-        ],
-        nutrition: { calories: "480 kcal", protein: "14g", fats: "18g", carbs: "62g" },
-        tip: "Add a slice of American cheese on top and let it melt into the broth for a creamy, restaurant-style finish on a student budget."
-    },
-    {
-        id: 2,
-        title: "University Power Bowl",
-        description: "A hearty breakfast bowl packed with oats, fruits, and protein to fuel your morning lectures.",
-        prepTime: 5,
-        cookTime: 15,
-        servings: 1,
-        tag: "Breakfast,Healthy",
-        imageUrl: "",
-        emoji: "🥣",
-        estimatedBudget: 3.50,
-        category: "Breakfast",
-        ingredients: [
-            "1/2 cup rolled oats",
-            "1 banana (sliced)",
-            "1 tbsp peanut butter",
-            "1 tbsp honey",
-            "Handful of blueberries",
-            "Splash of oat milk"
-        ],
-        instructions: [
-            { title: "Cook the Oats", desc: "Cook rolled oats with water or milk according to packet directions. Aim for a thick, creamy consistency." },
-            { title: "Build Your Bowl", desc: "Transfer oats to a bowl. Arrange sliced banana and blueberries on top in neat sections." },
-            { title: "Add the Goods", desc: "Drizzle peanut butter and honey over the top. Add a splash of cold oat milk around the edges for contrast." }
-        ],
-        nutrition: { calories: "420 kcal", protein: "12g", fats: "14g", carbs: "65g" },
-        tip: "Prep overnight oats the night before in a mason jar for a zero-effort morning."
-    },
-    {
-        id: 3,
-        title: "Finals Week Stir-Fry",
-        description: "A quick and budget-friendly veggie stir-fry that's ready in under 20 minutes.",
-        prepTime: 10,
-        cookTime: 20,
-        servings: 2,
-        tag: "Dinner,Quick",
-        imageUrl: "",
-        emoji: "🍳",
-        estimatedBudget: 4.50,
-        category: "Dinner",
-        ingredients: [
-            "1 pack stir-fry noodles",
-            "1 bell pepper (sliced)",
-            "1 carrot (julienned)",
-            "2 cloves garlic (minced)",
-            "2 tbsp soy sauce",
-            "1 tbsp sesame oil",
-            "Handful of beansprouts"
-        ],
-        instructions: [
-            { title: "Prep the Veg", desc: "Slice the bell pepper, julienne the carrot, and mince the garlic. Have everything ready before you start cooking." },
-            { title: "Heat and Sear", desc: "Heat sesame oil in a wok or large pan over high heat. Add garlic and stir for 30 seconds until fragrant." },
-            { title: "Stir-Fry", desc: "Add the vegetables and toss constantly for 3-4 minutes. They should be bright and still have a bite." },
-            { title: "Noodle Up", desc: "Add the noodles and soy sauce. Toss everything together for 2 minutes. Top with beansprouts and serve immediately." }
-        ],
-        nutrition: { calories: "380 kcal", protein: "10g", fats: "12g", carbs: "58g" },
-        tip: "Leftover stir-fry reheats great. Pack it for lunch tomorrow and save yourself another meal's budget."
-    }
-]
-
+import api from "../services/recipeService.js"
 
 export default function RecipeView() {
     const { id } = useParams()
     const navigate = useNavigate()
+    const [recipe, setRecipe] = useState(null)
 
-    const recipe = recipesData.find((r) => r.id === Number(id))
-
+    useEffect(()=> {
+        api.get(`/Recipe/${id}`)
+        .then(res => setRecipe(res.data))
+        .catch(err => console.error("Failed to fetch recipe", err))
+    }, [id])
     if (!recipe) {
+        return (
+            <div>Loading...</div>
+        )
+    }
+
+    if (recipe) {
         return (
             <>
                 <div className="Home">
                     <Navbar />
-                    <div className="RecipeView">
-                        <h1 className="RecipeView-notfound-title">Recipe not found</h1>
-                        <p className="RecipeView-notfound-desc">That recipe doesn't seem to exist.</p>
-                        <button className="RecipeView-notfound-btn" onClick={() => navigate("/recipes")}>Back to Recipes</button>
-                    </div>
+                    <RecipeViewPage recipe ={recipe}/>
+                    <div className="Home-footer-wrapper"></div>
+                        <G4Sfooter/>
                 </div>
             </>
         )
     }
-
-    return (
-        <>
-            <div className="Home">
-                <Navbar />
-                <RecipeViewPage recipe={recipe} />
-                <div className="Home-footer-wrapper">
-                    <G4Sfooter />
-                </div>
-            </div>
-        </>
-    )
 }
 
+
 function RecipeViewPage({ recipe }) {
+        const ingredients = recipe.ingredients ? JSON.parse(recipe.ingredients) : null
+        const instructions = recipe.instructions? JSON.parse(recipe.instructions) : null
+        const nutrition = recipe.nutrition ? JSON.parse(recipe.nutrition) : null
+        const tips = recipe.tips
     return (
         <>
             <div className="RecipeView">
@@ -140,12 +51,12 @@ function RecipeViewPage({ recipe }) {
 
                 <div className="RecipeView-content">
                     <aside className="RecipeView-sidebar">
-                        <RecipeViewIngredients ingredients={recipe.ingredients} />
-                        <RecipeViewNutrition nutrition={recipe.nutrition} />
+                        {ingredients && <RecipeViewIngredients ingredients={ingredients} />}
+                        {nutrition && <RecipeViewNutrition nutrition={nutrition} />}
                     </aside>
                     <article className="RecipeView-main">
-                        <RecipeViewInstructions instructions={recipe.instructions} />
-                        <RecipeViewTip tip={recipe.tip} />
+                        {instructions && <RecipeViewInstructions instructions={instructions} />}
+                        {tips && <RecipeViewTip tips={tips} />}
                     </article>
                 </div>
             </div>
@@ -153,7 +64,10 @@ function RecipeViewPage({ recipe }) {
     )
 }
 
-function RecipeViewHero({ recipe }) {
+
+
+
+function RecipeViewHero({ recipe}) {
     const tags = recipe.tag.split(",")
 
     return (
@@ -163,7 +77,7 @@ function RecipeViewHero({ recipe }) {
                     <img className="RecipeView-hero-img" src={recipe.imageUrl} alt={recipe.title} />
                 ) : (
                     <div className="RecipeView-hero-emoji-bg">
-                        <span className="RecipeView-hero-emoji">{recipe.emoji}</span>
+                        <span className="RecipeView-hero-emoji">No Image</span>
                     </div>
                 )}
                 <div className="RecipeView-hero-overlay"></div>
@@ -289,7 +203,7 @@ function RecipeViewInstructions({ instructions }) {
                             </div>
                             <div className="RecipeView-step-content">
                                 <h3 className="RecipeView-step-title">{step.title}</h3>
-                                <p className="RecipeView-step-desc">{step.desc}</p>
+                                <p className="RecipeView-step-desc">{step.description}</p>
                             </div>
                         </div>
                     ))}

@@ -2,11 +2,13 @@ import "react"
 import "./HomePage.css"
 import "./Components.css"
 import { useNavigate } from "react-router"
+import  {useState, useEffect} from "react"
 import {LayoutDashboardIcon, PizzaIcon, LucideShoppingCart, Calendar1Icon}from "lucide-react"
 import {CalendarIcon,ShoppingBasketIcon,ForkKnifeIcon,} from "lucide-react"
 import {Navbar} from "../Components/Navbar.jsx"
 import Searchbar  from "../Components/Searchbar.jsx"
 import {G4Sfooter} from "../Components/Footer.jsx"
+import api from "../services/recipeService.js"
 
 export default function Home(){
     return(
@@ -101,12 +103,14 @@ function Home3SectionsDiv(){
 
 function HomeFeatured(){
     const navigate = useNavigate();
+    const [featuredRecipe, setFeaturedRecipe] = useState([])
 
-    const featuredRecipes = [
-        {id: 1, img: "unipowerbowl.png", tag: "Breakfast", title: "University Power Bowl", time: 15, cost: 3.50},
-        {id: 2, img: "midnightexamramen.png", tag: "Lunch", title: "Midnight Exam Ramen", time: 10, cost: 2.00},
-        {id: 3, img: "FWstirfry.png", tag: "Dinner", title: "Finals Week Stir-Fry", time: 20, cost: 4.50},
-    ]
+    useEffect(()=> {
+        api.get('/Recipe')
+        .then(res => setFeaturedRecipe(res.data))
+        .catch(err => console.log("Failed to fetch recipe",err))
+    })
+
     return(
         <>
         <div className="HomeFeatured-background">
@@ -116,15 +120,15 @@ function HomeFeatured(){
             </div>
             <div className="HomeFeatured-ViewAllRecipes" onClick={()=> navigate("/recipes")}>View all recipes ➜</div>
             <div className="HomeFeatured-recipes-container">
-                {featuredRecipes.map((featuredRecipe)=>(
-                    <div key = {featuredRecipe.id} className="HomeFeatured-recipes" onClick={()=> navigate("/recipes/id")}>
-                        <img className= "HomeFeatured-recipes-img" src={featuredRecipe.img} alt="Feautured Recipe" />
+                {featuredRecipe.map((featuredRecipe)=>(
+                    <div key = {featuredRecipe.id} className="HomeFeatured-recipes" onClick={()=> navigate(`/recipes/${featuredRecipe.id}`)}>
+                        <img className= "HomeFeatured-recipes-img" src={featuredRecipe.imageUrl} alt="Feautured Recipe" />
                         <div className="HomeFeatured-recipes-body">
                             <h3 className="HomeFeatured-recipes-title">{featuredRecipe.title}</h3>
                             
                             <div className="HomeFeatured-recipes-tags">
                                 <span className="HomeFeatured-recipes-tag">{featuredRecipe.tag}</span>
-                                <span className="HomeFeatured-recipes-tag">€{featuredRecipe.cost.toFixed(2)}</span>
+                                <span className="HomeFeatured-recipes-tag">€{featuredRecipe.estimatedBudget.toFixed(2)}</span>
                                  <div className="HomeFeatured-recipes-meta">
                                     <span>{featuredRecipe.time} min</span>
                                 </div>
