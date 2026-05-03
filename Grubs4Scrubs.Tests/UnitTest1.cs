@@ -21,6 +21,7 @@ public class RecipeServiceTests
 
         Assert.Single(repo.GetAll());
         Assert.Equal("Test Recipe", repo.GetAll()[0].Title);
+        
     }
 
     [Fact]
