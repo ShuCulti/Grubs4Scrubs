@@ -29,3 +29,5 @@ bin/
 obj/
 *.user/
 
+Grubs4Scrubs_*.md
+*_Grubs4Scrubs.md
