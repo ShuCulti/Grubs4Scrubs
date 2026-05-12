@@ -5,85 +5,149 @@ namespace Grubs4Scrubs.Tests;
 
 public class RecipeServiceTests
 {
-    private RecipeService CreateService(FakeRecipeRepository repo)
-    {
-        return new RecipeService(repo);
-    }
-
+    // TESTED METHOD: Create 
     [Fact]
-    public void CreateRecipe_ValidRecipe_AddsToRepository()
+    public void CreateRecipe_ValidRecipe_AddsToRepo()
     {
-        var repo = new FakeRecipeRepository();
-        var service = CreateService(repo);
-        var recipe = new Recipe { Title = "Test Recipe", EstimatedBudget = 5.00m };
+        //Arrange
+        var repo = new FakeRepository();
+        var service = new RecipeService(repo);
 
-        service.CreateRecipe(recipe);
+        //Act
 
+        service.CreateRecipe(recipe: new Recipe
+        {
+            Title = "Test Recipe",
+            EstimatedBudget = 10.0m
+        });
+
+        //Assert
         Assert.Single(repo.GetAll());
         Assert.Equal("Test Recipe", repo.GetAll()[0].Title);
-        
+
     }
 
     [Fact]
-    public void CreateRecipe_EmptyTitle_ThrowsArgumentException()
+    public void CreateRecipe_InvalidRecipe_DoesNotAddToRepo()
     {
-        var repo = new FakeRecipeRepository();
-        var service = CreateService(repo);
-        var recipe = new Recipe { Title = "", EstimatedBudget = 5.00m };
+        //Arrange
+        var repo = new FakeRepository();
+        var service = new RecipeService(repo);
 
-        Assert.Throws<ArgumentException>(() => service.CreateRecipe(recipe));
+        //Assert & Assert // When Throwing Errors Act and Assert happen at the same lines
+        Assert.Throws<ArgumentException>(()=> service.CreateRecipe(recipe: new Recipe
+        {
+            Title = "",
+            EstimatedBudget = 10.0m
+
+        }));
     }
 
     [Fact]
-    public void CreateRecipe_NegativeBudget_ThrowsArgumentException()
+    public void CreateRecipe_NegativeBudget_DoesNotAddToRepo()
     {
-        var repo = new FakeRecipeRepository();
-        var service = CreateService(repo);
-        var recipe = new Recipe { Title = "Test", EstimatedBudget = -1.00m };
+        //Arrange
+        var repo = new FakeRepository();
+        var service = new RecipeService(repo);
 
-        Assert.Throws<ArgumentException>(() => service.CreateRecipe(recipe));
+        //Act & Assert
+        Assert.Throws<ArgumentException>(()=> service.CreateRecipe(recipe: new Recipe
+        {
+            Title = "Test Recipe",
+            EstimatedBudget = -5.0m
+        }));
+
+
     }
 
-    [Fact]
-    public void GetRecipeById_ExistingId_ReturnsRecipe()
-    {
-        var repo = new FakeRecipeRepository();
-        var service = CreateService(repo);
-        service.CreateRecipe(new Recipe { Title = "Ramen", EstimatedBudget = 2.20m });
+    // TESTED METHOD: GetById
 
+    [Fact]
+    public void GetById_ExistingRecipe_ReturnsRecipe()
+    {
+        //Arrange
+        var repo = new FakeRepository();
+        var service = new RecipeService(repo);
+        service.CreateRecipe(new Recipe { Title = "GetById Test Recipe", EstimatedBudget = 15.0m });
+
+        //Act
         var result = service.GetRecipeById(1);
 
+        //Assert
         Assert.NotNull(result);
-        Assert.Equal("Ramen", result.Title);
+        Assert.Equal("GetById Test Recipe", result.Title);
     }
 
     [Fact]
-    public void GetRecipeById_NonExistingId_ReturnsNull()
+    public void GetById_NonExistingRecipe_ReturnsNull()
     {
-        var repo = new FakeRecipeRepository();
-        var service = CreateService(repo);
+        //Arrange
+        var repo = new FakeRepository();
+        var service = new RecipeService(repo);
 
+        //Act
         var result = service.GetRecipeById(99);
 
+        //Assert
         Assert.Null(result);
     }
 
-    [Fact]
-    public void DeleteRecipe_NonExistingId_ThrowsKeyNotFoundException()
-    {
-        var repo = new FakeRecipeRepository();
-        var service = CreateService(repo);
+    // TESTED METHOD: Delete
 
-        Assert.Throws<KeyNotFoundException>(() => service.DeleteRecipe(99));
+    [Fact]
+    public void DeleteRecipe_ExistingRecipe_RemovesFromRepo()
+    {
+        //Arrange
+        var repo = new FakeRepository();
+        var service = new RecipeService(repo);
+        service.CreateRecipe(new Recipe { Title = "Delete Me", EstimatedBudget = 5.0m });
+
+        //Act
+        service.DeleteRecipe(1);
+
+        //Assert
+        Assert.Empty(repo.GetAll());
     }
 
     [Fact]
-    public void UpdateRecipe_NonExistingId_ThrowsKeyNotFoundException()
+    public void DeleteRecipe_NonExistingRecipe_ThrowsKeyNotFoundException()
     {
-        var repo = new FakeRecipeRepository();
-        var service = CreateService(repo);
-        var recipe = new Recipe { Id = 99, Title = "Ghost Recipe" };
+        //Arrange
+        var repo = new FakeRepository();
+        var service = new RecipeService(repo);
 
-        Assert.Throws<KeyNotFoundException>(() => service.UpdateRecipe(recipe));
+        //Act & Assert
+        Assert.Throws<KeyNotFoundException>(() => service.DeleteRecipe(99));
+    }
+
+    // TESTED METHOD: Update
+
+    [Fact]
+    public void UpdateRecipe_ExistingRecipe_UpdatesInRepo()
+    {
+        //Arrange
+        var repo = new FakeRepository();
+        var service = new RecipeService(repo);
+        service.CreateRecipe(new Recipe { Title = "Old Title", EstimatedBudget = 5.0m });
+
+        //Act
+        service.UpdateRecipe(new Recipe { Id = 1, Title = "New Title", EstimatedBudget = 7.0m });
+
+        //Assert
+        var updated = repo.GetById(1);
+        Assert.NotNull(updated);
+        Assert.Equal("New Title", updated.Title);
+        Assert.Equal(7.0m, updated.EstimatedBudget);
+    }
+
+    [Fact]
+    public void UpdateRecipe_NonExistingRecipe_ThrowsKeyNotFoundException()
+    {
+        //Arrange
+        var repo = new FakeRepository();
+        var service = new RecipeService(repo);
+
+        //Act & Assert
+        Assert.Throws<KeyNotFoundException>(() => service.UpdateRecipe(new Recipe { Id = 99, Title = "Ghost Recipe" }));
     }
 }

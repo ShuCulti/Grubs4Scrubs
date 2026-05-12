@@ -3,11 +3,7 @@ using Grubs4Scrubs.Domain;
 
 namespace Grubs4Scrubs.Business;
 
-// The service IMPLEMENTATION — this is the "business layer".
-// It sits between the controller and the repository.
-//
-// Right now it mostly just passes calls through to the repository,
-// but this is where you'd add things like:
+//  this is where you'd add things like:
 //   - "Budget can't be negative"
 //   - "Title can't be empty"
 //   - "Only allow 50 recipes per user"
@@ -16,8 +12,6 @@ public class RecipeService : IRecipeService
 {
     private readonly IRecipeRepository _recipeRepository;
 
-    // The repository is INJECTED — the service doesn't create it,
-    // it receives it. This is called Dependency Injection.
     public RecipeService(IRecipeRepository recipeRepository)
     {
         _recipeRepository = recipeRepository;

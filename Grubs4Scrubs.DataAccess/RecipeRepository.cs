@@ -4,8 +4,6 @@ using Microsoft.Extensions.Configuration;
 
 namespace Grubs4Scrubs.DataAccess;
 
-// This is the IMPLEMENTATION — the actual SQL queries live here.
-// This is the ONLY place in the entire app that talks to the database.
 public class RecipeRepository : IRecipeRepository
 {
     private readonly string _connectionString;
@@ -120,8 +118,7 @@ public class RecipeRepository : IRecipeRepository
         cmd.ExecuteNonQuery();
     }
 
-    // Private helper — maps a database row to a Recipe object.
-    // Used by GetAll and GetById so we don't repeat ourselves.
+
     private Recipe MapRecipe(SqlDataReader reader)
     {
         return new Recipe

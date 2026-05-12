@@ -10,8 +10,6 @@ import Recipes from './Pages/RecipesPage.jsx'
 import MealPlanner from './Pages/MealPlannerPage.jsx'
 import ShoppingList from './Pages/ShoppingListPage.jsx'
 import RecipeView from './Pages/RecipeViewPage.jsx'
-import Login from './Pages/LoginPage.jsx'
-import SignUp from './Pages/SignUpPage.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -24,10 +22,8 @@ createRoot(document.getElementById('root')).render(
         <Route path='/recipes/:id' element={<RecipeView/>}/>
         <Route path='/meal-planning' element={<MealPlanner/>}/>
         <Route path='shopping-list' element={<ShoppingList/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/signup' element={<SignUp/>}/>
-
-
+        
+        
       </Routes>
     </BrowserRouter>
   </StrictMode>,

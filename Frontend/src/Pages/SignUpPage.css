@@ -1,0 +1,443 @@
+.SignUpPage {
+    min-height: 100vh;
+    width: 100vw;
+    background: radial-gradient(circle at top left, rgb(22, 22, 42), rgb(15, 17, 26));
+    display: flex;
+    flex-direction: column;
+    color: #f1f5f9;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+
+.SignUpPage::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 40%;
+    height: 40%;
+    border-radius: 50%;
+    background: rgba(56, 189, 248, 0.08);
+    filter: blur(100px);
+    pointer-events: none;
+}
+
+.SignUpPage::after {
+    content: '';
+    position: absolute;
+    top: 40%;
+    right: -10%;
+    width: 30%;
+    height: 50%;
+    border-radius: 50%;
+    background: rgba(167, 139, 250, 0.07);
+    filter: blur(120px);
+    pointer-events: none;
+}
+
+/* Nav */
+.SignUpNav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 68px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(22, 22, 42, 0.85);
+    backdrop-filter: blur(12px);
+}
+
+.SignUpNav-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.SignUpNav-logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    letter-spacing: -0.5px;
+}
+
+.SignUpNav-links {
+    display: flex;
+    gap: 24px;
+}
+
+.SignUpNav-links span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #8a8f98;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.SignUpNav-links span:hover {
+    color: white;
+}
+
+.SignUpNav-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.SignUpNav-login {
+    font-size: 14px;
+    font-weight: 500;
+    color: #c9cdd4;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: color 0.15s;
+}
+
+.SignUpNav-login:hover {
+    color: white;
+}
+
+.SignUpNav-getstarted {
+    font-size: 14px;
+    font-weight: 700;
+    color: rgb(0, 53, 74);
+    background: rgb(56, 189, 248);
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.SignUpNav-getstarted:hover {
+    opacity: 0.85;
+}
+
+/* Main */
+.SignUpPage-main {
+    position: relative;
+    z-index: 10;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+}
+
+.SignUpPage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 520px;
+}
+
+/* Header */
+.SignUpPage-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.SignUpPage-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgb(56, 189, 248), rgb(167, 139, 250));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+
+.SignUpPage-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -0.5px;
+    margin: 0;
+}
+
+.SignUpPage-subtitle {
+    font-size: 15px;
+    color: #8a8f98;
+    margin: 0;
+}
+
+.SignUpPage-progress {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.SignUpPage-progress-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.SignUpPage-progress-dot-active {
+    background: rgb(56, 189, 248);
+}
+
+/* Card */
+.SignUpPage-card {
+    width: 100%;
+    background: rgba(22, 22, 42, 0.75);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.4);
+    text-align: left;
+}
+
+/* Socials */
+.SignUpPage-socials {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.SignUpPage-social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    color: #c9cdd4;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.SignUpPage-social-btn:hover {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.SignUpPage-social-svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Divider */
+.SignUpPage-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.SignUpPage-divider-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.SignUpPage-divider-text {
+    font-size: 12px;
+    color: #8a8f98;
+    white-space: nowrap;
+}
+
+/* Form */
+.SignUpPage-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.SignUpPage-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.SignUpPage-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #c9cdd4;
+    letter-spacing: 0.3px;
+    text-align: left;
+}
+
+.SignUpPage-input-wrapper {
+    position: relative;
+}
+
+.SignUpPage-input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #8a8f98;
+    pointer-events: none;
+}
+
+.SignUpPage-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 12px 14px 12px 42px;
+    font-size: 15px;
+    font-weight: 500;
+    color: white;
+    outline: none;
+    transition: all 0.15s;
+    box-sizing: border-box;
+}
+
+.SignUpPage-input::placeholder {
+    color: #8a8f98;
+}
+
+.SignUpPage-input:focus {
+    border-color: rgb(56, 189, 248);
+    background: rgba(56, 189, 248, 0.05);
+}
+
+.SignUpPage-input-password {
+    padding-right: 44px;
+}
+
+.SignUpPage-password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+    color: #8a8f98;
+}
+
+/* Terms */
+.SignUpPage-terms {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.SignUpPage-checkbox {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1.5px solid rgba(255, 255, 255, 0.06);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgb(0, 53, 74);
+    transition: all 0.15s;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.SignUpPage-checkbox-checked {
+    border-color: rgb(56, 189, 248);
+    background: rgb(56, 189, 248);
+}
+
+.SignUpPage-terms span {
+    font-size: 14px;
+    font-weight: 500;
+    color: #c9cdd4;
+}
+
+.SignUpPage-terms-link {
+    color: rgb(56, 189, 248) !important;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.SignUpPage-terms-link:hover {
+    color: rgb(142, 213, 255) !important;
+}
+
+/* Submit */
+.SignUpPage-submit {
+    width: 100%;
+    background: rgb(56, 189, 248);
+    border: none;
+    border-radius: 10px;
+    padding: 13px 24px;
+    font-size: 15px;
+    font-weight: 700;
+    color: rgb(0, 53, 74);
+    cursor: pointer;
+    transition: opacity 0.15s;
+    margin-top: 4px;
+}
+
+.SignUpPage-submit:hover {
+    opacity: 0.85;
+}
+
+/* Login link */
+.SignUpPage-login-link {
+    text-align: center;
+    font-size: 14px;
+    color: #8a8f98;
+    margin-top: 20px;
+}
+
+.SignUpPage-login-link span {
+    color: rgb(56, 189, 248);
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+
+.SignUpPage-login-link span:hover {
+    color: rgb(142, 213, 255);
+}
+
+/* Badges */
+.SignUpPage-badges {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.SignUpPage-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.SignUpPage-badge-secure {
+    background: rgba(245, 158, 11, 0.12);
+    color: rgb(245, 158, 11);
+}
+
+.SignUpPage-badge-nospam {
+    background: rgba(239, 68, 68, 0.12);
+    color: rgb(252, 129, 129);
+}
+
+.SignUpPage-badge-free {
+    background: rgba(34, 197, 94, 0.12);
+    color: rgb(74, 222, 128);
+}

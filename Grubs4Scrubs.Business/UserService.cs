@@ -3,21 +3,10 @@ using Grubs4Scrubs.Domain;
 
 namespace Grubs4Scrubs.Business;
 
-// The service IMPLEMENTATION — this is the "business layer".
-// It sits between the controller and the repository.
-//
-// Right now it mostly just passes calls through to the repository,
-// but this is where you'd add things like:
-//   - "Email must be valid"
-//   - "Username can't be empty"
-//   - "Don't allow duplicate emails"
-//   - Password hashing, logging, etc.
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
 
-    // The repository is INJECTED — the service doesn't create it,
-    // it receives it. This is called Dependency Injection.
     public UserService(IUserRepository userRepository)
     {
         _userRepository = userRepository;
