@@ -55,8 +55,8 @@ public class RecipeRepository : IRecipeRepository
         using SqlConnection conn = new(_connectionString);
         conn.Open();
 
-        string sql = @"INSERT INTO Recipes (Title, Description, Tag, PrepTime, CookTime, Servings, EstimatedBudget, Category, CreatedAt, ImageUrl, Ingredients, Instructions, UserId, Tips, Nutrition, Calories, Protein, Carbs, Fats))
-                        VALUES (@Title, @Desc, @Tag, @Prep, @Cook, @Serv, @Budget, @Cat, @Created,@ImageUrl, @Ingredients, @Instructions, @UserId, @Tips, @Nutrition, @Calories, @Protein, @Carbs, @Fats)";
+        string sql = @"INSERT INTO Recipes (Title, Description, Tag, PrepTime, CookTime, Servings, EstimatedBudget, Category, CreatedAt, ImageUrl, Ingredients, Instructions, UserId, Tips, Calories, Protein, Carbs, Fats)
+                        VALUES (@Title, @Desc, @Tag, @Prep, @Cook, @Serv, @Budget, @Cat, @Created,@ImageUrl, @Ingredients, @Instructions, @UserId, @Tips, @Calories, @Protein, @Carbs, @Fats)";
 
         using SqlCommand cmd = new(sql, conn);
         cmd.Parameters.AddWithValue("@Title", recipe.Title);
@@ -71,9 +71,8 @@ public class RecipeRepository : IRecipeRepository
         cmd.Parameters.AddWithValue("@ImageUrl", recipe.ImageUrl);
         cmd.Parameters.AddWithValue("@Ingredients", recipe.Ingredients);    
         cmd.Parameters.AddWithValue("@Instructions", recipe.Instructions);
-        cmd.Parameters.AddWithValue("@UserId", recipe.UserId);
+        cmd.Parameters.AddWithValue("@UserId", recipe.UserId ?? (object)DBNull.Value);
         cmd.Parameters.AddWithValue("@Tips", recipe.Tips);
-        cmd.Parameters.AddWithValue("@Nutrition", recipe.Nutrition); 
         cmd.Parameters.AddWithValue("@Calories", recipe.Calories);
         cmd.Parameters.AddWithValue("@Protein", recipe.Protein);
         cmd.Parameters.AddWithValue("@Carbs", recipe.Carbs);
@@ -140,10 +139,10 @@ public class RecipeRepository : IRecipeRepository
             UserId = reader.IsDBNull(reader.GetOrdinal("UserId"))
             ? 0 : reader.GetInt32(reader.GetOrdinal("UserId")),
             Tips = reader.GetString(reader.GetOrdinal("Tips")),
-            Fats = reader.GetString(reader.GetOrdinal("Fats")),
-            Carbs = reader.GetString(reader.GetOrdinal("Carbs")),
-            Protein = reader.GetString(reader.GetOrdinal("Protein")),
-            Calories = reader.GetString(reader.GetOrdinal("Calories"))
+            Fats = reader.GetInt32(reader.GetOrdinal("Fats")),
+            Carbs = reader.GetInt32(reader.GetOrdinal("Carbs")),
+            Protein = reader.GetInt32(reader.GetOrdinal("Protein")),
+            Calories = reader.GetInt32(reader.GetOrdinal("Calories"))
         };
     }
 }

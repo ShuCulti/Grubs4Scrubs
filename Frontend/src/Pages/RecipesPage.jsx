@@ -51,6 +51,7 @@ export default function Recipes() {
             cookTime: Number(newRecipe.cookTime),
             servings: Number(newRecipe.servings),
             estimatedBudget: Number(newRecipe.estimatedBudget)
+            })
             .then(()=> {
                 setShowModal(false)
                 setNewRecipe({ title:"", description:"", prepTime: "", cookTime: "", servings: "", tag: "", estimatedBudget: "", category: "Breakfast", imageUrl: ""})
@@ -58,7 +59,7 @@ export default function Recipes() {
             })
             .catch(err => console.error("Failed to add recipe", err))
             /* I could have used parseInt but I want to allow for decimal inputs for budget and time, just in case */
-        })
+
     }
 
     return (

@@ -29,7 +29,7 @@ public class RecipeService : IRecipeService
 
     public void CreateRecipe(Recipe recipe)
     {
-        // BUSINESS LOGIC EXAMPLE: validate before saving
+        //validate before saving
         if (string.IsNullOrWhiteSpace(recipe.Title))
         {
             throw new ArgumentException("Recipe title cannot be empty");
