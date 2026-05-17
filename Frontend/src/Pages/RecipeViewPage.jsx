@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useParams, useNavigate} from "react-router"
 import { Navbar } from "../Components/Navbar.jsx"
 import { G4Sfooter } from "../Components/Footer.jsx"
-import { Clock, Wallet, Users, ShoppingBasket, CookingPot, Lightbulb, CalendarPlus, Check, Heart, Share2, Trash} from "lucide-react"
+import { Clock, Wallet, Users, ShoppingBasket, ShoppingCart, CookingPot, Lightbulb, CalendarPlus, Check, Heart, Share2, Trash} from "lucide-react"
 import "./HomePage.css"
 import "./Components.css"
 import "./RecipeViewPage.css"
@@ -29,12 +29,28 @@ export default function RecipeView() {
             <>
                 <div className="Home">
                     <Navbar />
-                    <RecipeViewPage recipe ={recipe} onDelete={handleDelete}/>
+                    <RecipeViewPage recipe={recipe} onDelete={handleDelete} onAddToShoppingList={handleAddToShoppingList}/>
                     <div className="Home-footer-wrapper"></div>
                         <G4Sfooter/>
                 </div>
             </>
         )
+    }
+
+    function handleAddToShoppingList() {
+        if (!recipe.ingredients) return
+        const ingredients = JSON.parse(recipe.ingredients)
+        const promises = ingredients.map(ingredient =>
+            api.post("/ShoppingItem", {
+                name: ingredient,
+                quantity: "1",
+                price: 0,
+                isChecked: false,
+            })
+        )
+        Promise.all(promises)
+            .then(() => alert("Ingredients added to your shopping list!"))
+            .catch(err => console.error("Failed to add to shopping list", err))
     }
 
     function handleDelete(){
@@ -50,7 +66,7 @@ export default function RecipeView() {
     }
 }
 
-function RecipeViewPage({ recipe, onDelete }) {
+function RecipeViewPage({ recipe, onDelete, onAddToShoppingList }) {
         const ingredients = recipe.ingredients ? JSON.parse(recipe.ingredients) : null
         const instructions = recipe.instructions? JSON.parse(recipe.instructions) : null
         const nutrition = recipe.nutrition ? JSON.parse(recipe.nutrition) : null
@@ -59,7 +75,7 @@ function RecipeViewPage({ recipe, onDelete }) {
     return (
         <>
             <div className="RecipeView">
-                <RecipeViewHero recipe={recipe} onDelete={onDelete}/>
+                <RecipeViewHero recipe={recipe} onDelete={onDelete} onAddToShoppingList={onAddToShoppingList}/>
 
                 <div className="RecipeView-content">
                     <aside className="RecipeView-sidebar">
@@ -79,7 +95,7 @@ function RecipeViewPage({ recipe, onDelete }) {
 
 
 
-function RecipeViewHero({recipe, onDelete}) {
+function RecipeViewHero({recipe, onDelete, onAddToShoppingList}) {
     const tags = recipe.tag.split(",")
 
     
@@ -135,7 +151,11 @@ function RecipeViewHero({recipe, onDelete}) {
                 </div>
 
                 <div className="RecipeView-hero-cta">
-                    <button className="RecipeView-hero-bin-btn" onClick={onDelete} ><Trash/></button>
+                    <button className="RecipeView-hero-bin-btn" onClick={onDelete}><Trash/></button>
+                    <button className="RecipeView-hero-cta-btn" onClick={onAddToShoppingList}>
+                        <ShoppingCart size={18} />
+                        Add to Shopping List
+                    </button>
                     <button className="RecipeView-hero-cta-btn">
                         <CalendarPlus size={18} />
                         Add to Meal Planner

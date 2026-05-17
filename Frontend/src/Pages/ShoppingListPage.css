@@ -1,32 +1,24 @@
 /* Main */
 .ShoppingList-main {
-    max-width: 1280px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 40px 24px;
+    padding: 100px 24px 24px;
 }
 
 /* Header */
 .ShoppingList-header {
     display: flex;
-    flex-direction: column;
-    gap: 24px;
-    margin-bottom: 48px;
-}
-
-@media (min-width: 768px) {
-    .ShoppingList-header {
-        flex-direction: row;
-        align-items: flex-end;
-        justify-content: space-between;
-    }
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 32px;
 }
 
 .ShoppingList-title {
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 800;
     color: white;
     letter-spacing: -0.5px;
-    margin: 0 0 8px 0;
+    margin: 0 0 6px 0;
 }
 
 .ShoppingList-meta {
@@ -43,36 +35,6 @@
     height: 4px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.2);
-}
-
-.ShoppingList-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.ShoppingList-total-badge {
-    background: rgba(56, 189, 248, 0.1);
-    border: 1px solid rgba(56, 189, 248, 0.2);
-    padding: 8px 16px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.ShoppingList-total-label {
-    color: #8a8f98;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.ShoppingList-total-value {
-    color: rgb(56, 189, 248);
-    font-size: 20px;
-    font-weight: 700;
 }
 
 .ShoppingList-add-btn {
@@ -95,49 +57,79 @@
     opacity: 0.85;
 }
 
-/* Grid */
-.ShoppingList-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 32px;
-}
-
-@media (min-width: 1024px) {
-    .ShoppingList-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-/* Category */
-.ShoppingList-category {
+/* Add Form */
+.ShoppingList-add-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+    padding: 16px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 12px;
-    padding: 24px;
 }
 
-.ShoppingList-category-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 24px;
+.ShoppingList-add-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: white;
+    outline: none;
+    transition: border-color 0.15s;
 }
 
-.ShoppingList-category-icon {
-    font-size: 20px;
+.ShoppingList-add-input::placeholder {
+    color: #8a8f98;
 }
 
-.ShoppingList-category-title {
-    color: rgb(245, 158, 11);
+.ShoppingList-add-input:focus {
+    border-color: rgb(56, 189, 248);
+}
+
+.ShoppingList-add-input-small {
+    flex: 0 0 120px;
+}
+
+.ShoppingList-add-form-btn {
+    background: rgb(56, 189, 248);
+    color: rgb(0, 53, 74);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
     font-weight: 700;
-    font-size: 18px;
-    margin: 0;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.15s;
 }
 
-.ShoppingList-category-items {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+.ShoppingList-add-form-btn:hover {
+    opacity: 0.85;
+}
+
+.ShoppingList-add-form-cancel {
+    background: rgba(255, 255, 255, 0.06);
+    color: #c9cdd4;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.ShoppingList-add-form-cancel:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Items List */
+.ShoppingList-items {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    overflow: hidden;
 }
 
 /* Item */
@@ -145,23 +137,33 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 0;
-    cursor: pointer;
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     transition: background 0.15s;
+}
+
+.ShoppingList-item:last-child {
+    border-bottom: none;
+}
+
+.ShoppingList-item:hover {
+    background: rgba(255, 255, 255, 0.02);
 }
 
 .ShoppingList-item-left {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
+    cursor: pointer;
+    flex: 1;
 }
 
 .ShoppingList-item-checkbox {
     width: 20px;
     height: 20px;
-    border-radius: 4px;
+    border-radius: 5px;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -190,17 +192,19 @@
 .ShoppingList-item-right {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 20px;
 }
 
 .ShoppingList-item-quantity {
     color: #8a8f98;
-    font-size: 14px;
+    font-size: 13px;
+    min-width: 50px;
 }
 
 .ShoppingList-item-price {
     color: white;
     font-weight: 700;
+    font-size: 14px;
     min-width: 60px;
     text-align: right;
 }
@@ -209,30 +213,75 @@
     color: #8a8f98;
 }
 
-/* Banner */
-.ShoppingList-banner {
-    max-width: 1280px;
-    margin: 48px auto 0;
-    padding: 0 24px;
+.ShoppingList-item-delete {
+    background: none;
+    border: none;
+    color: #8a8f98;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    transition: all 0.15s;
 }
 
-.ShoppingList-banner-content {
+.ShoppingList-item-delete:hover {
+    color: rgb(239, 68, 68);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* Empty State */
+.ShoppingList-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    text-align: center;
+}
+
+.ShoppingList-empty-icon {
+    color: #8a8f98;
+    margin-bottom: 16px;
+}
+
+.ShoppingList-empty-title {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+}
+
+.ShoppingList-empty-desc {
+    color: #8a8f98;
+    font-size: 15px;
+    margin: 0 0 24px 0;
+}
+
+.ShoppingList-empty-btn {
+    background: rgb(56, 189, 248);
+    color: rgb(0, 53, 74);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.ShoppingList-empty-btn:hover {
+    opacity: 0.85;
+}
+
+/* Banner */
+.ShoppingList-banner {
+    margin-top: 32px;
     background: rgba(40, 40, 61, 1);
     border-radius: 16px;
     padding: 32px;
     position: relative;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-}
-
-@media (min-width: 768px) {
-    .ShoppingList-banner-content {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
 }
 
 .ShoppingList-banner-glow {
@@ -247,61 +296,53 @@
     pointer-events: none;
 }
 
-.ShoppingList-banner-text {
-    max-width: 560px;
+.ShoppingList-banner-content {
     position: relative;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+@media (min-width: 768px) {
+    .ShoppingList-banner-content {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.ShoppingList-banner-text {
+    max-width: 500px;
 }
 
 .ShoppingList-banner-title {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     color: white;
-    margin: 0 0 12px 0;
+    margin: 0 0 8px 0;
 }
 
 .ShoppingList-banner-desc {
     color: #c9cdd4;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.6;
     margin: 0;
 }
 
-.ShoppingList-banner-actions {
-    display: flex;
-    gap: 16px;
-    position: relative;
-    z-index: 1;
-}
-
-.ShoppingList-banner-btn-outline {
-    padding: 10px 24px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: transparent;
-    color: white;
-    font-weight: 700;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.15s;
-}
-
-.ShoppingList-banner-btn-outline:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.ShoppingList-banner-btn-solid {
-    padding: 10px 24px;
-    border-radius: 8px;
+.ShoppingList-banner-btn {
+    background: rgb(56, 189, 248);
+    color: rgb(0, 53, 74);
     border: none;
-    background: white;
-    color: rgb(17, 17, 37);
+    border-radius: 8px;
+    padding: 10px 24px;
     font-weight: 700;
     font-size: 14px;
     cursor: pointer;
     transition: opacity 0.15s;
+    white-space: nowrap;
 }
 
-.ShoppingList-banner-btn-solid:hover {
-    opacity: 0.9;
+.ShoppingList-banner-btn:hover {
+    opacity: 0.85;
 }

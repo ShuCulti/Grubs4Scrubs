@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Navbar } from "../Components/Navbar.jsx"
+import { G4Sfooter } from "../Components/Footer.jsx"
 import { Plus } from "lucide-react"
 import "./HomePage.css"
 import "./Components.css"
@@ -45,6 +46,7 @@ export default function MealPlanner() {
                     totalCost={totalCost}
                     totalMeals={totalMeals}
                 />
+                <G4Sfooter />
             </div>
         </>
     )
