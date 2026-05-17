@@ -5,8 +5,8 @@ export default function Searchbar(){
     return(
         <>
         <div className="Home">
-            <input className="HomeBoard-search " placeholder="Enter What you would like to make">
-            
+            <input className="HomeBoard-search " placeholder="Enter What you would like to make" required>
+                
             </input>
         </div>
         </>

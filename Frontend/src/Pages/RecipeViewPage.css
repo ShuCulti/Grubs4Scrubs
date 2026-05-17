@@ -193,8 +193,8 @@
 
 .RecipeView-hero-cta{
     position: absolute;
-    top: 24px;
-    right: 100px;
+    top: 21px;
+    right: 120px;
     z-index: 2;
 }
 
@@ -219,6 +219,44 @@
 }
 
 .RecipeView-hero-cta-btn:active{
+    transform: scale(0.95);
+}
+
+.RecipeView-hero-bin-btn{
+    position: absolute;
+    right: 110%;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #ff6b6b;
+    border: 10px solid rgba(0, 0, 0);
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.RecipeView-hero-bin-btn{
+    position: absolute;
+    right: 105%;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #ff6b6b;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.RecipeView-hero-bin-btn:hover{
+    transform: scale(1.0);
+}
+
+.RecipeView-hero-bin-btn:active{
     transform: scale(0.95);
 }
 

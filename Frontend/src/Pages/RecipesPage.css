@@ -164,9 +164,10 @@
 
 .recipe-meta {
     display: flex;
+    position: relative;
     gap: 16px;
-    color: #888;
-    font-size: 0.8rem;
+    color: #9bbac1;
+    font-size: 1rem;
 }
 
 .recipe-card-add {
@@ -229,7 +230,7 @@
     background: #1a1a2e;
     padding: 2rem;
     border-radius: 12px;
-    width: 500px;
+    width: 700px;
     max-height: 80vh;
     overflow-y: auto;
 }
@@ -242,7 +243,9 @@
 .modal-content input,
 .modal-content textarea,
 .modal-content select {
-    width: 100%;
+    position: relative;
+    left: 160px;
+    width: 70%;
     padding: 0.6rem;
     margin-bottom: 0.8rem;
     border-radius: 8px;
@@ -278,4 +281,31 @@
 .modal-buttons button[type="button"] {
     background: #333;
     color: white;
+}
+
+.modal-content-labels{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 43.5%;
+    width: 20%;
+    gap: 25.5px;
+}
+
+.modal-content-labels-Title{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 29.7%;
+    width: 20%;
+    gap: 40px;
+}
+
+.modal-content-labels-Description{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 34%;
+    width: 20%;
+    gap: 40px;
 }

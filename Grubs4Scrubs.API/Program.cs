@@ -24,6 +24,10 @@ builder.Services.AddControllers();
 // When RecipeService asks for IRecipeRepository, .NET gives it a RecipeRepository.
 builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<IRecipeService, RecipeService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IShoppingItemRepository, ShoppingItemRepository>();
+builder.Services.AddScoped<IShoppingItemService, ShoppingItemService>();
 
 var app = builder.Build();
 

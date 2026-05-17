@@ -46,8 +46,11 @@ public class RecipeRepository : IRecipeRepository
         {
             return MapRecipe(reader);
         }
+        else
+        {
+            return null;
+        }
 
-        return null;
     }
 
     public void Create(Recipe recipe)

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useParams, useNavigate} from "react-router"
 import { Navbar } from "../Components/Navbar.jsx"
 import { G4Sfooter } from "../Components/Footer.jsx"
-import { Clock, Wallet, Users, ShoppingBasket, CookingPot, Lightbulb, CalendarPlus, Check, Heart, Share2 } from "lucide-react"
+import { Clock, Wallet, Users, ShoppingBasket, CookingPot, Lightbulb, CalendarPlus, Check, Heart, Share2, Trash} from "lucide-react"
 import "./HomePage.css"
 import "./Components.css"
 import "./RecipeViewPage.css"
@@ -29,25 +29,37 @@ export default function RecipeView() {
             <>
                 <div className="Home">
                     <Navbar />
-                    <RecipeViewPage recipe ={recipe}/>
+                    <RecipeViewPage recipe ={recipe} onDelete={handleDelete}/>
                     <div className="Home-footer-wrapper"></div>
                         <G4Sfooter/>
                 </div>
             </>
         )
     }
+
+    function handleDelete(){
+        if(window.confirm('Are you sure you want to delete this recipe?')){
+            api.delete(`/Recipe/${id}`)
+            .then(()=> {
+                api.get("/Recipe")
+                .then(res => setRecipe(res.data))
+                .catch(err => console.error("Failed to fetch recipes", err))
+            })
+            .catch(err => console.error("Failed to delete recipe", err))
+        }
+    }
 }
 
-
-function RecipeViewPage({ recipe }) {
+function RecipeViewPage({ recipe, onDelete }) {
         const ingredients = recipe.ingredients ? JSON.parse(recipe.ingredients) : null
         const instructions = recipe.instructions? JSON.parse(recipe.instructions) : null
         const nutrition = recipe.nutrition ? JSON.parse(recipe.nutrition) : null
         const tips = recipe.tips
+
     return (
         <>
             <div className="RecipeView">
-                <RecipeViewHero recipe={recipe} />
+                <RecipeViewHero recipe={recipe} onDelete={onDelete}/>
 
                 <div className="RecipeView-content">
                     <aside className="RecipeView-sidebar">
@@ -67,8 +79,10 @@ function RecipeViewPage({ recipe }) {
 
 
 
-function RecipeViewHero({ recipe}) {
+function RecipeViewHero({recipe, onDelete}) {
     const tags = recipe.tag.split(",")
+
+    
 
     return (
         <>
@@ -121,6 +135,7 @@ function RecipeViewHero({ recipe}) {
                 </div>
 
                 <div className="RecipeView-hero-cta">
+                    <button className="RecipeView-hero-bin-btn" onClick={onDelete} ><Trash/></button>
                     <button className="RecipeView-hero-cta-btn">
                         <CalendarPlus size={18} />
                         Add to Meal Planner

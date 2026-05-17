@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router"
+import { useNavigate, useParams } from "react-router"
+import { LucideEuro, LucideUsers2, LucideClock3, LucideEdit3} from "lucide-react"
 import { Navbar } from "../Components/Navbar.jsx"
 import "./HomePage.css"
 import "./Components.css"
@@ -12,11 +13,13 @@ const filters = ["All", "Breakfast", "Lunch", "Dinner"]
 
 export default function Recipes() {
     const navigate = useNavigate()
+    const {id} = useParams()
     
     const [showModal, setShowModal] = useState(false)
     const [newRecipe, setNewRecipe] = useState({
         title:"",
         description:"",
+        instructions:"",
         prepTime:"",
         cookTime:"",
         servings:"",
@@ -59,8 +62,29 @@ export default function Recipes() {
             })
             .catch(err => console.error("Failed to add recipe", err))
             /* I could have used parseInt but I want to allow for decimal inputs for budget and time, just in case */
-
     }
+
+    function handleEdit(id){
+        e.preventDefault()
+            api.put('/Recipe')
+        
+    }
+    
+
+    function handleDelete(){
+        e.preventDefault()
+        if(window.confirm('Are you sure you want to delete this recipe?')){
+            api.delete(`/Recipe/${id}`)
+            .then(()=> {
+                api.get("/Recipe")
+                .then(res => setRecipes(res.data))
+                .catch(err => console.error("Failed to fetch recipes", err))
+            })
+            .catch(err => console.error("Failed to delete recipe", err))
+        }
+
+    } 
+    
 
     return (
         <>
@@ -109,10 +133,13 @@ export default function Recipes() {
                                         ))}
                                     </div>
                                     <h3 className="recipe-name">{recipe.title}</h3>
+                                    <div>
+                                        
+                                    </div>
                                     <div className="recipe-meta">
-                                        <span>🕐 {recipe.cookTime}</span>
-                                        <span>💰 {recipe.estimatedBudget}</span>
-                                        <span>🍽️ {recipe.servings}</span>
+                                        <span> <LucideClock3 color = "white" size={20}/> {recipe.cookTime}</span>
+                                        <span> <LucideEuro color = "white" size={20}/>  {recipe.estimatedBudget}</span>
+                                        <span><LucideUsers2 color={'white'}size={20}/>  {recipe.servings}</span>
                                     </div>
                                 </div>
                             </div>
@@ -133,6 +160,19 @@ export default function Recipes() {
             <div className="modal-overlay" onClick={() => setShowModal(false)}>
                 <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                     <h2>Add New Recipe</h2>
+                    <div>
+                        <label className= "modal-content-labels-Title" htmlFor="">Title:</label>
+                        <label className="modal-content-labels-Description" htmlFor="">Description: </label>
+                    </div>
+                    <div className="modal-content-labels">
+                        <label className="" htmlFor="">Tags:</label>
+                        <label htmlFor="">Category: </label>
+                        <label htmlFor="">Prep Time: </label>
+                        <label htmlFor="">Cook Time: </label>
+                        <label htmlFor="">Servings: </label>
+                        <label htmlFor="">Estimated Budget: </label>
+                        <label htmlFor="">Image: </label>
+                    </div>
                     <form onSubmit={handleSubmit}>
                         <input type="text" placeholder="Title" value={newRecipe.title} onChange={(e) => setNewRecipe({...newRecipe, title: e.target.value})} required />
                         <textarea placeholder="Description" value={newRecipe.description} onChange={(e) => setNewRecipe({...newRecipe, description: e.target.value})} required />
