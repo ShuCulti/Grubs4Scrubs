@@ -19,13 +19,19 @@ export default function Recipes() {
     const [newRecipe, setNewRecipe] = useState({
         title:"",
         description:"",
-        instructions:"",
         prepTime:"",
         cookTime:"",
         servings:"",
         tag:"",
         estimatedBudget:"",
         category:"Breakfast",
+        instructions:"",
+        ingredients: "",
+        tips:"",
+        calories: "",
+        protein: "",
+        fats: "",
+        carbs: "",
         imageUrl:"",
     })
     const [recipes, setRecipes] = useState([]);
@@ -53,11 +59,17 @@ export default function Recipes() {
             prepTime: Number(newRecipe.prepTime),
             cookTime: Number(newRecipe.cookTime),
             servings: Number(newRecipe.servings),
-            estimatedBudget: Number(newRecipe.estimatedBudget)
+            estimatedBudget: Number(newRecipe.estimatedBudget),
+            calories: Number(newRecipe.calories) || 0,
+            protein: Number(newRecipe.protein) || 0,
+            carbs: Number(newRecipe.carbs) || 0,
+            fats: Number(newRecipe.fats) || 0,
+            ingredients: JSON.stringify(newRecipe.ingredients.split("\n").filter(i => i.trim() !== "")),
+            instructions: JSON.stringify(newRecipe.instructions.split("\n").filter(i => i.trim() !== "").map(step => ({ title: step.split(":")[0].trim(), description: step.split(":")[1]?.trim() || "" }))),            
             })
             .then(()=> {
                 setShowModal(false)
-                setNewRecipe({ title:"", description:"", prepTime: "", cookTime: "", servings: "", tag: "", estimatedBudget: "", category: "Breakfast", imageUrl: ""})
+                setNewRecipe({ title:"", description:"", prepTime: "", cookTime: "", servings: "", tag: "", estimatedBudget: "", category: "Breakfast", instructions: "", ingredients: "", tips: "", imageUrl: ""})
                 api.get("/Recipe").then(res => setRecipes(res.data))
             })
             .catch(err => console.error("Failed to add recipe", err))
@@ -124,7 +136,7 @@ export default function Recipes() {
                             <div key={recipe.id} className="recipe-card" onClick={() => navigate(`/recipes/${recipe.id}`)}>
                                 <div className="recipe-card-image">
                                     <span className="recipe-emoji">{recipe.emoji}</span>
-                                    <img className = "recipe-card-image-img" src={recipe.imageUrl} alt="an Image" />
+                                    {recipe.imageUrl ? (<img className="recipe-card-image-img" src={recipe.imageUrl} alt={recipe.title} />) : null}
                                 </div>
                                 <div className="recipe-card-body">
                                     <div className="recipe-tags">
@@ -160,43 +172,87 @@ export default function Recipes() {
             <div className="modal-overlay" onClick={() => setShowModal(false)}>
                 <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                     <h2>Add New Recipe</h2>
-                    <div>
-                        <label className= "modal-content-labels-Title" htmlFor="">Title:</label>
-                        <label className="modal-content-labels-Description" htmlFor="">Description: </label>
-                    </div>
-                    <div className="modal-content-labels">
-                        <label className="" htmlFor="">Tags:</label>
-                        <label htmlFor="">Category: </label>
-                        <label htmlFor="">Prep Time: </label>
-                        <label htmlFor="">Cook Time: </label>
-                        <label htmlFor="">Servings: </label>
-                        <label htmlFor="">Estimated Budget: </label>
-                        <label htmlFor="">Image: </label>
-                    </div>
-                    <form onSubmit={handleSubmit}>
-                        <input type="text" placeholder="Title" value={newRecipe.title} onChange={(e) => setNewRecipe({...newRecipe, title: e.target.value})} required />
-                        <textarea placeholder="Description" value={newRecipe.description} onChange={(e) => setNewRecipe({...newRecipe, description: e.target.value})} required />
-                        <input type="text" placeholder="Tags (comma separated)" value={newRecipe.tag} onChange={(e) => setNewRecipe({...newRecipe, tag: e.target.value})} />
-                        <select value={newRecipe.category} onChange={(e) => setNewRecipe({...newRecipe, category: e.target.value})}>
-                            <option value="Breakfast">Breakfast</option>
-                            <option value="Lunch">Lunch</option>
-                            <option value="Dinner">Dinner</option>
-                        </select>
-                        <input type="number" placeholder="Prep Time (min)" value={newRecipe.prepTime} onChange={(e) => setNewRecipe({...newRecipe, prepTime: e.target.value})} required />
-                        <input type="number" placeholder="Cook Time (min)" value={newRecipe.cookTime} onChange={(e) => setNewRecipe({...newRecipe, cookTime: e.target.value})} required />
-                        <input type="number" placeholder="Servings" value={newRecipe.servings} onChange={(e) => setNewRecipe({...newRecipe, servings: e.target.value})} required />
-                        <input type="number" step="0.01" placeholder="Estimated Budget (€)" value={newRecipe.estimatedBudget} onChange={(e) => setNewRecipe({...newRecipe, estimatedBudget: e.target.value})} required />
-                        <input type="file" accept="image/*" onChange={(e) => {
-                            const file = e.target.files[0]
-                            if (file) {
-                                setNewRecipe({...newRecipe, imageUrl: "/" + file.name})
-                            }
-                        }} />
+
+                    <form className="modal-form" onSubmit={handleSubmit}>
+                        
+                        <div className="modal-field">
+                             <label className= "modal-field-label" htmlFor="">Title:</label>
+                            <input type="text" placeholder="Title" value={newRecipe.title} onChange={(e) => setNewRecipe({...newRecipe, title: e.target.value})} required />
+                        </div>
+
+                        <div className="modal-field">
+                             <label className="modal-field-label" htmlFor="">Description: </label>
+                            <input placeholder="Description" value={newRecipe.description} onChange={(e) => setNewRecipe({...newRecipe, description: e.target.value})} required />
+                        </div>
+
+                        <div className="modal-field">
+                             <label className="modal-field-label" htmlFor="">Instructions:</label>
+                            <textarea placeholder="Instructions" value={newRecipe.instructions} onChange={(e) => setNewRecipe({...newRecipe, instructions: e.target.value})} required />
+
+                        </div>
+                        
+                        <div className="modal-field">
+                             <label className="modal-field-label" htmlFor="">Ingredients: </label>
+                            <textarea placeholder="Ingredients" value={newRecipe.ingredients} onChange={(e) => setNewRecipe({...newRecipe, ingredients: e.target.value})} required />
+
+                        </div>
+
+                        <div className="modal-field">
+                             <label className="modal-field-label" htmlFor="">Tags:</label>
+                            <input type="text" placeholder="Tags (comma separated)" value={newRecipe.tag} onChange={(e) => setNewRecipe({...newRecipe, tag: e.target.value})} />
+                        </div>
+                        
+                        <div className="modal-field">
+                            <label className="modal-field-label">Category: </label>
+                            <select value={newRecipe.category} onChange={(e) => setNewRecipe({...newRecipe, category: e.target.value})}>
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Dinner">Dinner</option>
+                            </select>
+                        </div>
+                        
+                        <div className="modal-field">
+                             <label className="modal-field-label">PrepTime: </label>
+                            <input type="number" placeholder="Prep Time (min)" value={newRecipe.prepTime} onChange={(e) => setNewRecipe({...newRecipe, prepTime: e.target.value})} required />
+                        </div>
+                        
+                        <div className="modal-field">
+                             <label className="modal-field-label">CookTime: </label>
+                            <input type="number" placeholder="Cook Time (min)" value={newRecipe.cookTime} onChange={(e) => setNewRecipe({...newRecipe, cookTime: e.target.value})} required />
+                        </div >
+                        
+                        <div className="modal-field">
+                             <label className="modal-field-label">Servings: </label>
+                            <input type="number" placeholder="Servings" value={newRecipe.servings} onChange={(e) => setNewRecipe({...newRecipe, servings: e.target.value})} required />
+                        </div>
+                        
+                        <div  className="modal-field">
+                             <label className="modal-field-label">Estimated Budget: </label>
+                            <input type="number" step="0.01" placeholder="Estimated Budget (€)" value={newRecipe.estimatedBudget} onChange={(e) => setNewRecipe({...newRecipe, estimatedBudget: e.target.value})} required />
+                        </div>
+
+                        <div className="modal-field">
+                             <label className="modal-field-label">Tips: </label>
+                            <input type="text" placeholder="Tips" value={newRecipe.tips} onChange={(e) => setNewRecipe({...newRecipe, tips: e.target.value})} />
+                        </div>
+                        
+                        <div className="modal-field">
+                             <label className="modal-field-label">Image: </label>
+                            <input type="file" accept="image/*" onChange={(e) => {
+                                const file = e.target.files[0]
+                                if (file) {
+                                    setNewRecipe({...newRecipe, imageUrl: "/" + file.name})
+                                }
+                            }} />
+                        </div>
+
                         <div className="modal-buttons">
                             <button type="button" onClick={() => setShowModal(false)}>Cancel</button>
                             <button type="submit">Create Recipe</button>
                         </div>
+
                     </form>
+
                 </div>
             </div>
         )}
