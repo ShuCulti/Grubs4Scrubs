@@ -230,6 +230,64 @@
     background: rgba(239, 68, 68, 0.1);
 }
 
+/* Edit button */
+.ShoppingList-item-edit {
+    background: none;
+    border: none;
+    color: #8a8f98;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    transition: all 0.15s;
+}
+
+.ShoppingList-item-edit:hover {
+    color: rgb(56, 189, 248);
+    background: rgba(56, 189, 248, 0.1);
+}
+
+/* Edit mode */
+.ShoppingList-item-editing {
+    background: rgba(56, 189, 248, 0.04);
+}
+
+.ShoppingList-edit-input {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 14px;
+    color: white;
+    outline: none;
+    width: 100%;
+}
+
+.ShoppingList-edit-input:focus {
+    border-color: rgb(56, 189, 248);
+}
+
+.ShoppingList-edit-input-small {
+    width: 80px;
+}
+
+.ShoppingList-edit-save {
+    background: none;
+    border: none;
+    color: rgb(56, 189, 248);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    transition: all 0.15s;
+}
+
+.ShoppingList-edit-save:hover {
+    background: rgba(56, 189, 248, 0.1);
+}
+
 /* Empty State */
 .ShoppingList-empty {
     display: flex;

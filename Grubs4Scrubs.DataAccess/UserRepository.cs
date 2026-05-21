@@ -48,6 +48,24 @@ public class UserRepository : IUserRepository
         return null;
     }
 
+    public User? GetByEmail(string email)
+    {
+        using SqlConnection conn = new(_connectionString);
+        conn.Open();
+
+        using SqlCommand cmd = new("SELECT * FROM Users WHERE Email = @Email", conn);
+        cmd.Parameters.AddWithValue("@Email", email);
+
+        using SqlDataReader reader = cmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            return MapUser(reader);
+        }
+
+        return null;
+    }
+
     public void Create(User user)
     {
         using SqlConnection conn = new(_connectionString);

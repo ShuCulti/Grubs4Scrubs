@@ -55,12 +55,11 @@ public class ShoppingItemRepository : IShoppingItemRepository
         using SqlConnection conn = new(_connectionString);
         conn.Open();
 
-        string sql = @"INSERT INTO ShoppingItems (UserId, Id, Name, Quantity, Price, IsChecked)
-                        VALUE (@UserId, @Id, @Name, @Quantity, @Price, @IsChecked)";
+        string sql = @"INSERT INTO ShoppingItems (UserId, Name, Quantity, Price, IsChecked)
+                        VALUES (@UserId, @Name, @Quantity, @Price, @IsChecked)";
 
         using SqlCommand cmd = new(sql, conn);
         cmd.Parameters.AddWithValue("@UserId", shoppingItem.UserId);
-        cmd.Parameters.AddWithValue("@Id", shoppingItem.Id);
         cmd.Parameters.AddWithValue("@Name", shoppingItem.Name);
         cmd.Parameters.AddWithValue("@Quantity", shoppingItem.Quantity);
         cmd.Parameters.AddWithValue("@Price", shoppingItem.Price);

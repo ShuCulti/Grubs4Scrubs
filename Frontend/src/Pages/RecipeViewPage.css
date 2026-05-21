@@ -260,6 +260,29 @@
     transform: scale(0.95);
 }
 
+.RecipeView-hero-edit-btn{
+    position: absolute;
+    right: 130%;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #38bdf8;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.RecipeView-hero-edit-btn:hover{
+    background-color: rgba(56, 189, 248, 0.2);
+}
+
+.RecipeView-hero-edit-btn:active{
+    transform: scale(0.95);
+}
+
 /* Two Column Content Layout */
 
 .RecipeView-content{

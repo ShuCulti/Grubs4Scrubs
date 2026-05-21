@@ -2,16 +2,19 @@ import { useState, useEffect } from "react"
 import { useParams, useNavigate} from "react-router"
 import { Navbar } from "../Components/Navbar.jsx"
 import { G4Sfooter } from "../Components/Footer.jsx"
-import { Clock, Wallet, Users, ShoppingBasket, ShoppingCart, CookingPot, Lightbulb, CalendarPlus, Check, Heart, Share2, Trash} from "lucide-react"
+import { Clock, Wallet, Users, ShoppingBasket, ShoppingCart, CookingPot, Lightbulb, CalendarPlus, Check, Heart, Share2, Trash, Pencil} from "lucide-react"
 import "./HomePage.css"
 import "./Components.css"
 import "./RecipeViewPage.css"
+import "./RecipesPage.css"
 import api from "../services/recipeService.js"
 
 export default function RecipeView() {
     const { id } = useParams()
     const navigate = useNavigate()
     const [recipe, setRecipe] = useState(null)
+    const [showEditModal, setShowEditModal] = useState(false)
+    const [editRecipe, setEditRecipe] = useState(null)
 
     useEffect(()=> {
         api.get(`/Recipe/${id}`)
@@ -29,7 +32,15 @@ export default function RecipeView() {
             <>
                 <div className="Home">
                     <Navbar />
-                    <RecipeViewPage recipe={recipe} onDelete={handleDelete} onAddToShoppingList={handleAddToShoppingList}/>
+                    <RecipeViewPage recipe={recipe} onDelete={handleDelete} onEdit={handleStartEdit} onAddToShoppingList={handleAddToShoppingList}/>
+                    {showEditModal && (
+                        <RecipeEditModal
+                            editRecipe={editRecipe}
+                            setEditRecipe={setEditRecipe}
+                            onSubmit={handleEditSubmit}
+                            onClose={() => setShowEditModal(false)}
+                        />
+                    )}
                     <div className="Home-footer-wrapper"></div>
                         <G4Sfooter/>
                 </div>
@@ -56,17 +67,69 @@ export default function RecipeView() {
     function handleDelete(){
         if(window.confirm('Are you sure you want to delete this recipe?')){
             api.delete(`/Recipe/${id}`)
-            .then(()=> {
-                api.get("/Recipe")
-                .then(res => setRecipe(res.data))
-                .catch(err => console.error("Failed to fetch recipes", err))
-            })
+            .then(()=> navigate("/recipes"))
             .catch(err => console.error("Failed to delete recipe", err))
         }
     }
+
+    function handleStartEdit() {
+        const ingredients = recipe.ingredients ? JSON.parse(recipe.ingredients) : []
+        const instructions = recipe.instructions ? JSON.parse(recipe.instructions) : []
+
+        setEditRecipe({
+            title: recipe.title,
+            description: recipe.description,
+            prepTime: recipe.prepTime,
+            cookTime: recipe.cookTime,
+            servings: recipe.servings,
+            tag: recipe.tag,
+            imageUrl: recipe.imageUrl,
+            estimatedBudget: recipe.estimatedBudget,
+            category: recipe.category,
+            ingredients: ingredients.join("\n"),
+            instructions: instructions.map(s => `${s.title}: ${s.description}`).join("\n"),
+            tips: recipe.tips,
+            calories: recipe.calories,
+            protein: recipe.protein,
+            carbs: recipe.carbs,
+            fats: recipe.fats,
+        })
+        setShowEditModal(true)
+    }
+
+    function handleEditSubmit(e) {
+        e.preventDefault()
+        api.put(`/Recipe/${id}`, {
+            id: Number(id),
+            title: editRecipe.title,
+            description: editRecipe.description,
+            prepTime: Number(editRecipe.prepTime) || 0,
+            cookTime: Number(editRecipe.cookTime) || 0,
+            servings: Number(editRecipe.servings) || 1,
+            tag: editRecipe.tag,
+            imageUrl: editRecipe.imageUrl,
+            estimatedBudget: Number(editRecipe.estimatedBudget) || 0,
+            category: editRecipe.category,
+            ingredients: JSON.stringify(editRecipe.ingredients.split("\n").filter(i => i.trim() !== "")),
+            instructions: JSON.stringify(editRecipe.instructions.split("\n").filter(i => i.trim() !== "").map(step => ({
+                title: step.split(":")[0]?.trim() || "",
+                description: step.split(":").slice(1).join(":").trim() || ""
+            }))),
+            tips: editRecipe.tips,
+            calories: Number(editRecipe.calories) || 0,
+            protein: Number(editRecipe.protein) || 0,
+            carbs: Number(editRecipe.carbs) || 0,
+            fats: Number(editRecipe.fats) || 0,
+        })
+            .then(() => {
+                setShowEditModal(false)
+                api.get(`/Recipe/${id}`).then(res => setRecipe(res.data))
+            })
+            .catch(err => console.error("Failed to update recipe", err))
+    }
 }
 
-function RecipeViewPage({ recipe, onDelete, onAddToShoppingList }) {
+function RecipeViewPage({ recipe, onDelete, onEdit, onAddToShoppingList }) {
         const ingredients = recipe.ingredients ? JSON.parse(recipe.ingredients) : null
         const instructions = recipe.instructions? JSON.parse(recipe.instructions) : null
         const nutrition = recipe.nutrition ? JSON.parse(recipe.nutrition) : null
@@ -75,7 +138,7 @@ function RecipeViewPage({ recipe, onDelete, onAddToShoppingList }) {
     return (
         <>
             <div className="RecipeView">
-                <RecipeViewHero recipe={recipe} onDelete={onDelete} onAddToShoppingList={onAddToShoppingList}/>
+                <RecipeViewHero recipe={recipe} onDelete={onDelete} onEdit={onEdit} onAddToShoppingList={onAddToShoppingList}/>
 
                 <div className="RecipeView-content">
                     <aside className="RecipeView-sidebar">
@@ -95,7 +158,7 @@ function RecipeViewPage({ recipe, onDelete, onAddToShoppingList }) {
 
 
 
-function RecipeViewHero({recipe, onDelete, onAddToShoppingList}) {
+function RecipeViewHero({recipe, onDelete, onEdit, onAddToShoppingList}) {
     const tags = recipe.tag.split(",")
 
     
@@ -151,6 +214,7 @@ function RecipeViewHero({recipe, onDelete, onAddToShoppingList}) {
                 </div>
 
                 <div className="RecipeView-hero-cta">
+                    <button className="RecipeView-hero-edit-btn" onClick={onEdit}><Pencil/></button>
                     <button className="RecipeView-hero-bin-btn" onClick={onDelete}><Trash/></button>
                     <button className="RecipeView-hero-cta-btn" onClick={onAddToShoppingList}>
                         <ShoppingCart size={18} />
@@ -259,6 +323,88 @@ function RecipeViewTip({ tip }) {
                         <h4 className="RecipeView-tip-title">Scholar's Tip</h4>
                         <p className="RecipeView-tip-desc">{tip}</p>
                     </div>
+                </div>
+            </div>
+        </>
+    )
+}
+
+function RecipeEditModal({ editRecipe, setEditRecipe, onSubmit, onClose }) {
+    return (
+        <>
+            <div className="modal-overlay" onClick={onClose}>
+                <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                    <h2>Edit Recipe</h2>
+                    <form className="modal-form" onSubmit={onSubmit}>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Title</label>
+                            <input type="text" value={editRecipe.title} onChange={(e) => setEditRecipe({ ...editRecipe, title: e.target.value })} required />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Description</label>
+                            <textarea value={editRecipe.description} onChange={(e) => setEditRecipe({ ...editRecipe, description: e.target.value })} />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Image URL</label>
+                            <input type="text" value={editRecipe.imageUrl} onChange={(e) => setEditRecipe({ ...editRecipe, imageUrl: e.target.value })} />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Tags</label>
+                            <input type="text" value={editRecipe.tag} onChange={(e) => setEditRecipe({ ...editRecipe, tag: e.target.value })} />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Category</label>
+                            <input type="text" value={editRecipe.category} onChange={(e) => setEditRecipe({ ...editRecipe, category: e.target.value })} />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Prep Time</label>
+                            <input type="number" value={editRecipe.prepTime} onChange={(e) => setEditRecipe({ ...editRecipe, prepTime: e.target.value })} />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Cook Time</label>
+                            <input type="number" value={editRecipe.cookTime} onChange={(e) => setEditRecipe({ ...editRecipe, cookTime: e.target.value })} />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Servings</label>
+                            <input type="number" value={editRecipe.servings} onChange={(e) => setEditRecipe({ ...editRecipe, servings: e.target.value })} />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Budget (€)</label>
+                            <input type="number" step="0.01" value={editRecipe.estimatedBudget} onChange={(e) => setEditRecipe({ ...editRecipe, estimatedBudget: e.target.value })} />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Ingredients</label>
+                            <textarea rows={5} value={editRecipe.ingredients} onChange={(e) => setEditRecipe({ ...editRecipe, ingredients: e.target.value })} placeholder="One ingredient per line" />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Instructions</label>
+                            <textarea rows={5} value={editRecipe.instructions} onChange={(e) => setEditRecipe({ ...editRecipe, instructions: e.target.value })} placeholder="Step Title: Step description (one per line)" />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Tips</label>
+                            <input type="text" value={editRecipe.tips} onChange={(e) => setEditRecipe({ ...editRecipe, tips: e.target.value })} />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Calories</label>
+                            <input type="number" value={editRecipe.calories} onChange={(e) => setEditRecipe({ ...editRecipe, calories: e.target.value })} />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Protein</label>
+                            <input type="number" value={editRecipe.protein} onChange={(e) => setEditRecipe({ ...editRecipe, protein: e.target.value })} />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Carbs</label>
+                            <input type="number" value={editRecipe.carbs} onChange={(e) => setEditRecipe({ ...editRecipe, carbs: e.target.value })} />
+                        </div>
+                        <div className="modal-field">
+                            <label className="modal-field-label">Fats</label>
+                            <input type="number" value={editRecipe.fats} onChange={(e) => setEditRecipe({ ...editRecipe, fats: e.target.value })} />
+                        </div>
+                        <div className="modal-buttons">
+                            <button type="submit">Save Changes</button>
+                            <button type="button" onClick={onClose}>Cancel</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </>

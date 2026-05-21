@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router"
 import { Navbar } from "../Components/Navbar.jsx"
 import { G4Sfooter } from "../Components/Footer.jsx"
-import { Plus, Check, Trash2, ShoppingCart } from "lucide-react"
+import { Plus, Check, Trash2, ShoppingCart, Pencil, X } from "lucide-react"
 import "./HomePage.css"
 import "./Components.css"
 import "./ShoppingListPage.css"
@@ -13,6 +13,8 @@ export default function ShoppingList() {
     const [items, setItems] = useState([])
     const [showAddForm, setShowAddForm] = useState(false)
     const [newItem, setNewItem] = useState({ name: "", quantity: "", price: "" })
+    const [editingId, setEditingId] = useState(null)
+    const [editItem, setEditItem] = useState({ name: "", quantity: "", price: "" })
 
     useEffect(() => {
         api.get("/ShoppingItem")
@@ -57,6 +59,25 @@ export default function ShoppingList() {
         }
     }
 
+    function handleStartEdit(item) {
+        setEditingId(item.id)
+        setEditItem({ name: item.name, quantity: item.quantity, price: item.price })
+    }
+
+    function handleEditSave(item) {
+        api.put(`/ShoppingItem/${item.id}`, {
+            ...item,
+            name: editItem.name,
+            quantity: editItem.quantity,
+            price: Number(editItem.price) || 0,
+        })
+            .then(() => {
+                setEditingId(null)
+                api.get("/ShoppingItem").then(res => setItems(res.data))
+            })
+            .catch(err => console.error("Failed to update item", err))
+    }
+
     function getEstimatedTotal() {
         return items.reduce((total, item) => total + item.price, 0).toFixed(2)
     }
@@ -91,6 +112,12 @@ export default function ShoppingList() {
                                     item={item}
                                     onToggle={() => handleToggle(item)}
                                     onDelete={() => handleDelete(item.id)}
+                                    isEditing={editingId === item.id}
+                                    editItem={editItem}
+                                    setEditItem={setEditItem}
+                                    onStartEdit={() => handleStartEdit(item)}
+                                    onEditSave={() => handleEditSave(item)}
+                                    onEditCancel={() => setEditingId(null)}
                                 />
                             ))}
                         </div>
@@ -162,7 +189,48 @@ function ShoppingListAddForm({ newItem, setNewItem, onSubmit, onCancel }) {
     )
 }
 
-function ShoppingListItem({ item, onToggle, onDelete }) {
+function ShoppingListItem({ item, onToggle, onDelete, isEditing, editItem, setEditItem, onStartEdit, onEditSave, onEditCancel }) {
+    if (isEditing) {
+        return (
+            <>
+                <div className="ShoppingList-item ShoppingList-item-editing">
+                    <div className="ShoppingList-item-left" style={{ flex: 1 }}>
+                        <input
+                            className="ShoppingList-edit-input"
+                            type="text"
+                            value={editItem.name}
+                            onChange={(e) => setEditItem({ ...editItem, name: e.target.value })}
+                            autoFocus
+                        />
+                    </div>
+                    <div className="ShoppingList-item-right">
+                        <input
+                            className="ShoppingList-edit-input ShoppingList-edit-input-small"
+                            type="text"
+                            value={editItem.quantity}
+                            onChange={(e) => setEditItem({ ...editItem, quantity: e.target.value })}
+                            placeholder="Qty"
+                        />
+                        <input
+                            className="ShoppingList-edit-input ShoppingList-edit-input-small"
+                            type="number"
+                            step="0.01"
+                            value={editItem.price}
+                            onChange={(e) => setEditItem({ ...editItem, price: e.target.value })}
+                            placeholder="Price"
+                        />
+                        <button className="ShoppingList-edit-save" onClick={onEditSave}>
+                            <Check size={16} />
+                        </button>
+                        <button className="ShoppingList-item-delete" onClick={onEditCancel}>
+                            <X size={16} />
+                        </button>
+                    </div>
+                </div>
+            </>
+        )
+    }
+
     return (
         <>
             <div className="ShoppingList-item">
@@ -179,6 +247,9 @@ function ShoppingListItem({ item, onToggle, onDelete }) {
                     <span className={`ShoppingList-item-price ${item.isChecked ? "ShoppingList-item-price-checked" : ""}`}>
                         €{item.price.toFixed(2)}
                     </span>
+                    <button className="ShoppingList-item-edit" onClick={onStartEdit}>
+                        <Pencil size={16} />
+                    </button>
                     <button className="ShoppingList-item-delete" onClick={onDelete}>
                         <Trash2 size={16} />
                     </button>

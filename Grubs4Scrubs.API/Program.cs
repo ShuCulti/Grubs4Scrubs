@@ -1,10 +1,13 @@
 using Grubs4Scrubs.DataAccess;
 using Grubs4Scrubs.Business;
 using Grubs4Scrubs.Domain;
+using Microsoft.IdentityModel.Tokens.Experimental;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
 builder.Services.AddOpenApi();
 builder.Services.AddCors(policy =>
 {
@@ -18,10 +21,24 @@ builder.Services.AddCors(policy =>
 
 builder.Services.AddControllers();
 
-// DEPENDENCY INJECTION — this is where you wire the layers together.
+builder.Services.AddAuthentication("Bearer")
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+                };
+            });
+
+// DEPENDENCY INJECTION: this is where you wire the layers together.
 // "Scoped" means one instance per HTTP request.
-// When a controller asks for IRecipeService, .NET gives it a RecipeService.
-// When RecipeService asks for IRecipeRepository, .NET gives it a RecipeRepository.
+
 builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<IRecipeService, RecipeService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -43,6 +60,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
