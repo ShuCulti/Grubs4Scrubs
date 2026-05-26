@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { useNavigate } from "react-router"
 import "./SignUpPage.css"
+import { registerUser} from "../services/authService"
 
 export default function SignUpPage() {
     const navigate = useNavigate()
-    const [fullName, setFullName] = useState("")
+    const [userName, setUserName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
@@ -12,7 +13,13 @@ export default function SignUpPage() {
 
     function handleSubmit(e) {
         e.preventDefault()
-        console.log("Sign up submitted:", { fullName, email, password, agreedToTerms })
+        
+        registerUser(userName, email, password)
+        .then(() => {
+            navigate('/login')
+        })
+        .catch(err => console.log("Registration Failed", err))
+        ;
     }
 
     return (
@@ -27,7 +34,7 @@ export default function SignUpPage() {
                             <SignUpSocials />
                             <SignUpDivider />
                             <form className="SignUpPage-form" onSubmit={handleSubmit}>
-                                <SignUpNameField fullName={fullName} setFullName={setFullName} />
+                                <SignUpNameField userName={userName} setUserName={setUserName} />
                                 <SignUpEmailField email={email} setEmail={setEmail} />
                                 <SignUpPasswordField
                                     password={password}
@@ -117,7 +124,7 @@ function SignUpDivider() {
     )
 }
 
-function SignUpNameField({ fullName, setFullName }) {
+function SignUpNameField({ userName, setUserName }) {
     return (
         <>
             <div className="SignUpPage-field">
@@ -129,8 +136,8 @@ function SignUpNameField({ fullName, setFullName }) {
                         id="signup-name"
                         type="text"
                         placeholder="Alex Scrub"
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)}
                         required
                     />
                 </div>

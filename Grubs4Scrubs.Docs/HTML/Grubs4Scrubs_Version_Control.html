@@ -1,0 +1,72 @@
+<html><body>
+<h1 style="text-align:center;">Student Meal Planner</h1>
+<h2 style="text-align:center;">Version Control Evidence</h2>
+<p style="text-align:center;"><em>A Managing Document for the Grubs4Scrubs Project</em></p>
+<p style="text-align:center;">Date: April 2026<br>Author: Yao Cheng Zhou</p>
+<hr>
+<h2>How I Use Git</h2>
+<p>The Grubs4Scrubs project lives in a GitHub repository. I use Git for version control on both the frontend (React + Vite) and backend (ASP.NET Core). This document explains my workflow: how I commit, how I branch, and what the repo structure looks like.</p>
+<p>[NOTE: Add your GitHub repo URL here. Also add screenshots of your commit history and any branch graphs if you have them.]</p>
+<h2>Repository Structure</h2>
+<p>The repo contains both the frontend and backend in a single repository. The folder structure looks like this:</p>
+<pre><code>Grubs4Scrubs/
+├── Frontend/                   ← React + Vite frontend
+│   └── src/
+│       ├── Pages/              ← Page components + CSS
+│       ├── Components/         ← Shared components (Navbar, Footer, Searchbar)
+│       ├── services/           ← Axios API service files
+│       └── main.jsx
+├── Grubs4Scrubs.sln            ← .NET solution file
+├── Grubs4Scrubs.API/           ← Controllers (Recipe, User, ShoppingItem, Auth), Program.cs
+├── Grubs4Scrubs.Business/      ← Service interfaces + implementations
+├── Grubs4Scrubs.DataAccess/    ← ADO.NET repositories, DbSeeder
+├── Grubs4Scrubs.Domain/        ← Models, repository interfaces, DTOs
+├── Grubs4Scrubs.Tests/         ← Unit tests with FakeRepository
+└── Grubs4Scrubs.Docs/          ← Portfolio documentation (markdown)
+</code></pre>
+<h2>Branching Strategy</h2>
+<p>[NOTE: Describe your actual branching approach. If you work mostly on main, say so honestly. If you use feature branches, list some examples. Here's a template for either approach:]</p>
+<p>For a solo project, I kept it simple. Most development happened on the main branch. When I worked on bigger changes that might break things (like the Tailwind removal or the layered architecture migration), I created a feature branch so I could test everything before merging back.</p>
+<p>Example branches:
+- <code>feature/remove-tailwind</code> for the CSS migration
+- <code>feature/layered-architecture</code> for the backend restructuring
+- <code>feature/recipe-view-page</code> for building the recipe detail page</p>
+<p>[Update this with your actual branch names, or remove the feature branch section if you worked directly on main.]</p>
+<h2>Commit Practices</h2>
+<p>I try to commit after completing a logical chunk of work, not after every line change. A commit should represent one thing: "added Recipe View page", "removed Tailwind from Dashboard", "moved models to Domain project". Not "various changes" or "stuff".</p>
+<p>[NOTE: Add 5-10 real commit messages from your history here. Something like:]</p>
+<p>Example commits from the project:</p>
+<pre><code>- &quot;Add DashboardPage with custom CSS replacing Tailwind&quot;
+- &quot;Create RecipeViewPage with ingredient checklist&quot;
+- &quot;Wire recipe card navigation from RecipesPage to RecipeView&quot;
+- &quot;Split backend into layered architecture (Domain, DataAccess, Business, API)&quot;
+- &quot;Fix namespace errors after project restructure&quot;
+- &quot;Remove Tailwind dependencies from MealPlannerPage&quot;
+- &quot;Add RecipeRepository with ADO.NET implementation&quot;
+- &quot;Register DI services in Program.cs&quot;
+- &quot;Add ShoppingItem backend (model, repo, service, controller)&quot;
+- &quot;Add inline editing to ShoppingListPage&quot;
+- &quot;Add AuthController with register and login endpoints&quot;
+- &quot;Add JWT middleware configuration to Program.cs&quot;
+- &quot;Add recipe edit modal to RecipeViewPage&quot;
+</code></pre>
+<p>[NOTE: Swap in your actual commit messages from <code>git log --oneline</code>. These are based on work you've done but the exact wording might differ.]</p>
+<h2>What's in .gitignore</h2>
+<p>Standard ignores for both React and .NET:
+- <code>node_modules/</code> (frontend dependencies, reinstalled with npm install)
+- <code>bin/</code> and <code>obj/</code> (.NET build output)
+- <code>.vs/</code> (Visual Studio settings)
+- <code>appsettings.Development.json</code> (local config that might contain connection strings)</p>
+<h2>Lessons Learned About Version Control</h2>
+<p>The layered architecture migration taught me the most about Git. I moved files between projects, renamed namespaces, and updated references all in one go. That made for a messy diff. If I did it again, I'd commit after each step: first move the models, commit. Then create the DataAccess project, commit. Then move the repositories, commit. Smaller commits make it way easier to find where something broke if the build fails.</p>
+<p>The Tailwind removal was similar. I should've committed after converting each page instead of converting everything and committing once. When something broke, I had to search through a huge diff to find the issue.</p>
+<h2>GitHub Features Used</h2>
+<p>[NOTE: Fill in whichever of these you actually use:]</p>
+<ul>
+<li><strong>Issues:</strong> [Did you use GitHub Issues to track bugs or features?]</li>
+<li><strong>Projects board:</strong> [Did you use GitHub Projects as a kanban/sprint board?]</li>
+<li><strong>Pull requests:</strong> [Did you use PRs even as a solo dev, or merge directly?]</li>
+<li><strong>Actions/CI:</strong> [Did you set up any GitHub Actions?]</li>
+</ul>
+<p>Even for a solo project, having the code on GitHub means I have a backup, a history of every change, and a link I can share with my coach for feedback.</p>
+</body></html>

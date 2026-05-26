@@ -1,6 +1,8 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from "react-router"
 import "./LoginPage.css"
+import { loginUser } from "../services/authService"
+import { AuthContext } from "../context/AuthContext"
 
 export default function LoginPage() {
     const navigate = useNavigate()
@@ -8,10 +10,20 @@ export default function LoginPage() {
     const [password, setPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const [rememberMe, setRememberMe] = useState(false)
+    
+    const { setToken } = useContext(AuthContext)
 
     function handleSubmit(e) {
         e.preventDefault()
-        console.log("Login submitted:", { email, password, rememberMe })
+
+        loginUser(email, password)
+        .then(data => {
+            setToken(data.token)
+            navigate("/")
+        })
+        .catch(err => console.log("Login Failed", err))
+        
+        
     }
 
     return (
@@ -34,7 +46,7 @@ export default function LoginPage() {
                                     setShowPassword={setShowPassword}
                                 />
                                 <LoginRemember rememberMe={rememberMe} setRememberMe={setRememberMe} />
-                                <button className="LoginPage-submit" type="submit">Sign in</button>
+                                <button className="LoginPage-submit" type="submit">Log in</button>
                             </form>
                             <p className="LoginPage-signup-link">
                                 Don't have an account?{" "}

@@ -1,0 +1,132 @@
+<html><body>
+<h1 style="text-align:center;">Student Meal Planner</h1>
+<h2 style="text-align:center;">ERD & Database Design</h2>
+<p style="text-align:center;"><em>A Design Document for the Grubs4Scrubs Project</em></p>
+<p style="text-align:center;">Date: April 2026<br>Author: Yao Cheng Zhou</p>
+<hr>
+<p><strong>LO mapped:</strong> LO2 Designing (Software Design)</p>
+<h2>Why this document exists</h2>
+<p>Before writing any SQL or repository code, I needed to think about what data the app actually stores and how the tables relate to each other. This doc covers the current database schema, the relationships between tables, and a few design decisions that aren't obvious from the SQL alone.</p>
+<h2>Entity Relationship Diagram</h2>
+<pre><code>┌──────────────────────────┐
+│         Users            │
+├──────────────────────────┤
+│ PK  Id          INT      │
+│     Email       NVARCHAR │
+│     PasswordHash NVARCHAR│
+│     UserName    NVARCHAR │
+│     GoogleId    NVARCHAR │◄── nullable, for future OAuth
+│     CreatedAt   DATETIME │
+└──────────┬───────────────┘
+           │
+           │ 1 ──── * (one user has many recipes)
+           │
+           ▼
+┌──────────────────────────────┐
+│          Recipes             │
+├──────────────────────────────┤
+│ PK  Id              INT     │
+│     Title           NVARCHAR│
+│     Description     NVARCHAR│
+│     PrepTime        INT     │
+│     CookTime        INT     │
+│     Servings        INT     │
+│     Tag             NVARCHAR│
+│     ImageUrl        NVARCHAR│
+│     EstimatedBudget DECIMAL │
+│     Category        NVARCHAR│
+│     Ingredients     NVARCHAR│◄── stored as JSON string
+│     Instructions    NVARCHAR│◄── stored as JSON string
+│ FK  UserId          INT     │◄── nullable, links to Users.Id
+│     Tips            NVARCHAR│
+│     Calories        INT     │
+│     Protein         INT     │
+│     Carbs           INT     │
+│     Fats            INT     │
+│     CreatedAt       DATETIME│
+└──────────────────────────────┘
+
+┌──────────────────────────┐
+│      ShoppingItems       │
+├──────────────────────────┤
+│ PK  Id          INT      │
+│     Name        NVARCHAR │
+│     Quantity    NVARCHAR  │
+│     Price       DECIMAL  │
+│     IsChecked   BIT      │
+│ FK  UserId      INT      │◄── nullable, links to Users.Id
+└──────────────────────────┘
+</code></pre>
+<h2>Tables in detail</h2>
+<h3>Users</h3>
+<p>Stores registered accounts. The <code>PasswordHash</code> column holds a BCrypt hash, never a plain-text password. <code>GoogleId</code> is there for a future Google OAuth flow but stays null for email/password accounts. <code>CreatedAt</code> defaults to the current UTC time on insert.</p>
+<p>The <code>Email</code> column should be unique in practice (the AuthController checks for duplicates before inserting), but there's no UNIQUE constraint on the column itself yet. That's a gap I should fix.</p>
+<h3>Recipes</h3>
+<p>The biggest table. Most columns are straightforward, but two need explaining:</p>
+<p><strong>Ingredients</strong> is stored as a JSON string, not as a separate table. The JSON looks like <code>["200g pasta", "2 eggs", "100g bacon"]</code>. I went with JSON-in-a-column instead of a separate Ingredients table because the ingredients don't need to be queried independently. You never search "show me all recipes that use pasta" in this app (yet). If that feature gets added, a normalized Ingredients table with a foreign key back to Recipes would make more sense.</p>
+<p><strong>Instructions</strong> is also JSON. Each instruction is an object with a title and description: <code>[{"title": "Boil the pasta", "description": "Fill a pot with water..."}]</code>. Same reasoning as ingredients. The instructions are always read and written as a complete list alongside their recipe, never individually.</p>
+<p><strong>UserId</strong> links a recipe to the user who created it. It's nullable because some seeded recipes don't belong to any user. Once the auth system is fully wired to the frontend, new recipes will always have a UserId set.</p>
+<h3>ShoppingItems</h3>
+<p>Simple table for the shopping list feature. Each item has a name, quantity (stored as a string because users type things like "2 cans" or "500g"), a price in decimal, and an IsChecked boolean for the checkbox state. UserId will eventually filter shopping items per user, but right now the app shows all items to everyone since login isn't connected to the frontend yet.</p>
+<h2>Relationships</h2>
+<p>There are two relationships in the current schema:</p>
+<ul>
+<li><strong>Users to Recipes:</strong> One-to-many. One user can create many recipes. The <code>UserId</code> foreign key on Recipes points back to <code>Users.Id</code>. Currently nullable since some recipes are seeded without an owner.</li>
+<li><strong>Users to ShoppingItems:</strong> One-to-many. One user has many shopping items. The <code>UserId</code> foreign key on ShoppingItems points to <code>Users.Id</code>. Also nullable for the same reason.</li>
+</ul>
+<p>There's no many-to-many relationship yet. If meal plans get a table, it'll likely be a join table between Users and Recipes with a day-of-week column, creating a many-to-many through a MealPlan table.</p>
+<h2>What I chose and why</h2>
+<p><strong>JSON columns instead of normalized tables for ingredients/instructions.</strong> The trade-off is that I can't query individual ingredients with SQL. But for this app, ingredients and instructions are always read as a complete blob alongside their recipe. Normalizing them would mean extra JOIN queries on every recipe fetch and more repository code for something that doesn't need to be queried separately. If recipe search-by-ingredient becomes a feature, I'd reconsider this.</p>
+<p><strong>NVARCHAR for Quantity instead of a numeric type.</strong> Users type quantities like "a handful," "2 large," or "500g." Forcing a numeric type would mean splitting into amount + unit columns, which adds complexity for very little gain in a student meal planning app.</p>
+<p><strong>No foreign key constraints in the SQL yet.</strong> The relationships exist logically (UserId columns reference Users.Id), but I haven't added <code>FOREIGN KEY</code> constraints to the CREATE TABLE statements. That's something I should add. Without them, SQL Server won't stop me from inserting a recipe with a UserId that doesn't exist in the Users table.</p>
+<p>[NOTE: If you've added any FK constraints since this was written, update this section.]</p>
+<h2>Tables I'll probably need later</h2>
+<p>These don't exist yet, but the app will likely need them:</p>
+<ul>
+<li><strong>MealPlans</strong> (Id, UserId, RecipeId, DayOfWeek, MealType) for persisting the weekly meal planner. Right now meal plans only live in React state and disappear on page refresh.</li>
+<li><strong>SavedRecipes</strong> (UserId, RecipeId) if I add a "save to favorites" feature. Simple join table.</li>
+</ul>
+<h2>SQL CREATE statements</h2>
+<p>For reference, here are the CREATE TABLE statements used to set up the database.</p>
+<pre><code class="language-sql">CREATE TABLE Users (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Email NVARCHAR(255) NOT NULL,
+    PasswordHash NVARCHAR(255) NOT NULL,
+    UserName NVARCHAR(100) NOT NULL,
+    GoogleId NVARCHAR(255),
+    CreatedAt DATETIME DEFAULT GETUTCDATE()
+);
+
+CREATE TABLE Recipes (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Title NVARCHAR(255) NOT NULL,
+    Description NVARCHAR(MAX),
+    PrepTime INT,
+    CookTime INT,
+    Servings INT,
+    Tag NVARCHAR(100),
+    ImageUrl NVARCHAR(500),
+    EstimatedBudget DECIMAL(10,2),
+    Category NVARCHAR(100),
+    Ingredients NVARCHAR(MAX),
+    Instructions NVARCHAR(MAX),
+    UserId INT,
+    Tips NVARCHAR(MAX),
+    Calories INT,
+    Protein INT,
+    Carbs INT,
+    Fats INT,
+    CreatedAt DATETIME DEFAULT GETUTCDATE()
+);
+
+CREATE TABLE ShoppingItems (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(255) NOT NULL,
+    Quantity NVARCHAR(100),
+    Price DECIMAL(10,2),
+    IsChecked BIT DEFAULT 0,
+    UserId INT
+);
+</code></pre>
+<p>[NOTE: If you've changed these tables since setting them up, double-check the column types match what's actually in your database.]</p>
+</body></html>

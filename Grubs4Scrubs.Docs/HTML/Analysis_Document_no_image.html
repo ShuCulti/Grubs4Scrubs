@@ -1,0 +1,382 @@
+<html><body>
+<h1 style="text-align:center;">Student Meal Planner</h1>
+<h2 style="text-align:center;">Analysis Document</h2>
+<p style="text-align:center;"><em>An Analysis Document for the Grubs4Scrubs Project</em></p>
+<p style="text-align:center;">Date: May 2026<br>Author: Yao Cheng Zhou</p>
+<hr>
+<p><strong>Student Meal Planner</strong></p>
+<p>Analysis Document</p>
+<p><em>An Analysis Document for the Grubs4Scrubs Project</em> </p>
+<p>Date: May 2026</p>
+<p>Author: Yao Cheng Zhou</p>
+<p><strong>Table of Contents</strong></p>
+<p><a href="#heading="><strong>Introduction 3</strong></a></p>
+<p><a href="#heading="><strong>Project Description  3</strong></a></p>
+<p><a href="#heading="><strong>Project Analysis 3</strong></a></p>
+<p><a href="#heading="><strong>Gap 1: Budget Awareness  3</strong></a></p>
+<p><a href="#heading="><strong>Gap 2: Student-Friendly Complexity   3</strong></a></p>
+<p><a href="#heading="><strong>Gap 3: Meal Planning Integration 4</strong></a></p>
+<p><a href="#heading="><strong>Gap 4: Nutritional Transparency  4</strong></a></p>
+<p><a href="#heading="><strong>Existing Solutions   4</strong></a></p>
+<p><a href="#heading="><strong>Stakeholder Analysis 4</strong></a></p>
+<p><a href="#heading="><strong>Functional Requirements  6</strong></a></p>
+<p><a href="#heading="><strong>User Management  6</strong></a></p>
+<p><a href="#heading="><strong>Recipe Management    6</strong></a></p>
+<p><a href="#heading="><strong>Meal Planning    6</strong></a></p>
+<p><a href="#heading="><strong>Grocery List 6</strong></a></p>
+<p><a href="#heading="><strong>Non-Functional Requirements  8</strong></a></p>
+<p><a href="#heading="><strong>Domain Model 9</strong></a></p>
+<p><a href="#heading="><strong>Implemented Entities 9</strong></a></p>
+<p><a href="#heading="><strong>Planned Entities 9</strong></a></p>
+<p><a href="#heading="><strong>Entity Relationships 9</strong></a></p>
+<p><a href="#heading="><strong>Entity Relationship Diagram  10</strong></a></p>
+<p><a href="#heading="><strong>Constraints  11</strong></a></p>
+<p><a href="#heading="><strong>Assumptions  11</strong></a></p>
+<p><a href="#heading="><strong>Conclusion   11</strong></a></p>
+<h1><strong>Introduction</strong></h1>
+<p>This document covers the full analysis behind Grubs4Scrubs, a web app I'm building for my Semester 2 individual project at Fontys ICT. The whole idea is pretty straightforward: students need an easy way to find cheap, quick meals they can actually make in a dorm or small kitchen. I've been there, and most recipe apps don't really get what it's like cooking on a tight budget with barely any gear.</p>
+<p>The purpose of this analysis is to break down the problem, figure out what already exists, define what the app needs to do, and map out the data model that supports everything. This document started as groundwork before building, but I've been updating it as development progresses to keep it honest about what's actually implemented versus what's still planned.</p>
+<h1><strong>Project Description</strong></h1>
+<p>Grubs4Scrubs is a student meal planner web application. The frontend runs on React 19 with Vite and custom CSS (I originally used Tailwind but removed it in Sprint 3 to keep styling consistent across all pages). The backend is an ASP.NET Core Web API built on .NET 10 with a SQL Server database, using raw ADO.NET for all data access. Authentication runs on BCrypt for password hashing and JWT tokens for session management.</p>
+<p>The target audience is pretty specific: college and university students who are living on their own for the first time, cooking with limited equipment, and watching every euro they spend on food. The app needs to feel fast and simple because nobody wants to fight with a complicated interface just to figure out what's for dinner.</p>
+<h1><strong>Project Analysis</strong></h1>
+<p>I looked at the problem from a few different angles to figure out what gaps exist and where Grubs4Scrubs can actually add value.</p>
+<h2><strong>Gap 1: Budget Awareness</strong></h2>
+<p>Most recipe platforms don't show you what a meal actually costs. They'll list ingredients but you're on your own figuring out the price. For students, that's a dealbreaker. If you've got 15 euros to last the week, you need to know upfront whether a recipe fits your budget. Grubs4Scrubs includes an estimated budget per recipe and filters by price range so you can plan around what you can actually afford.</p>
+<h2><strong>Gap 2: Student-Friendly Complexity</strong></h2>
+<p>A lot of recipe apps assume you've got a full kitchen with every tool imaginable. Students typically have a single pan, a pot, maybe a microwave. The recipes on Grubs4Scrubs are specifically tagged by prep time and cook time, and they're written for people who don't have sous vide machines or stand mixers. Quick, simple, doable with basic gear.</p>
+<h2><strong>Gap 3: Meal Planning Integration</strong></h2>
+<p>Finding a recipe is one thing, but planning a whole week of meals is another problem entirely. Most free apps either don't have meal planning at all or lock it behind a subscription. Grubs4Scrubs will let users drag recipes into a weekly planner and auto-generate a grocery list from the combined ingredients. No paywall, no premium tier.</p>
+<h2><strong>Gap 4: Nutritional Transparency</strong></h2>
+<p>Students tend to either eat too much junk food or accidentally under-eat because they're busy. Each recipe in Grubs4Scrubs shows calories, protein, fats, and carbs right on the card. It's not a full diet tracker, but it gives you enough info to make reasonable choices without needing a separate app for nutrition.</p>
+<h1><strong>Existing Solutions</strong></h1>
+<p>Before building anything, I looked at three popular apps that overlap with what Grubs4Scrubs is trying to do. Here's how they compare:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">AllRecipes</th>
+<th style="text-align: left;">Mealime</th>
+<th style="text-align: left;">Grubs4Scrubs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Budget per recipe</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Student-focused recipes</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Partially</td>
+<td style="text-align: left;">Yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Meal planning</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Yes (paid)</td>
+<td style="text-align: left;">Yes (free)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Grocery list generation</td>
+<td style="text-align: left;">Yes (basic)</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Nutritional info</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Partial</td>
+<td style="text-align: left;">Yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Prep/Cook time filters</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Free to use</td>
+<td style="text-align: left;">Yes (with ads)</td>
+<td style="text-align: left;">Freemium</td>
+<td style="text-align: left;">Yes</td>
+</tr>
+</tbody>
+</table>
+<p>The main takeaway is that none of the existing options combine budget tracking, student-specific recipes, and free meal planning in one place. AllRecipes is massive but generic and ad-heavy. Mealime is slick but locks planning behind a paywall. Grubs4Scrubs fills the gap by keeping everything free, focused, and built around what students actually need.</p>
+<h1><strong>Stakeholder Analysis</strong></h1>
+<p>I identified the key stakeholders and what each of them cares about:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Stakeholder</th>
+<th style="text-align: left;">Interest</th>
+<th style="text-align: left;">Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Students (end users)</td>
+<td style="text-align: left;">Finding cheap, easy meals. Planning their week without overthinking it.</td>
+<td style="text-align: left;">Primary users. Their feedback shapes what features matter most.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fontys ICT (school)</td>
+<td style="text-align: left;">Seeing proper software engineering practices. Clean architecture, testing, documentation.</td>
+<td style="text-align: left;">They grade the project. The technical decisions need to demonstrate learning outcomes.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Developer (me)</td>
+<td style="text-align: left;">Building something real that works. Learning React, .NET, and SQL Server properly.</td>
+<td style="text-align: left;">I make all the decisions and do all the work. My skill growth directly affects quality.</td>
+</tr>
+</tbody>
+</table>
+<h1><strong>Functional Requirements</strong></h1>
+<p>I broke the functional requirements down using MoSCoW prioritization. Here's what the app needs to do:</p>
+<h2><strong>User Management</strong></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">Requirement</th>
+<th style="text-align: left;">Priority</th>
+<th style="text-align: left;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">FR-01</td>
+<td style="text-align: left;">Users can register with email and password</td>
+<td style="text-align: left;">Must</td>
+<td style="text-align: left;">Done</td>
+</tr>
+<tr>
+<td style="text-align: left;">FR-02</td>
+<td style="text-align: left;">Users can log in and receive a JWT token</td>
+<td style="text-align: left;">Must</td>
+<td style="text-align: left;">Done (backend)</td>
+</tr>
+<tr>
+<td style="text-align: left;">FR-03</td>
+<td style="text-align: left;">Users can log in via Google OAuth</td>
+<td style="text-align: left;">Should</td>
+<td style="text-align: left;">Planned</td>
+</tr>
+<tr>
+<td style="text-align: left;">FR-04</td>
+<td style="text-align: left;">Users can view and edit their profile</td>
+<td style="text-align: left;">Should</td>
+<td style="text-align: left;">Planned</td>
+</tr>
+</tbody>
+</table>
+<h2><strong>Recipe Management</strong></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">Requirement</th>
+<th style="text-align: left;">Priority</th>
+<th style="text-align: left;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">FR-05</td>
+<td style="text-align: left;">Users can browse all available recipes</td>
+<td style="text-align: left;">Must</td>
+<td style="text-align: left;">Done</td>
+</tr>
+<tr>
+<td style="text-align: left;">FR-06</td>
+<td style="text-align: left;">Users can view recipe details including nutritional info</td>
+<td style="text-align: left;">Must</td>
+<td style="text-align: left;">Done</td>
+</tr>
+<tr>
+<td style="text-align: left;">FR-07</td>
+<td style="text-align: left;">Users can filter recipes by category, budget, and prep time</td>
+<td style="text-align: left;">Must</td>
+<td style="text-align: left;">Done (category filters working, budget/prep time planned)</td>
+</tr>
+<tr>
+<td style="text-align: left;">FR-08</td>
+<td style="text-align: left;">Users can search recipes by keyword</td>
+<td style="text-align: left;">Must</td>
+<td style="text-align: left;">Done</td>
+</tr>
+<tr>
+<td style="text-align: left;">FR-09</td>
+<td style="text-align: left;">Users can create and submit their own recipes</td>
+<td style="text-align: left;">Should</td>
+<td style="text-align: left;">Done</td>
+</tr>
+<tr>
+<td style="text-align: left;">FR-10</td>
+<td style="text-align: left;">Users can edit and delete their own recipes</td>
+<td style="text-align: left;">Should</td>
+<td style="text-align: left;">Done</td>
+</tr>
+</tbody>
+</table>
+<h2><strong>Meal Planning</strong></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">Requirement</th>
+<th style="text-align: left;">Priority</th>
+<th style="text-align: left;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">FR-11</td>
+<td style="text-align: left;">Users can create a weekly meal plan</td>
+<td style="text-align: left;">Should</td>
+<td style="text-align: left;">Planned</td>
+</tr>
+<tr>
+<td style="text-align: left;">FR-12</td>
+<td style="text-align: left;">Users can assign recipes to specific days and meal types</td>
+<td style="text-align: left;">Should</td>
+<td style="text-align: left;">Planned</td>
+</tr>
+<tr>
+<td style="text-align: left;">FR-13</td>
+<td style="text-align: left;">Users can view their meal plan for the current week</td>
+<td style="text-align: left;">Should</td>
+<td style="text-align: left;">Planned</td>
+</tr>
+</tbody>
+</table>
+<h2><strong>Grocery List</strong></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">Requirement</th>
+<th style="text-align: left;">Priority</th>
+<th style="text-align: left;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">FR-14</td>
+<td style="text-align: left;">System generates a grocery list from the weekly meal plan</td>
+<td style="text-align: left;">Could</td>
+<td style="text-align: left;">Partial (manual shopping list with CRUD exists)</td>
+</tr>
+<tr>
+<td style="text-align: left;">FR-15</td>
+<td style="text-align: left;">Users can check off items on the grocery list</td>
+<td style="text-align: left;">Could</td>
+<td style="text-align: left;">Done</td>
+</tr>
+</tbody>
+</table>
+<h1><strong>Non-Functional Requirements</strong></h1>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">ID</th>
+<th style="text-align: left;">Requirement</th>
+<th style="text-align: left;">Category</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NFR-01</td>
+<td style="text-align: left;">Pages should load within 2 seconds on a standard connection</td>
+<td style="text-align: left;">Performance</td>
+</tr>
+<tr>
+<td style="text-align: left;">NFR-02</td>
+<td style="text-align: left;">The app should work on mobile and desktop browsers</td>
+<td style="text-align: left;">Usability</td>
+</tr>
+<tr>
+<td style="text-align: left;">NFR-03</td>
+<td style="text-align: left;">Passwords must be hashed using BCrypt before storage</td>
+<td style="text-align: left;">Security</td>
+</tr>
+<tr>
+<td style="text-align: left;">NFR-04</td>
+<td style="text-align: left;">The API should follow RESTful conventions</td>
+<td style="text-align: left;">Maintainability</td>
+</tr>
+<tr>
+<td style="text-align: left;">NFR-05</td>
+<td style="text-align: left;">The codebase should use layered architecture with clear separation of concerns</td>
+<td style="text-align: left;">Maintainability</td>
+</tr>
+<tr>
+<td style="text-align: left;">NFR-06</td>
+<td style="text-align: left;">Business logic should be covered by unit tests using xUnit with fake repositories</td>
+<td style="text-align: left;">Quality</td>
+</tr>
+<tr>
+<td style="text-align: left;">NFR-07</td>
+<td style="text-align: left;">User authentication should use JWT tokens with BCrypt password hashing</td>
+<td style="text-align: left;">Security</td>
+</tr>
+</tbody>
+</table>
+<h1><strong>Domain Model</strong></h1>
+<p>The domain model describes the core entities in the system and how they relate to each other. Some of these are already implemented in code, while others are planned for upcoming sprints.</p>
+<h2><strong>Implemented Entities</strong></h2>
+<p>User is the central entity. Every user has an email, a hashed password (BCrypt), a username, and optionally a Google ID for OAuth login. Registration and login are fully working on the backend through the AuthController, which issues JWT tokens on successful login. The frontend has LoginPage and SignUpPage components that talk to these endpoints.</p>
+<p>Recipe holds all the info about a single meal: title, description, prep and cook times, servings, an estimated budget, a category, tags, tips, and nutritional data (calories, protein, fats, carbs as integers). Ingredients and instructions are stored as JSON strings inside the Recipe table because the school doesn't allow an ORM, so I'm keeping things manageable with raw ADO.NET queries. Each recipe can optionally belong to a user via UserId. Full CRUD is implemented on both frontend and backend. The RecipeViewPage has an edit modal for updating all fields and a delete button, plus an "Add to Shopping List" button that pushes ingredients directly to the ShoppingItem API.</p>
+<p>ShoppingItem (originally planned as GroceryItem) is now a standalone entity with its own table, full backend CRUD (ShoppingItemController, ShoppingItemService, ShoppingItemRepository), and a working frontend page. Each item has a name, quantity (as a string), price, a checkbox for marking it off, and a UserId for future per-user filtering. The ShoppingListPage supports adding, editing, deleting, and checking off items. The current implementation is a manual shopping list (plus the recipe integration mentioned above) rather than auto-generated from meal plans, but the table and API are in place for that integration later.</p>
+<h2><strong>Planned Entities</strong></h2>
+<p>MealPlan represents a weekly plan created by a user. It has a name, a start date, and an end date. The frontend already has a MealPlannerPage with hardcoded sample data, but the backend tables and API don't exist yet.</p>
+<p>MealSlot ties a specific recipe to a day of the week and a meal type (breakfast, lunch, dinner) within a meal plan. Each MealPlan will contain multiple MealSlots.</p>
+<p>Favorite is a simple join table that lets users bookmark recipes they want to come back to. It just links a UserId to a RecipeId with a timestamp.</p>
+<h2><strong>Entity Relationships</strong></h2>
+<p>Here's how everything connects: a User can have zero or many Recipes (one-to-many). A User can also have zero or many ShoppingItems, MealPlans, and Favorites (all one-to-many). Each MealPlan contains one or many MealSlots (one-to-many), and each MealSlot references exactly one Recipe (many-to-one). A Favorite links back to exactly one Recipe (many-to-one). On the frontend, recipes can push their ingredients directly into ShoppingItems through the "Add to Shopping List" button, which creates one ShoppingItem per ingredient.</p>
+<h1><strong>Entity Relationship Diagram</strong></h1>
+<p>The ERD below shows all entities with their attributes, data types, primary keys, and foreign keys. Blue entities (User, Recipe, ShoppingItem) are implemented in the codebase with full CRUD operations. The auth system (register, login, JWT) is also complete on the backend. Purple entities (MealPlan, MealSlot, Favorite) are planned for future sprints.</p>
+<p><p><em>[Entity Relationship Diagram - see original document for image]</em></p><br />
+The diagram uses color coding to distinguish between implemented and planned entities. Cardinality labels (1, 0..*, 1..*) show how many instances of one entity can relate to another. Note that Ingredients and Instructions are currently stored as JSON strings inside the Recipe table rather than as separate normalized tables.</p>
+<h1><strong>Constraints</strong></h1>
+<p>There are a few constraints that shape how I can build this project:</p>
+<ul>
+<li>
+<p>No ORM allowed. The school requires raw ADO.NET with parameterized SQL queries, which means I'm writing all the data access code by hand. It's more work, but it forces me to actually understand what's happening at the database level.</p>
+</li>
+<li>
+<p>Single developer. I'm the only person working on this, so I have to be realistic about scope. That's why the MoSCoW prioritization matters: Must-haves get done first, everything else is stretch.</p>
+</li>
+<li>
+<p>Time-boxed to one semester. The project runs alongside other coursework, so I can't spend unlimited time on it. Sprint planning and backlog management keep things on track.</p>
+</li>
+<li>
+<p>SQL Server as the database. This is a school requirement. I'm running it locally for development.</p>
+</li>
+<li>
+<p>The frontend must be a JavaScript framework. I chose React because it's the most widely used and has the best job market relevance.</p>
+</li>
+</ul>
+<h1><strong>Assumptions</strong></h1>
+<p>A few assumptions I'm working with:</p>
+<ul>
+<li>
+<p>Users have a modern browser (Chrome, Firefox, Safari, Edge). I'm not supporting Internet Explorer.</p>
+</li>
+<li>
+<p>Users have basic internet access. The app isn't designed for offline use right now.</p>
+</li>
+<li>
+<p>Recipe nutritional data is estimated and provided by the recipe creator. It's not pulled from a certified nutrition database.</p>
+</li>
+<li>
+<p>The app will be hosted locally during development. Deployment to a cloud provider is a stretch goal.</p>
+</li>
+</ul>
+<h1><strong>Conclusion</strong></h1>
+<p>This analysis has held up well through actual development. The gaps I identified early on (budget awareness, student-friendly recipes, free meal planning, nutritional transparency) still drive the features I'm building. Most of the Must-have requirements are done: users can browse recipes, view full details with nutrition info, search and filter, create new recipes, and edit or delete existing ones. The auth system (register, login, JWT) is working on the backend. The shopping list is fully functional with its own CRUD API and frontend page, including the ability to push ingredients straight from a recipe.</p>
+<p>What's left is mostly the Should-have and Could-have features: meal planning with the weekly drag-and-drop planner, Google OAuth, user profiles, and auto-generating grocery lists from meal plans. The domain model and ERD have proven accurate. ShoppingItem moved from planned to implemented without needing schema changes, which tells me the upfront design work was worth it. Unit tests cover the core RecipeService logic with a FakeRepository, and the layered architecture keeps things organized even as the codebase grows. The foundation is solid, and the remaining features are well-scoped for the time I have left.</p>
+</body></html>

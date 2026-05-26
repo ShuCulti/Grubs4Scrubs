@@ -2,7 +2,7 @@ import "react"
 import "./HomePage.css"
 import "./Components.css"
 import { useNavigate } from "react-router"
-import  {useState, useEffect} from "react"
+import  {useState, useEffect, useContext} from "react"
 import {LayoutDashboardIcon, PizzaIcon, LucideShoppingCart, Calendar1Icon}from "lucide-react"
 import {CalendarIcon,ShoppingBasketIcon,ForkKnifeIcon,} from "lucide-react"
 import {Navbar} from "../Components/Navbar.jsx"
@@ -10,7 +10,12 @@ import Searchbar  from "../Components/Searchbar.jsx"
 import {G4Sfooter} from "../Components/Footer.jsx"
 import api from "../services/recipeService.js"
 
+import { AuthContext } from "../context/AuthContext.jsx"
+
 export default function Home(){
+    const { token } = useContext(AuthContext)
+    console.log("Token:", token)
+    
     return(
         <>
         <div className="Home">

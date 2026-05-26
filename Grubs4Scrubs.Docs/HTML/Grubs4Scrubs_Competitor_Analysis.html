@@ -1,0 +1,151 @@
+<html><body>
+<h1 style="text-align:center;">Student Meal Planner</h1>
+<h2 style="text-align:center;">Competitor Analysis</h2>
+<p style="text-align:center;"><em>An Analysis Document for the Grubs4Scrubs Project</em></p>
+<p style="text-align:center;">Date: April 2026<br>Author: Yao Cheng Zhou</p>
+<hr>
+<p><strong>LO mapped:</strong> LO1 Analysing (User Specifications)</p>
+<h2>Why I did this</h2>
+<p>Before building anything, I wanted to see what's already out there for student meal planning. Half the design decisions are already made by what competitors get right and wrong. I just had to notice them. So I picked four apps that students actually talk about and spent time clicking through each one.</p>
+<h2>Competitors analyzed</h2>
+<p>I looked at apps that overlap with what Grubs4Scrubs is trying to do: affordable meal planning for people on tight budgets who don't have a lot of cooking experience.</p>
+<h3>Mealime</h3>
+<p><strong>Positioning:</strong> Free meal planner focused on simple recipes with auto-generated grocery lists.
+<strong>Key features:</strong></p>
+<ul>
+<li>Recipe browsing with dietary filters</li>
+<li>Automatic grocery list generation from selected recipes</li>
+<li>Step-by-step cooking instructions</li>
+<li>Meal plan scheduling</li>
+</ul>
+<p><strong>What they do well:</strong> The grocery list feature is genuinely useful. You pick your meals for the week and it spits out a shopping list grouped by store aisle. The recipes also tend to be simple, which fits the "I don't know how to cook" crowd.</p>
+<p><strong>What they do badly:</strong> There's no budget tracking at all. You can plan meals but you have zero idea what they'll cost until you're at the checkout. For students, that's a dealbreaker. The free tier is also limited in how many dietary preferences you can set.</p>
+<p><strong>What I'm taking from this:</strong> The auto-generated grocery list idea. Grubs4Scrubs does this through the "Add to Shopping List" button on each recipe.</p>
+<h3>Eat This Much</h3>
+<p><strong>Positioning:</strong> Automatic meal planner that generates daily meal plans based on calorie and budget targets.
+<strong>Key features:</strong></p>
+<ul>
+<li>Calorie-based meal generation</li>
+<li>Budget target per day</li>
+<li>Nutritional breakdown per meal</li>
+<li>Grocery list export</li>
+</ul>
+<p><strong>What they do well:</strong> The budget target feature is the closest thing to what Grubs4Scrubs does. You set a daily budget and it tries to stay under it. The nutritional info per meal is also solid.</p>
+<p><strong>What they do badly:</strong> The UI feels clinical. It's clearly built for fitness people, not students who just want to eat something decent. The generated meals often suggest ingredients that aren't available at a Dutch Albert Heijn or Jumbo. And the free tier is basically useless since it only plans one meal per day.</p>
+<p><strong>What I'm taking from this:</strong> The budget visibility concept, but presented in a way that doesn't feel like a calorie-counting app.</p>
+<h3>Yazio</h3>
+<p><strong>Positioning:</strong> Calorie counter and nutrition tracker with meal logging.
+<strong>Key features:</strong></p>
+<ul>
+<li>Food diary with barcode scanning</li>
+<li>Calorie and macro tracking</li>
+<li>Recipe database</li>
+<li>Fasting timer</li>
+</ul>
+<p><strong>What they do well:</strong> The tracking interface is polished. Logging a meal is fast. The food database is huge.</p>
+<p><strong>What they do badly:</strong> It's a tracker, not a planner. It tells you what you ate, not what you should eat. There's no meal planning, no grocery list, no budget awareness at all. It's also heavily paywalled. The premium push is aggressive.</p>
+<p><strong>What I'm taking from this:</strong> The nutritional info display. Grubs4Scrubs shows calories, protein, carbs, and fats per recipe, but as helpful info rather than the entire point of the app.</p>
+<h3>Budget Bytes</h3>
+<p><strong>Positioning:</strong> Recipe website focused on affordable cooking with cost-per-serving breakdowns.
+<strong>Key features:</strong></p>
+<ul>
+<li>Recipes with estimated cost per serving</li>
+<li>Step-by-step photo instructions</li>
+<li>Meal prep guides</li>
+<li>Grocery budget tips</li>
+</ul>
+<p><strong>What they do well:</strong> The cost-per-serving thing is exactly what budget-conscious students want. Every recipe shows what it'll cost, and the recipes are genuinely cheap. The instructions are clear and beginner-friendly.</p>
+<p><strong>What they do badly:</strong> It's a website, not an app. There's no meal planning tool, no shopping list integration, no user accounts. You browse recipes and figure out the rest yourself. No way to save favorites or track what you've cooked.</p>
+<p><strong>What I'm taking from this:</strong> The cost-per-serving model. Every Grubs4Scrubs recipe has an estimated budget field that shows up prominently on the recipe card and view page.</p>
+<h2>Feature comparison table</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Mealime</th>
+<th>Eat This Much</th>
+<th>Yazio</th>
+<th>Budget Bytes</th>
+<th>Grubs4Scrubs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Meal planning</td>
+<td>Yes</td>
+<td>Yes (auto)</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Budget tracking</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+<td>Per recipe</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Grocery list</td>
+<td>Yes (auto)</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Nutritional info</td>
+<td>Basic</td>
+<td>Detailed</td>
+<td>Detailed</td>
+<td>Basic</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Recipe database</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Logging only</td>
+<td>Yes</td>
+<td>Yes (growing)</td>
+</tr>
+<tr>
+<td>Free tier usable</td>
+<td>Partial</td>
+<td>Barely</td>
+<td>Partial</td>
+<td>Yes (web only)</td>
+<td>Fully free</td>
+</tr>
+<tr>
+<td>Student-focused</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Budget-focused</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Dutch market aware</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h2>Gap analysis</h2>
+<p>None of these apps are built for Dutch students specifically. Eat This Much comes closest on the budget side, but it suggests ingredients you can't find at local supermarkets and the UI screams "gym bro" rather than "tired student." Mealime has the best grocery list feature but completely ignores cost. Budget Bytes nails the affordability angle but it's just a recipe blog with no planning tools.</p>
+<p>The gap Grubs4Scrubs fills is combining all three: meal planning, budget awareness, and a grocery list, in one app that's actually designed for students living in the Netherlands. Nobody else is doing that specific combination.</p>
+<h2>What this means for my requirements</h2>
+<ul>
+<li>Budget visibility on every recipe is non-negotiable. Eat This Much and Budget Bytes prove students want to see cost before they commit.</li>
+<li>The shopping list needs to be connected to recipes (like Mealime), not a standalone notepad.</li>
+<li>Keep the free tier fully usable. Yazio and Eat This Much's aggressive paywalls are exactly what I want to avoid.</li>
+<li>Nutritional info is expected but shouldn't dominate the UI. It's a meal planner, not a calorie counter.</li>
+<li>Recipes need to use ingredients available at Dutch supermarkets, not American grocery stores.</li>
+</ul>
+<p>[NOTE: If you've looked at any other specific apps or websites, add them here. These four are solid picks but swap in whatever you actually reviewed.]</p>
+</body></html>

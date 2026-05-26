@@ -111,7 +111,7 @@ export default function Recipes() {
                             {filters.map((filter) => (
                                 <button
                                     key={filter}
-                                    className={`filter-btn ${activeFilter === filter ? "filter-active" : ""}`}
+                                    className={`filter-btn ${activeFilter === filter ? "filter-active" : null}`}
                                     onClick={() => setActiveFilter(filter)}
                                 >
                                     {filter}

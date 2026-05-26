@@ -95,7 +95,7 @@ function MealPlannerDayTabs({ activeDay, setActiveDay }) {
                 {days.map((day) => (
                     <button
                         key={day}
-                        className={`MealPlanner-daytab ${activeDay === day ? "MealPlanner-daytab-active" : ""}`}
+                        className={`MealPlanner-daytab ${activeDay === day ? "MealPlanner-daytab-active" : null}`}
                         onClick={() => setActiveDay(day)}
                     >
                         {day}
@@ -169,7 +169,7 @@ function MealPlannerWeekOverview() {
                     return (
                     <div
                         key={mealType}
-                        className={`MealPlanner-overview-dot ${meal ? "MealPlanner-overview-dot-filled" : ""}`}
+                        className={`MealPlanner-overview-dot ${meal ? "MealPlanner-overview-dot-filled" : null}`}
                         title={meal ? `${mealType}: ${meal.name}` : `${mealType}: empty`}
                     ></div>
                         )

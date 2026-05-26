@@ -13,22 +13,23 @@ import RecipeView from './Pages/RecipeViewPage.jsx'
 import Login from './Pages/LoginPage.jsx'
 import SignUp from './Pages/SignUpPage.jsx'
 
+import { AuthProvider } from './context/AuthContext.jsx'
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-
-        <Route path="/" element= {<Home/>}/>
-        <Route path="/dashboard" element={<Dashboard/>}/>
-        <Route path='/recipes' element={<Recipes/>}/>
-        <Route path='/recipes/:id' element={<RecipeView/>}/>
-        <Route path='/meal-planning' element={<MealPlanner/>}/>
-        <Route path='shopping-list' element={<ShoppingList/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/signup' element={<SignUp/>}/>
-
-
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element= {<Home/>}/>
+          <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route path='/recipes' element={<Recipes/>}/>
+          <Route path='/recipes/:id' element={<RecipeView/>}/>
+          <Route path='/meal-planning' element={<MealPlanner/>}/>
+          <Route path='shopping-list' element={<ShoppingList/>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/signup' element={<SignUp/>}/>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   </StrictMode>,
 )
