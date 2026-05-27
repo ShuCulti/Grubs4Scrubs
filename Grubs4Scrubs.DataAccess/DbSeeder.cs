@@ -9,11 +9,10 @@ public static class DbSeeder
         using SqlConnection conn = new(connectionString);
         conn.Open();
 
-        // Check if there are already recipes in the table
         using SqlCommand checkCmd = new("SELECT COUNT(*) FROM Recipes", conn);
         int count = (int)checkCmd.ExecuteScalar();
 
-        if (count > 0) return; // Already has data, skip seeding
+        if (count > 0) return; 
 
         string sql = @"
             INSERT INTO Recipes (Title, Description, Tag, PrepTime, CookTime, Servings, EstimatedBudget, Category, CreatedAt, ImageUrl, Tip, Calories, Protein, Fats, Carbs, Ingredients, Instructions)

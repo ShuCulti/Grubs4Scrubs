@@ -90,7 +90,7 @@ public class RecipeRepository : IRecipeRepository
         conn.Open();
 
         string sql = @"UPDATE Recipes SET
-                        Title = @Title, Description = @Desc, Tag = @Tag,
+                        Title = @Title, Description = @Desc, Tag = @Tag, ImageUrl = @ImageUrl,
                         PrepTime = @Prep, CookTime = @Cook, Servings = @Serv,
                         EstimatedBudget = @Budget, Category = @Cat
                         WHERE Id = @Id";
@@ -100,6 +100,7 @@ public class RecipeRepository : IRecipeRepository
         cmd.Parameters.AddWithValue("@Title", recipe.Title);
         cmd.Parameters.AddWithValue("@Desc", recipe.Description);
         cmd.Parameters.AddWithValue("@Tag", recipe.Tag);
+        cmd.Parameters.AddWithValue("@ImageUrl", recipe.ImageUrl);
         cmd.Parameters.AddWithValue("@Prep", recipe.PrepTime);
         cmd.Parameters.AddWithValue("@Cook", recipe.CookTime);
         cmd.Parameters.AddWithValue("@Serv", recipe.Servings);

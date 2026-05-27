@@ -4,19 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Grubs4Scrubs.Controllers;
 
-// The controller is now THIN — it only handles HTTP stuff.
-// No SQL, no business logic. It just:
-//   1. Receives the request
-//   2. Calls the service
-//   3. Returns the response
-
 [ApiController]
 [Route("api/[controller]")]
 public class RecipeController : ControllerBase
 {
     private readonly IRecipeService _recipeService;
 
-    // The SERVICE is injected — not the connection string anymore
     public RecipeController(IRecipeService recipeService)
     {
         _recipeService = recipeService;

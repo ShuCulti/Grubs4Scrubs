@@ -24,7 +24,6 @@ public class UserService : IUserService
 
     public void CreateUser(User user)
     {
-        // BUSINESS LOGIC EXAMPLE: validate before saving
         if (string.IsNullOrWhiteSpace(user.Email))
         {
             throw new ArgumentException("Email cannot be empty");
