@@ -50,6 +50,7 @@ public class UserRepository : IUserRepository
 
     public User? GetByEmail(string email)
     {
+        
         using SqlConnection conn = new(_connectionString);
         conn.Open();
 

@@ -5,6 +5,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
+using Grubs4Scrubs.DataAccess;
+
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController: ControllerBase
