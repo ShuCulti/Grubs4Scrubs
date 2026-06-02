@@ -21,7 +21,7 @@ export default function LoginPage() {
             setToken(data.token)
             navigate("/")
         })
-        .catch(err => console.log("Login Failed", err))
+        .catch(err => console.error("Login Failed", err))
         
         
     }
