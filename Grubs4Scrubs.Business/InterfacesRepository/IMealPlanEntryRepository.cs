@@ -1,4 +1,4 @@
-using Grubs4Scrubs.Domain;
+using Grubs4Scrubs.Business;
 
 public interface IMealPlanEntryRepository
 {

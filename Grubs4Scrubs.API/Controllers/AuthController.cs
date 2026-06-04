@@ -1,11 +1,13 @@
-using Grubs4Scrubs.Domain;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-using Grubs4Scrubs.DataAccess;
+using Grubs4Scrubs.Business;
+
+namespace Grubs4Scrubs.API;
 
 [ApiController]
 [Route("api/[controller]")]

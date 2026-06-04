@@ -1,8 +1,5 @@
-using System.Data.Common;
-using System.Reflection.PortableExecutable;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using Grubs4Scrubs.Domain;
+
+using Grubs4Scrubs.Business;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 

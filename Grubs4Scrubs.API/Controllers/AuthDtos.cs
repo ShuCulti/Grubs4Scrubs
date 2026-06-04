@@ -1,4 +1,6 @@
-namespace Grubs4Scrubs.Domain;
+using Grubs4Scrubs.Business;
+
+namespace Grubs4Scrubs.API;
 
 public class RegisterDto
 {

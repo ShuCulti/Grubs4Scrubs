@@ -1,5 +1,4 @@
-﻿using Grubs4Scrubs.Domain;
-using Grubs4Scrubs.Business;
+﻿using Grubs4Scrubs.Business;
 
 namespace Grubs4Scrubs.Tests;
 

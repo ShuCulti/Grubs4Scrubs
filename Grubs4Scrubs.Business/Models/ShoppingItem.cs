@@ -1,4 +1,4 @@
-namespace Grubs4Scrubs.Domain;
+namespace Grubs4Scrubs.Business;
 
 public class ShoppingItem
 {

@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Grubs4Scrubs.Business\Grubs4Scrubs.Business.csproj" />
-    <ProjectReference Include="..\Grubs4Scrubs.Domain\Grubs4Scrubs.Domain.csproj" />
     <ProjectReference Include="..\Grubs4Scrubs.DataAccess\Grubs4Scrubs.DataAccess.csproj" />
   </ItemGroup>
 

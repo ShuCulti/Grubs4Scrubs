@@ -1,9 +1,10 @@
-using Grubs4Scrubs.DataAccess;
+
 using Grubs4Scrubs.Business;
-using Grubs4Scrubs.Domain;
+using Grubs4Scrubs.DataAccess;
 using Microsoft.IdentityModel.Tokens.Experimental;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,8 +37,10 @@ builder.Services.AddAuthentication("Bearer")
                 };
             });
 
-// DEPENDENCY INJECTION: this is where you wire the layers together.
+// DEPENDENCY INJECTION: this is where I wire the layers together.
 // "Scoped" means one instance per HTTP request.
+
+
 
 builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<IRecipeService, RecipeService>();
@@ -48,7 +51,6 @@ builder.Services.AddScoped<IShoppingItemService, ShoppingItemService>();
 
 var app = builder.Build();
 
-// Seed the database with starter recipes if empty
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 DbSeeder.Seed(connectionString);
 

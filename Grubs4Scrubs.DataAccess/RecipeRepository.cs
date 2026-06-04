@@ -1,4 +1,4 @@
-using Grubs4Scrubs.Domain;
+using Grubs4Scrubs.Business;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
