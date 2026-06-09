@@ -133,7 +133,7 @@ export default function Recipes() {
 
                     <div className="recipes-grid">
                         {filteredRecipes.map((recipe) => (
-                            <div key={recipe.id} className="recipe-card" onClick={() => navigate(`/recipes/${recipe.id}`)}>
+                            <div key={recipe.id} className="recipe-card" onClick={() => navigate(`/recipes-view-page/${recipe.id}`)}>
                                 <div className="recipe-card-image">
                                     <span className="recipe-emoji">{recipe.emoji}</span>
                                     {recipe.imageUrl ? (<img className="recipe-card-image-img" src={recipe.imageUrl} alt={recipe.title} />) : null}

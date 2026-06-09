@@ -45,7 +45,6 @@ builder.Services.AddAuthentication("Bearer")
 builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<IRecipeService, RecipeService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IShoppingItemRepository, ShoppingItemRepository>();
 builder.Services.AddScoped<IShoppingItemService, ShoppingItemService>();
 

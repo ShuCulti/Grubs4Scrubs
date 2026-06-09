@@ -123,10 +123,10 @@ function HomeFeatured(){
                 <h1 className="HomeFeatured-title">Feautured Recipes </h1>
                 <span className="HomeFeatured-title-description">Tried and tested by the midnight oil crowd.</span>
             </div>
-            <div className="HomeFeatured-ViewAllRecipes" onClick={()=> navigate("/recipes")}>View all recipes ➜</div>
+            <div className="HomeFeatured-ViewAllRecipes" onClick={()=> navigate("/recipes-view-page")}>View all recipes ➜</div>
             <div className="HomeFeatured-recipes-container">
                 {featuredRecipe.map((featuredRecipe)=>(
-                    <div key = {featuredRecipe.id} className="HomeFeatured-recipes" onClick={()=> navigate(`/recipes/${featuredRecipe.id}`)}>
+                    <div key = {featuredRecipe.id} className="HomeFeatured-recipes" onClick={()=> navigate(`/recipes-view-page/${featuredRecipe.id}`)}>
                         <img className= "HomeFeatured-recipes-img" src={featuredRecipe.imageUrl} alt="Feautured Recipe" />
                         <div className="HomeFeatured-recipes-body">
                             <h3 className="HomeFeatured-recipes-title">{featuredRecipe.title}</h3>

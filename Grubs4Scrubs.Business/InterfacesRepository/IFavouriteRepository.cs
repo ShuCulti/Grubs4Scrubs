@@ -4,7 +4,7 @@ public interface IFavouriteRepository
 {
     List<Favourite> GetAll();
     Favourite? GetById(int id);
-    Favourite? GetByUserId(int UserId);
+    List<Favourite> GetByUserId(int UserId);
     Favourite? GetByRecipeId(int RecipeId);
     void Create(Favourite favourite);
     void Update(Favourite favourite);

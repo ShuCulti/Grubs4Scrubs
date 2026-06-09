@@ -13,8 +13,20 @@ export default function RecipeView() {
     const { id } = useParams()
     const navigate = useNavigate()
     const [recipe, setRecipe] = useState(null)
+    const [user, setUser] = useState({
+        id: "",
+        email: "",
+        passwordHash: "",
+        googleId: "",
+
+    })
     const [showEditModal, setShowEditModal] = useState(false)
     const [editRecipe, setEditRecipe] = useState(null)
+
+    const [favourite, setFavourite] = useState({
+        UserId: "",
+        RecipeId: "",
+    });
 
     useEffect(()=> {
         api.get(`/Recipe/${id}`)
@@ -32,7 +44,8 @@ export default function RecipeView() {
             <>
                 <div className="Home">
                     <Navbar />
-                    <RecipeViewPage recipe={recipe} onDelete={handleDelete} onEdit={handleStartEdit} onAddToShoppingList={handleAddToShoppingList}/>
+                    <RecipeViewPage recipe={recipe} onDelete={handleDelete} onEdit={handleStartEdit} 
+                    onAddToShoppingList={handleAddToShoppingList} onAddFavourite = {handleAddFavourite}/>
                     {showEditModal && (
                         <RecipeEditModal
                             editRecipe={editRecipe}
@@ -67,9 +80,20 @@ export default function RecipeView() {
     function handleDelete(){
         if(window.confirm('Are you sure you want to delete this recipe?')){
             api.delete(`/Recipe/${id}`)
-            .then(()=> navigate("/recipes"))
+            .then(()=> navigate("/recipes-view-page"))
             .catch(err => console.error("Failed to delete recipe", err))
         }
+    }
+
+        function handleAddFavourite(){
+        api.post("/Favourite",
+            {
+                UserId: Number(),
+                RecipeId: Number(recipe.id),
+            }).then(
+                api.get("/Favourite"))
+                .catch(err => console.error("Couldn't add Favourite", err))
+
     }
 
     function handleStartEdit() {
@@ -176,7 +200,7 @@ function RecipeViewHero({recipe, onDelete, onEdit, onAddToShoppingList}) {
                 <div className="RecipeView-hero-overlay"></div>
 
                 <div className="RecipeView-hero-actions">
-                    <button className="RecipeView-hero-action-btn"><Heart size={18} /></button>
+                    <button className="RecipeView-hero-action-btn" onClick={()=> handle} ><Heart size={18} /></button>
                     <button className="RecipeView-hero-action-btn"><Share2 size={18} /></button>
                 </div>
 

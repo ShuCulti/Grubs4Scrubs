@@ -14,4 +14,5 @@ public class Favourite
         RecipeId = this.RecipeId;
         CreatedAt = this.CreatedAt;
     }
+
 }

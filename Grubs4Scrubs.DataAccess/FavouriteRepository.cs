@@ -28,7 +28,7 @@ public class FavouriteRepository: IFavouriteRepository
 
         while (reader.Read())
         {
-            MapFavourite(reader);
+            favourites.Add(MapFavourite(reader));
         }
         return favourites;
     }
@@ -43,7 +43,7 @@ public class FavouriteRepository: IFavouriteRepository
         using SqlCommand cmd = new(sql, conn);
         cmd.Parameters.AddWithValue("@Id", id);
 
-        SqlDataReader reader = cmd.ExecuteReader();
+        using SqlDataReader reader = cmd.ExecuteReader();
         
 
         if (reader.Read())
@@ -54,23 +54,25 @@ public class FavouriteRepository: IFavouriteRepository
         return null;
     }
 
-    public Favourite? GetByUserId(int UserId)
+    public List<Favourite> GetByUserId(int UserId)
     {
-        SqlConnection conn = new(_connectionString);
+        var favouritesByUserId = new List<Favourite>();
+
+        using SqlConnection conn = new(_connectionString);
         conn.Open();
 
         string sql = @"SELECT * FROM Favourites WHERE UserId = @UserId";
 
-        SqlCommand cmd = new(sql,conn);
+        using SqlCommand cmd = new(sql,conn);
         cmd.Parameters.AddWithValue("@UserId", UserId);
 
-        SqlDataReader reader = cmd.ExecuteReader();
+        using SqlDataReader reader = cmd.ExecuteReader();
 
-        if (reader.Read())
+        while (reader.Read())
         {
-            return MapFavourite(reader);
+            favouritesByUserId.Add(MapFavourite(reader));
         }
-        return null;
+        return favouritesByUserId;
 
     }
 
@@ -82,13 +84,13 @@ public class FavouriteRepository: IFavouriteRepository
         string sql = @"SELECT * FROM Favourites WHERE RecipeId = @RecipeId";
 
         using SqlCommand cmd = new(sql, conn);
-        cmd.Parameters.AddWithValue("RecipeId", RecipeId);
+        cmd.Parameters.AddWithValue("@RecipeId", RecipeId);
 
         using SqlDataReader reader  = cmd.ExecuteReader();
 
         if (reader.Read())
         {
-            MapFavourite(reader);                                                                                       
+            return MapFavourite(reader);                                                                                       
         }
 
         return null;
@@ -97,17 +99,45 @@ public class FavouriteRepository: IFavouriteRepository
 
     public void Create(Favourite favourite)
     {
-        
+        using SqlConnection conn = new(_connectionString);
+        conn.Open();
+
+        string sql = @"INSERT INTO Favourites(Id, UserId, RecipeId, CreatedAt)
+                        VALUES(@Id, @UserId, @RecipeId, @CreatedAt)";
+
+        using SqlCommand cmd = new(sql, conn);
+        cmd.Parameters.AddWithValue("@UserId", favourite.UserId);
+        cmd.Parameters.AddWithValue("@RecipeId", favourite.RecipeId);
+
+        cmd.ExecuteNonQuery();
     }
 
     public void Update(Favourite favourite)
     {
-        
+        using SqlConnection conn = new(_connectionString);
+        conn.Open();
+
+        string sql = @"UPDATE Favourites SET UserId = @UserId, RecipeId = @RecipeId, CreatedAt = @CreatedAt WHERE Id = @Id";
+
+        using SqlCommand cmd = new(sql, conn);
+        cmd.Parameters.AddWithValue("@UserId", favourite.UserId);
+        cmd.Parameters.AddWithValue("@RecipeId", favourite.RecipeId);
+
+        cmd.ExecuteNonQuery();
+
     }
 
     public void Delete(int id)
     {
-        
+        using SqlConnection conn = new(_connectionString);
+        conn.Open();
+
+        string sql = @"DELETE FROM Favourites WHERE Id = @Id";
+
+        using SqlCommand cmd = new(sql, conn);
+        cmd.Parameters.AddWithValue("@Id",id);
+
+        cmd.ExecuteNonQuery();
     }
 
     public Favourite MapFavourite(SqlDataReader reader)
