@@ -7,12 +7,12 @@ public class Favourite
     public int RecipeId { get; private set; }
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
     
-    public Favourite(int Id, int UserId, int RecipeId, DateTime CreatedAt)
+    public Favourite(int id, int userId, int recipeId, DateTime createdAt)
     {
-        Id = this.Id;
-        UserId = this.UserId;
-        RecipeId = this.RecipeId;
-        CreatedAt = this.CreatedAt;
+        Id = id;
+        UserId = userId;
+        RecipeId = recipeId;
+        CreatedAt = createdAt;
     }
 
 }

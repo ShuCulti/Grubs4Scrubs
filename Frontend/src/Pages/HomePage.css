@@ -153,7 +153,7 @@
     position: absolute;
     top: 105vh;
     height: 85vh;
-    width: 100%;
+    width: 100vw;
     background-color: #0f0f1b;
 }
 
@@ -241,7 +241,7 @@
     background-color: #2a2a4a;
     color: #ccc;
     font-size: 11px;
-    padding: 4px 10px;
+    padding: 4px 5px;
     border-radius: 20px;
 }
 

@@ -97,6 +97,27 @@ public class FavouriteRepository: IFavouriteRepository
 
     }
 
+    public Favourite? GetByUserAndRecipe(int UserId, int RecipeId)
+    {
+        SqlConnection conn = new(_connectionString);
+        conn.Open();
+
+        string sql = @"SELECT * FROM Favourites WHERE UserId = @UserId AND RecipeId = @RecipeId";
+
+        SqlCommand cmd = new(sql, conn);
+        cmd.Parameters.AddWithValue("@UserId", UserId);
+        cmd.Parameters.AddWithValue("@RecipeId", RecipeId);
+
+        SqlDataReader reader = cmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            return MapFavourite(reader);
+        }
+
+        return null;
+    }
+
     public void Create(Favourite favourite)
     {
         using SqlConnection conn = new(_connectionString);

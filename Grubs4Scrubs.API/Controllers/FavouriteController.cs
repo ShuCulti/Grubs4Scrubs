@@ -1,10 +1,12 @@
+using System.Security.Claims;
 using Grubs4Scrubs.Business;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gurbs4Scubs.API;
 
 [ApiController]
-[Route("/api[controller]")]
+[Route("api/[controller]")]
 
 public class FavouriteController: ControllerBase
 {
@@ -22,7 +24,7 @@ public class FavouriteController: ControllerBase
         return Ok(allFavourites);
     }
 
-    [HttpGet]
+    [HttpGet ("{id}")]
     public IActionResult GetById(int id)
     {
         var favouriteById = _favouriteService.GetFavouriteById(id);
@@ -30,7 +32,7 @@ public class FavouriteController: ControllerBase
         return Ok(favouriteById);
     }
 
-    [HttpGet]
+    [HttpGet ("user/{UserId}")]
 
     public IActionResult GetByUserId(int UserId)
     {
@@ -39,7 +41,7 @@ public class FavouriteController: ControllerBase
         return Ok(favouriteByUserId);
     }
 
-    [HttpGet]
+    [HttpGet ("recipeId/{RecipeId}")]
 
     public IActionResult GetByRecipeId(int RecipeId)
     {
@@ -48,11 +50,13 @@ public class FavouriteController: ControllerBase
         return Ok(favouriteByRecipeId);
     }
 
+    [Authorize]
     [HttpPost]
 
-    public IActionResult Create(Favourite favourite)
+    public IActionResult Create(CreateFavouriteDto dto)
     {   
-        _favouriteService.CreateFavourite(favourite);
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        _favouriteService.GetByUserAndRecipe(userId,dto.RecipeId);
 
         return Created();
     }

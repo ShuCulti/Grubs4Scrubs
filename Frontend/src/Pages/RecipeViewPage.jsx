@@ -23,7 +23,7 @@ export default function RecipeView() {
     const [showEditModal, setShowEditModal] = useState(false)
     const [editRecipe, setEditRecipe] = useState(null)
 
-    const [favourite, setFavourite] = useState({
+    const [favourites, setFavourites] = useState({
         UserId: "",
         RecipeId: "",
     });
@@ -88,12 +88,13 @@ export default function RecipeView() {
         function handleAddFavourite(){
         api.post("/Favourite",
             {
-                UserId: Number(),
-                RecipeId: Number(recipe.id),
-            }).then(
+                UserId: recipe.UserId,
+                RecipeId: recipe.Id,
+            }).then(()=>
                 api.get("/Favourite"))
-                .catch(err => console.error("Couldn't add Favourite", err))
+                .then(res => setFavourites(res.data))
 
+            .catch(err => console.error("Couldn't add Favourite", err))
     }
 
     function handleStartEdit() {

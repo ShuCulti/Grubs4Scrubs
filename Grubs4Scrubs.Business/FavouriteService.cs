@@ -22,6 +22,7 @@ public class FavouriteService
     {
         return _favouriteRepository.GetByUserId(UserId);
     }
+
     public Favourite? GetFavouriteByRecipeId(int RecipeId)
     {
         var favouriteByRecipeId = _favouriteRepository.GetByRecipeId(RecipeId);
@@ -32,6 +33,19 @@ public class FavouriteService
         }
 
         return _favouriteRepository.GetByRecipeId(RecipeId);
+    }
+
+    public Favourite? GetByUserAndRecipe(int UserId, int RecipeId)
+    {   
+        var favouriteByRecipeAndUserId = _favouriteRepository.GetByUserAndRecipe(UserId, RecipeId);
+
+        if (favouriteByRecipeAndUserId == null)
+        {
+            throw new ArgumentException("This Favourite cannot be found because UserId and RecipeId do not match");
+        }
+        
+        return _favouriteRepository.GetByUserAndRecipe(UserId, RecipeId);
+
     }
 
     public void CreateFavourite(Favourite favourite)

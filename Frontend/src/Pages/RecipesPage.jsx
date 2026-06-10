@@ -6,7 +6,7 @@ import "./HomePage.css"
 import "./Components.css"
 import "./RecipesPage.css"
 import { G4Sfooter } from "../Components/Footer.jsx"
-import api from "../services/recipeservice.js"
+import api from "../services/recipeService.js"
 
 
 const filters = ["All", "Breakfast", "Lunch", "Dinner"]
