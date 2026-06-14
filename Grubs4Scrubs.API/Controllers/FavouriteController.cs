@@ -16,13 +16,8 @@ public class FavouriteController: ControllerBase
         _favouriteService = new FavouriteService(favouriteRepository);
     }
 
+    [Authorize]
     [HttpGet]
-
-    public IActionResult GetAll()
-    {
-        var allFavourites = _favouriteService.GetAllFavourites();
-        return Ok(allFavourites);
-    }
 
     [HttpGet ("{id}")]
     public IActionResult GetById(int id)
@@ -32,31 +27,26 @@ public class FavouriteController: ControllerBase
         return Ok(favouriteById);
     }
 
-    [HttpGet ("user/{UserId}")]
-
-    public IActionResult GetByUserId(int UserId)
-    {
-        var favouriteByUserId = _favouriteService.GetFavouriteByUserId(UserId);
-
-        return Ok(favouriteByUserId);
-    }
-
-    [HttpGet ("recipeId/{RecipeId}")]
-
-    public IActionResult GetByRecipeId(int RecipeId)
-    {
-        var favouriteByRecipeId = _favouriteService.GetFavouriteByRecipeId(RecipeId);
-
-        return Ok(favouriteByRecipeId);
-    }
-
-    [Authorize]
+    [Authorize ("AllowReact")]
     [HttpPost]
 
     public IActionResult Create(CreateFavouriteDto dto)
     {   
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        _favouriteService.GetByUserAndRecipe(userId,dto.RecipeId);
+        
+        var favourite = new Favourite(
+            userId,
+            dto.RecipeId
+        );
+
+        var favouriteExists = _favouriteService.GetByUserAndRecipe(userId,dto.RecipeId);
+
+        if (favouriteExists != null)
+        {
+            return Conflict("Can't create new Favourite, Favourite already exists");
+        }
+
+        _favouriteService.CreateFavourite(favourite);
 
         return Created();
     }

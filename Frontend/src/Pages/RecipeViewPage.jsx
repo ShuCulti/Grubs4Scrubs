@@ -80,7 +80,7 @@ export default function RecipeView() {
     function handleDelete(){
         if(window.confirm('Are you sure you want to delete this recipe?')){
             api.delete(`/Recipe/${id}`)
-            .then(()=> navigate("/recipes-view-page"))
+            .then(()=> navigate("/recipes"))
             .catch(err => console.error("Failed to delete recipe", err))
         }
     }

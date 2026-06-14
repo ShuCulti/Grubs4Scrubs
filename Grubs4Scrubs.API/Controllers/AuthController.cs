@@ -1,21 +1,22 @@
-
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
-
 using Grubs4Scrubs.Business;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Grubs4Scrubs.API;
 
 [ApiController]
 [Route("api/[controller]")]
+
 public class AuthController: ControllerBase
 {
-    private readonly IUserRepository _userRepository;
     private readonly IConfiguration _configuration;
- 
+    private readonly IUserRepository _userRepository;
 
     public AuthController(IConfiguration configuration, IUserRepository userRepository)
     {
@@ -23,48 +24,58 @@ public class AuthController: ControllerBase
         _userRepository = userRepository;
     }
 
-    [HttpPost("register")]
+    [HttpPost ("register")]
+
     public IActionResult Register(RegisterDto dto)
     {
-        var existing = _userRepository.GetByEmail(dto.Email);
 
-        if (existing != null)
+        var exists = _userRepository.GetByEmail(dto.Email);
+
+        if (exists != null)
         {
-            return BadRequest("Email already in use");
+            return BadRequest("User Already Exists");
         }
 
-        var HashedPassword = BCrypt.Net.BCrypt.HashPassword(dto.Password);
-        
-        var user = new User{
-            Email = dto.Email, 
-            PasswordHash = HashedPassword, 
-            UserName = dto.UserName};
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
+        var user = new User
+        {
+            Email = dto.Email,
+            PasswordHash = hashedPassword,
+            UserName = dto.UserName
+        };
+            
         _userRepository.Create(user);
 
-        return Ok();
-        
+        return Created();
     }
 
+    [HttpPost ("login")]
 
-    [HttpPost("login")]
     public IActionResult Login(LoginDto dto)
     {
-        var user = _userRepository.GetByEmail(dto.Email);
-
-        if (user == null)
+        var existingUser = _userRepository.GetByEmail(dto.Email);
+        
+        if (existingUser == null)
         {
-            return Unauthorized("Invalid email or Passowrd");
+            return BadRequest("Email or Password is Incorrect");
         }
 
-        var Verified = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
+        var Password = dto.Password;
 
-        if (Verified == false)
+        if (Password == null)
         {
-            return Unauthorized("Invalid email or Passowrd");
+            return BadRequest("Email or Password is Incorrect");
         }
 
-        var token = GenerateToken(user);
+        var verifiedPassword = BCrypt.Net.BCrypt.Verify(Password, existingUser.PasswordHash);
+
+        if (verifiedPassword != true) /* Can also be written as: if (!verifiefiedPassword) */
+        {
+            return BadRequest("Email or Password is Incorrect");
+        }
+
+        var token = GenerateToken(existingUser);
 
         return Ok(new {token});
     }
@@ -75,13 +86,13 @@ public class AuthController: ControllerBase
             Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!)
         );
 
-        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var claims = new[]
+        var claims = new Claim[]
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Name, user.UserName)
+          new (ClaimTypes.NameIdentifier, user.Id.ToString()),
+          new (ClaimTypes.Email, user.Email),
+          new (ClaimTypes.Name, user.UserName)  
         };
 
         var token = new JwtSecurityToken(
@@ -89,11 +100,14 @@ public class AuthController: ControllerBase
             audience: _configuration["Jwt:Audience"],
             claims: claims,
             expires: DateTime.UtcNow.AddHours(24),
-            signingCredentials: credentials
+            signingCredentials: signingCredentials
         );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
-    
+
+        /* To Remember: Jwt Results as ""header.payload.signature" */
+
     }
 
 }
+

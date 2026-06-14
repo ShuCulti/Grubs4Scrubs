@@ -15,4 +15,10 @@ public class Favourite
         CreatedAt = createdAt;
     }
 
+    public Favourite(int userId, int recipeId)
+    {
+        UserId = userId;
+        RecipeId = recipeId;
+    }
+
 }
