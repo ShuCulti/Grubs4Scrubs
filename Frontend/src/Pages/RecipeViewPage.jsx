@@ -154,7 +154,7 @@ export default function RecipeView() {
     }
 }
 
-function RecipeViewPage({ recipe, onDelete, onEdit, onAddToShoppingList }) {
+function RecipeViewPage({ recipe, onDelete, onEdit, onAddToShoppingList, onAddFavourite}) {
         const ingredients = recipe.ingredients ? JSON.parse(recipe.ingredients) : null
         const instructions = recipe.instructions? JSON.parse(recipe.instructions) : null
         const nutrition = recipe.nutrition ? JSON.parse(recipe.nutrition) : null
@@ -163,7 +163,7 @@ function RecipeViewPage({ recipe, onDelete, onEdit, onAddToShoppingList }) {
     return (
         <>
             <div className="RecipeView">
-                <RecipeViewHero recipe={recipe} onDelete={onDelete} onEdit={onEdit} onAddToShoppingList={onAddToShoppingList}/>
+                <RecipeViewHero recipe={recipe} onDelete={onDelete} onEdit={onEdit} onAddToShoppingList={onAddToShoppingList} onAddFavourite = {onAddFavourite}/>
 
                 <div className="RecipeView-content">
                     <aside className="RecipeView-sidebar">
@@ -183,7 +183,7 @@ function RecipeViewPage({ recipe, onDelete, onEdit, onAddToShoppingList }) {
 
 
 
-function RecipeViewHero({recipe, onDelete, onEdit, onAddToShoppingList}) {
+function RecipeViewHero({recipe, onDelete, onEdit, onAddToShoppingList, onAddFavourite}) {
     const tags = recipe.tag.split(",")
 
     
@@ -201,7 +201,7 @@ function RecipeViewHero({recipe, onDelete, onEdit, onAddToShoppingList}) {
                 <div className="RecipeView-hero-overlay"></div>
 
                 <div className="RecipeView-hero-actions">
-                    <button className="RecipeView-hero-action-btn" onClick={()=> handle} ><Heart size={18} /></button>
+                    <button className="RecipeView-hero-action-btn" onClick={onAddFavourite} ><Heart size={18} /></button>
                     <button className="RecipeView-hero-action-btn"><Share2 size={18} /></button>
                 </div>
 
