@@ -8,9 +8,9 @@ namespace Grubs4Scrubs.Controllers;
 [Route("api/[controller]")]
 public class RecipeController : ControllerBase
 {
-    private readonly IRecipeService _recipeService;
+    private readonly RecipeService _recipeService;
 
-    public RecipeController(IRecipeService recipeService)
+    public RecipeController(RecipeService recipeService)
     {
         _recipeService = recipeService;
     }

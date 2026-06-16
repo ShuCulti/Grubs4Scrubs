@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Grubs4Scrubs.Business;
+using Grubs4Scrubs.DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +12,9 @@ namespace Gurbs4Scubs.API;
 public class FavouriteController: ControllerBase
 {
     private readonly FavouriteService _favouriteService;
-    public FavouriteController(IFavouriteRepository favouriteRepository)
+    public FavouriteController(FavouriteService favouriteService)
     {
-        _favouriteService = new FavouriteService(favouriteRepository);
+        _favouriteService = favouriteService;
     }
 
     [Authorize]

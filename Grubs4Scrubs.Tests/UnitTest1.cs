@@ -20,9 +20,17 @@ public class RecipeServiceTests
             EstimatedBudget = 10.0m
         });
 
+        service.CreateRecipe(recipe: new Recipe
+        {
+            Title = "Test Recipe number 2",
+            EstimatedBudget = 10.0m
+        });
+        
+
         //Assert
-        Assert.Single(repo.GetAll());
+    
         Assert.Equal("Test Recipe", repo.GetAll()[0].Title);
+        Assert.Equal("Test Recipe number 2", repo.GetAll()[1].Title);
 
     }
 
