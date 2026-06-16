@@ -28,7 +28,7 @@ public class FavouriteController: ControllerBase
         return Ok(favouriteById);
     }
 
-    [Authorize ("AllowReact")]
+    [Authorize]
     [HttpPost]
 
     public IActionResult Create(CreateFavouriteDto dto)

@@ -45,10 +45,14 @@ builder.Services.AddAuthentication("Bearer")
 builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<RecipeService, RecipeService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<UserService, UserService>();
 builder.Services.AddScoped<IShoppingItemRepository, ShoppingItemRepository>();
-builder.Services.AddScoped<IShoppingItemService, ShoppingItemService>();
-builder.Services.AddScoped<FavouriteService, FavouriteService>();
+builder.Services.AddScoped<ShoppingItemService, ShoppingItemService>();
+builder.Services.AddScoped<IMealPlanEntryRepository, MealPlanEntryRepository>();
+builder.Services.AddScoped<MealPlanEntryService, MealPlanEntryService>();
 builder.Services.AddScoped<IFavouriteRepository, FavouriteRepository>();
+builder.Services.AddScoped<FavouriteService, FavouriteService>();
+
 
 
 

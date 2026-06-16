@@ -11,9 +11,9 @@ namespace Grubs4Scrubs.API;
 public class MealPlanEntryController: ControllerBase
 {
     private readonly MealPlanEntryService _mealPlanEntryService;
-    public MealPlanEntryController(IMealPlanEntryRepository mealPlanEntryRepository)
+    public MealPlanEntryController(MealPlanEntryService mealPlanEntryService)
     {
-        _mealPlanEntryService = new MealPlanEntryService(mealPlanEntryRepository);
+        _mealPlanEntryService = mealPlanEntryService;
     }
     [HttpGet]
 

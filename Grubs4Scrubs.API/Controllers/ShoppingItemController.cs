@@ -9,9 +9,9 @@ namespace Grubs4Scrubs.Controllers;
 
 public class ShoppingItemController : ControllerBase
 {
-    private readonly IShoppingItemService _shoppingItemService;
+    private readonly ShoppingItemService _shoppingItemService;
 
-    public ShoppingItemController(IShoppingItemService shoppingItemService)
+    public ShoppingItemController(ShoppingItemService shoppingItemService)
     {
         _shoppingItemService = shoppingItemService;
     }

@@ -9,11 +9,11 @@ namespace Grubs4Scrubs.Controllers;
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly UserService _userService;
+    private readonly IUserService _userService;
 
-    public UserController(IUserRepository userRepository)
+    public UserController(IUserService userService)
     {
-        _userService = new UserService(userRepository);
+        _userService = userService;
     }
 
     // GET api/user

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useParams, useNavigate} from "react-router"
 import { Navbar } from "../Components/Navbar.jsx"
 import { G4Sfooter } from "../Components/Footer.jsx"
@@ -8,6 +8,7 @@ import "./Components.css"
 import "./RecipeViewPage.css"
 import "./RecipesPage.css"
 import api from "../services/recipeService.js"
+import { AuthContext } from "../context/AuthContext.jsx"
 
 export default function RecipeView() {
     const { id } = useParams()
@@ -24,9 +25,10 @@ export default function RecipeView() {
     const [editRecipe, setEditRecipe] = useState(null)
 
     const [favourites, setFavourites] = useState({
-        UserId: "",
         RecipeId: "",
     });
+
+    const token = useContext(AuthContext)
 
     useEffect(()=> {
         api.get(`/Recipe/${id}`)
@@ -88,7 +90,6 @@ export default function RecipeView() {
         function handleAddFavourite(){
         api.post("/Favourite",
             {
-                UserId: recipe.UserId,
                 RecipeId: recipe.Id,
             }).then(()=>
                 api.get("/Favourite"))
