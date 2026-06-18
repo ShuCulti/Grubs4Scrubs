@@ -28,7 +28,7 @@ export default function RecipeView() {
         RecipeId: "",
     });
 
-    const token = useContext(AuthContext)
+    const { token } = useContext(AuthContext)
 
     useEffect(()=> {
         api.get(`/Recipe/${id}`)
@@ -90,7 +90,7 @@ export default function RecipeView() {
         function handleAddFavourite(){
         api.post("/Favourite",
             {
-                RecipeId: recipe.Id,
+                RecipeId: Number(recipe.id),
             }).then(()=>
                 api.get("/Favourite"))
                 .then(res => setFavourites(res.data))

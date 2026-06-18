@@ -34,6 +34,11 @@ public class RecipeService : IRecipeService
             throw new ArgumentException("Recipe title cannot be empty");
         }
 
+        if (recipe.Title.Length < 255)
+        {
+            throw new ArgumentException("Title Cannot be Longer than 255 characters");
+        }
+
         if (recipe.EstimatedBudget < 0)
         {
             throw new ArgumentException("Budget cannot be negative");

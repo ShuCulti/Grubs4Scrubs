@@ -18,6 +18,7 @@ export default function LoginPage() {
 
         loginUser(email, password)
         .then(data => {
+            localStorage.setItem("token", data.token);
             setToken(data.token)
             navigate("/")
         })

@@ -36,14 +36,7 @@ public class FavouriteService
     }
 
     public Favourite? GetByUserAndRecipe(int UserId, int RecipeId)
-    {   
-        var favouriteByRecipeAndUserId = _favouriteRepository.GetByUserAndRecipe(UserId, RecipeId);
-
-        if (favouriteByRecipeAndUserId == null)
-        {
-            throw new ArgumentException("This Favourite cannot be found because UserId and RecipeId do not match");
-        }
-        
+    {      
         return _favouriteRepository.GetByUserAndRecipe(UserId, RecipeId);
 
     }
