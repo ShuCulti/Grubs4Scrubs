@@ -69,6 +69,7 @@ public class UserRepository : IUserRepository
 
     public void Create(User user)
     {
+        try{
         using SqlConnection conn = new(_connectionString);
         conn.Open();
 
@@ -83,10 +84,17 @@ public class UserRepository : IUserRepository
         cmd.Parameters.AddWithValue("@Created", DateTime.UtcNow);
 
         cmd.ExecuteNonQuery();
+        }
+        catch(SqlException ex) when (ex.Number == SqlErrorCodes.UniqueConstraintViolation || ex.Number == SqlErrorCodes.UniqueIndexViolation)
+        {
+            throw new DuplicateUserException(message: "Duplicate User Exception", ex);
+        }
+
     }
 
     public void Update(User user)
     {
+        try {
         using SqlConnection conn = new(_connectionString);
         conn.Open();
 
@@ -103,6 +111,12 @@ public class UserRepository : IUserRepository
         cmd.Parameters.AddWithValue("@GoogleId", (object?)user.GoogleId ?? DBNull.Value);
 
         cmd.ExecuteNonQuery();
+        }
+
+        catch(SqlException ex) when(ex.Number == SqlErrorCodes.UniqueConstraintViolation || ex.Number == SqlErrorCodes.UniqueIndexViolation)
+        {
+            throw new DuplicateUserException(message: "Duplicate User Exception", ex);
+        }
     }
 
     public void Delete(int id)

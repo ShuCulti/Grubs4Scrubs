@@ -82,6 +82,7 @@ public class MealPlanEntryRepository: IMealPlanEntryRepository
 
     public void Create(MealPlanEntry mealPlanEntry)
     {
+        try{
         using SqlConnection conn = new(_connectionString);
         conn.Open();
 
@@ -97,6 +98,12 @@ public class MealPlanEntryRepository: IMealPlanEntryRepository
         cmd.Parameters.AddWithValue("@Servings", mealPlanEntry.Servings);
 
         cmd.ExecuteNonQuery();
+        }
+        catch(SqlException ex) when (ex.Number == SqlErrorCodes.ForeignKeyViolation)
+        {
+            throw new MealPlanEntryNotFoundException(message: "MealPlanEntry Not Found", ex);
+        }
+
     }
     public void Update(MealPlanEntry mealPlanEntry)
     {

@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Storage;
+using Grubs4Scrubs.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,7 +55,8 @@ builder.Services.AddScoped<MealPlanEntryService, MealPlanEntryService>();
 builder.Services.AddScoped<IFavouriteRepository, FavouriteRepository>();
 builder.Services.AddScoped<FavouriteService, FavouriteService>();
 
-
+builder.Services.AddExceptionHandler<GEH>();
+builder.Services.AddProblemDetails();
 
 
 var app = builder.Build();
@@ -68,6 +71,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

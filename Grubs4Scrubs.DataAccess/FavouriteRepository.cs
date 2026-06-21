@@ -7,9 +7,6 @@ namespace Grubs4Scrubs.DataAccess;
 
 public class FavouriteRepository: IFavouriteRepository
 {
-    //Sql Exceptions errors numbers stored by a variabe SO THAT I don't forget their meanings
-    private readonly int UniqueIndexViolation = 2601;
-    private readonly int ForeignKeyViolation = 547;
 
     private readonly string _connectionString;
     public FavouriteRepository(IConfiguration configuration)
@@ -124,6 +121,7 @@ public class FavouriteRepository: IFavouriteRepository
 
     public void Create(Favourite favourite)
     {
+        try {
         using SqlConnection conn = new(_connectionString);
         conn.Open();
 
@@ -135,6 +133,11 @@ public class FavouriteRepository: IFavouriteRepository
         cmd.Parameters.AddWithValue("@RecipeId", favourite.RecipeId);
 
         cmd.ExecuteNonQuery();
+        }
+        catch(SqlException ex) when(ex.Number == SqlErrorCodes.ForeignKeyViolation)
+        {
+            throw new FavouriteForeignKeyNotFoundException(message: "Favourite's Foreign Key Not Found Or Missing", ex);
+        }
     }
 
     public void Update(Favourite favourite)
@@ -155,9 +158,9 @@ public class FavouriteRepository: IFavouriteRepository
         cmd.ExecuteNonQuery();
 
         }
-        catch (SqlException ex) when (ex.Number == 2627 || ex.Number == 2601)
+        catch (SqlException ex) when (ex.Number == SqlErrorCodes.UniqueConstraintViolation || ex.Number == SqlErrorCodes.UniqueIndexViolation)
         {
-            throw new DuplicateFavouriteException(ex.Message, ex);
+            throw new DuplicateFavouriteException(message: "Duplicate Favourite Exception", ex);
         }
     }
 

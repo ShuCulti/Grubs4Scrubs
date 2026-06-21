@@ -44,6 +44,11 @@ public class RecipeService : IRecipeService
             throw new ArgumentException("Budget cannot be negative");
         }
 
+        if (recipe.Servings < 0)
+        {
+            throw new ArgumentException("Servings cannot be zero");
+        }
+
         _recipeRepository.Create(recipe);
     }
 

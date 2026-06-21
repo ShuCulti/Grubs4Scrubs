@@ -55,6 +55,7 @@ public class RecipeRepository : IRecipeRepository
 
     public void Create(Recipe recipe)
     {
+        try {
         using SqlConnection conn = new(_connectionString);
         conn.Open();
 
@@ -82,6 +83,14 @@ public class RecipeRepository : IRecipeRepository
         cmd.Parameters.AddWithValue("@Fats", recipe.Fats);
 
         cmd.ExecuteNonQuery();
+
+        }
+        catch(SqlException ex) when (ex.Number == SqlErrorCodes.ForeignKeyViolation)
+        {
+            throw new RecipeForeignKeyNotFoundException(message: "Recipe's Foreign Key Not Found Or Missing", ex);
+        }
+
+
     }
 
     public void Update(Recipe recipe)
@@ -91,8 +100,10 @@ public class RecipeRepository : IRecipeRepository
 
         string sql = @"UPDATE Recipes SET
                         Title = @Title, Description = @Desc, Tag = @Tag, ImageUrl = @ImageUrl,
-                        PrepTime = @Prep, CookTime = @Cook, Servings = @Serv,
-                        EstimatedBudget = @Budget, Category = @Cat
+                        PrepTime = @Prep, CookTime = @Cook, Servings = @Serv, 
+                        EstimatedBudget = @Budget, Category = @Cat, Ingredients = @Ingredients,
+                        Instructions = @Instructions, Tips = @Tips, Calories = @Calories,
+                        Protein = @Protein, Carbs = @Carbs, Fats = @Fats
                         WHERE Id = @Id";
 
         using SqlCommand cmd = new(sql, conn);
@@ -106,6 +117,13 @@ public class RecipeRepository : IRecipeRepository
         cmd.Parameters.AddWithValue("@Serv", recipe.Servings);
         cmd.Parameters.AddWithValue("@Budget", recipe.EstimatedBudget);
         cmd.Parameters.AddWithValue("@Cat", recipe.Category);
+        cmd.Parameters.AddWithValue("@Ingredients", recipe.Ingredients);    
+        cmd.Parameters.AddWithValue("@Instructions", recipe.Instructions);
+        cmd.Parameters.AddWithValue("@Tips", recipe.Tips);
+        cmd.Parameters.AddWithValue("@Calories", recipe.Calories);
+        cmd.Parameters.AddWithValue("@Protein", recipe.Protein);
+        cmd.Parameters.AddWithValue("@Carbs", recipe.Carbs);
+        cmd.Parameters.AddWithValue("@Fats", recipe.Fats);
 
         cmd.ExecuteNonQuery();
     }

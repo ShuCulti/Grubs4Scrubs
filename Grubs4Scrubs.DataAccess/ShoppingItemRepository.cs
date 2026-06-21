@@ -10,7 +10,7 @@ public class ShoppingItemRepository : IShoppingItemRepository
 
     public ShoppingItemRepository(IConfiguration configuration)
     {
-        _connectionString = configuration.GetConnectionString("DefaultConnection");
+        _connectionString = configuration.GetConnectionString("DefaultConnection")!;
     }
 
     public List<ShoppingItem> GetAll()
@@ -52,6 +52,7 @@ public class ShoppingItemRepository : IShoppingItemRepository
 
     public void Create(ShoppingItem shoppingItem)
     {
+        try{
         using SqlConnection conn = new(_connectionString);
         conn.Open();
 
@@ -66,6 +67,11 @@ public class ShoppingItemRepository : IShoppingItemRepository
         cmd.Parameters.AddWithValue("@IsChecked", shoppingItem.IsChecked);
 
         cmd.ExecuteNonQuery();
+        }
+        catch(SqlException ex) when (ex.Number == SqlErrorCodes.ForeignKeyViolation)
+        {
+            throw new ShoppingItemForeignKeyNotFoundException(message: "Shopping Item Foreign Key Not Found or Missing", ex);
+        }
 
     }
 

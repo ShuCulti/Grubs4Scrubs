@@ -36,8 +36,18 @@ public class MealPlanEntryController: ControllerBase
     [HttpPost]
     public IActionResult Create(MealPlanEntry mealPlanEntry)
     {
+        try{
         _mealPlanEntryService.CreateMealPlanEntry(mealPlanEntry);
         return Created();
+        }
+        catch (MealPlanEntryNotFoundException)
+        {
+            return NotFound();
+        }
+        catch (ArgumentException)
+        {
+            return BadRequest("Error 400, Bad Request");
+        }
     }
 
     [HttpPut("{id}")]
