@@ -33,24 +33,37 @@ public class FavouriteController: ControllerBase
 
     public IActionResult Create(CreateFavouriteDto dto)
     {   
-        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        
-        var favourite = new Favourite(
-            userId,
-            dto.RecipeId
-        );
-
-        var favouriteExists = _favouriteService.GetByUserAndRecipe(userId,dto.RecipeId);
-
-        if (favouriteExists != null)
+        try
         {
-            return Conflict("Can't create new Favourite, Favourite already exists");
-        }
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            
+            var favourite = new Favourite(
+                userId,
+                dto.RecipeId
+            );
 
-        _favouriteService.CreateFavourite(favourite);
+            var favouriteExists = _favouriteService.GetByUserAndRecipe(userId,dto.RecipeId);
+
+            if (favouriteExists != null)
+            {
+                return Conflict("Can't create new Favourite, Favourite already exists");
+            }
+
+            _favouriteService.CreateFavourite(favourite);
+
+        }
+        catch (DuplicateFavouriteException)
+        {
+            return Conflict("Favourite Already Exists");
+        }
+        catch (FavouriteForeignKeyNotFoundException)
+        {
+            return NotFound("Referenced recipe not found");
+        }
 
         return Created();
     }
+
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)

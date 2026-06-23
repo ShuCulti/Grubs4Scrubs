@@ -27,7 +27,7 @@ public class GEH: IExceptionHandler
                 break;
             case FavouriteForeignKeyNotFoundException:
                 status = StatusCodes.Status404NotFound;
-                title = "Favourite Not Found";
+                title = "Referenced recipe not Found";
                 break;
             case ShoppingItemForeignKeyNotFoundException:
                 status = StatusCodes.Status404NotFound;
@@ -37,7 +37,6 @@ public class GEH: IExceptionHandler
                 status = StatusCodes.Status500InternalServerError;
                 title = ex.Message;
                 break;
-
             case ArgumentException:
                 status = StatusCodes.Status400BadRequest;
                 title = string.IsNullOrWhiteSpace(ex.Message) ?  "Something Went Wrong" : ex.Message ;

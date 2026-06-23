@@ -41,7 +41,14 @@ public class ShoppingItemController : ControllerBase
 
     public IActionResult Create(ShoppingItem shoppingItem)
     {
-         _shoppingItemService.CreateShoppingItem(shoppingItem);
+        try
+        {
+            _shoppingItemService.CreateShoppingItem(shoppingItem);
+        }
+        catch (ShoppingItemForeignKeyNotFoundException)
+        {
+            return NotFound("Referenced recipe's ingredient/Shopping Item not found");
+        }
         return Created();
     }
 

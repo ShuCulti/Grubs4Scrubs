@@ -2,11 +2,7 @@
 
 namespace Grubs4Scrubs.Business;
 
-//  this is where you'd add things like:
-//   - "Budget can't be negative"
-//   - "Title can't be empty"
-//   - "Only allow 50 recipes per user"
-//   - Logging, caching, etc.
+// Here is where I define the laws and constraints of my app. What is allowed or not allowed and so forth.
 public class RecipeService : IRecipeService
 {
     private readonly IRecipeRepository _recipeRepository;
@@ -34,7 +30,7 @@ public class RecipeService : IRecipeService
             throw new ArgumentException("Recipe title cannot be empty");
         }
 
-        if (recipe.Title.Length < 255)
+        if (recipe.Title.Length > 255)
         {
             throw new ArgumentException("Title Cannot be Longer than 255 characters");
         }

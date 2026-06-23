@@ -83,7 +83,7 @@ export default function RecipeView() {
         if(window.confirm('Are you sure you want to delete this recipe?')){
             api.delete(`/Recipe/${id}`)
             .then(()=> navigate("/recipes"))
-            .catch(err => console.error("Failed to delete recipe", err))
+            .catch(err => console.error(err.response.data ?? "Failed to delete recipe"))
         }
     }
 
@@ -95,7 +95,7 @@ export default function RecipeView() {
                 api.get("/Favourite"))
                 .then(res => setFavourites(res.data))
 
-            .catch(err => console.error("Couldn't add Favourite", err))
+            .catch(err => console.error(err.response.data ?? "couldn't add Favourite"))
     }
 
     function handleStartEdit() {

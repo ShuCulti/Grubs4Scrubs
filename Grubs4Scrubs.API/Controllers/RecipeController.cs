@@ -41,7 +41,16 @@ public class RecipeController : ControllerBase
     [HttpPost]
     public IActionResult Create(Recipe recipe)
     {
-        _recipeService.CreateRecipe(recipe);
+        try
+        {
+            _recipeService.CreateRecipe(recipe);
+        }
+
+        catch(RecipeForeignKeyNotFoundException)
+        {
+            return NotFound("Recipe Not Found");
+        }
+
         return Created();
     }
 

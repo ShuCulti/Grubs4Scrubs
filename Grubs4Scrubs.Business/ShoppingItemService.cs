@@ -26,7 +26,12 @@ public class ShoppingItemService : IShoppingItemService
 
         if (string.IsNullOrWhiteSpace(shoppingItem.Name))
         {
-            throw new ArgumentException("ShoppingItem name cannot be empty");
+            throw new ValidationException("ShoppingItem name cannot be empty");
+        }
+
+        if (shoppingItem.Name.Length > 255)
+        {
+            throw new ArgumentException("ShoppingItenm name cannot be greater than 255 characters");
         }
 
         _shoppingItemRepository.Create(shoppingItem);
